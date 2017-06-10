@@ -13,8 +13,15 @@ using System.Windows.Forms;
 
 namespace SharpInjector
 {
+
     public partial class Form1 : MetroFramework.Forms.MetroForm
     {
+
+        private string ProcessName = String.Empty;
+        public List<string> DLL_List { get; set; }
+
+
+
         public Form1()
         {
             InitializeComponent();
@@ -23,6 +30,8 @@ namespace SharpInjector
 
             //this.StyleManager.Style = MetroFramework.MetroColorStyle.Black;
             this.StyleManager.Theme = MetroFramework.MetroThemeStyle.Dark;
+
+            DLL_List = new List<string>();
         }
 
         #region DLLImports
@@ -97,9 +106,12 @@ namespace SharpInjector
 
         public Int32 GetProcessId(String proc)
         {
-            Process[] ProcList;
-            ProcList = Process.GetProcessesByName(proc);
-            return ProcList[0].Id;
+            Process[] procList;
+            procList = Process.GetProcessesByName(proc.Remove(proc.Length - 4));
+            if (procList.Length > 0)
+                return procList[0].Id;
+            else
+                return -1;
         }
 
         public void InjectDLL(IntPtr hProcess, String strDLLName)
@@ -107,16 +119,16 @@ namespace SharpInjector
             IntPtr bytesout;
 
             // Length of string containing the DLL file name +1 byte padding
-            Int32 LenWrite = strDLLName.Length + 1;
+            Int32 lenWrite = strDLLName.Length + 1;
             // Allocate memory within the virtual address space of the target process
-            IntPtr AllocMem = (IntPtr)VirtualAllocEx(hProcess, (IntPtr)null, (uint)LenWrite, 0x1000, 0x40); //allocation pour WriteProcessMemory
+            IntPtr allocMem = (IntPtr)VirtualAllocEx(hProcess, (IntPtr)null, (uint)lenWrite, 0x1000, 0x40); //allocation pour WriteProcessMemory
 
             // Write DLL file name to allocated memory in target process
-            WriteProcessMemory(hProcess, AllocMem, strDLLName, (UIntPtr)LenWrite, out bytesout);
+            WriteProcessMemory(hProcess, allocMem, strDLLName, (UIntPtr)lenWrite, out bytesout);
             // Function pointer "Injector"
-            UIntPtr Injector = (UIntPtr)GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
+            UIntPtr injector = GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
 
-            if (Injector == null)
+            if (injector == null)
             {
                 MessageBox.Show(" Injector Error! \n ");
                 // return failed
@@ -124,7 +136,7 @@ namespace SharpInjector
             }
 
             // Create thread in target process and store handle in hThread
-            IntPtr hThread = (IntPtr)CreateRemoteThread(hProcess, (IntPtr)null, 0, Injector, AllocMem, 0, out bytesout);
+            IntPtr hThread = CreateRemoteThread(hProcess, (IntPtr)null, 0, injector, allocMem, 0, out bytesout);
             // Make sure thread handle is valid
             if (hThread == null)
             {
@@ -133,9 +145,9 @@ namespace SharpInjector
                 return;
             }
 
-            int Result = WaitForSingleObject(hThread, 10 * 1000);
+            int result = WaitForSingleObject(hThread, 10 * 1000);
             // check for timeout
-            if (Result == 0x00000080L || Result == 0x00000102L || Result == 0xFFFFFFFF)
+            if (result == 0x00000080L || result == 0x00000102L || result == 0xFFFFFFF)
             {
                 // Thread timed out
                 MessageBox.Show(" hThread [ 2 ] Error! \n ");
@@ -148,7 +160,7 @@ namespace SharpInjector
 
             Thread.Sleep(1000);
             // Clear up allocated space ( Allocmem )
-            VirtualFreeEx(hProcess, AllocMem, (UIntPtr)0, 0x8000);
+            VirtualFreeEx(hProcess, allocMem, (UIntPtr)0, 0x8000);
             // Make sure thread handle is valid before closing... prevents crashes.
             if (hThread != null)
             {
@@ -160,19 +172,88 @@ namespace SharpInjector
 
         private void metroButton2_Click(object sender, EventArgs e)
         {
-            if (!autoInjectCheckBox.Checked)
+            Int32 ProcID;
+
+            if (ProcessName == String.Empty || !ProcessName.Contains(".exe"))
             {
+                MessageBox.Show(this, "Process name is missing .exe extension or empty");
+                return;
+            }
+                
+            if (metroToggle1.Checked)
+            {
+                bool timedOut = false;
+                System.Windows.Forms.Timer timeout = new System.Windows.Forms.Timer();
+                timeout.Interval = 60000;
+                timeout.Tick += (x, y) =>
+                {
+                    timeout.Stop();
+                    timedOut = true;
+                };
+
+                timeout.Start();
+
                 // Throw error msgbbox if process not found
+                do
+                {
+                    ProcID = GetProcessId(ProcessName);
+                    Thread.Sleep(500);
+                } while (ProcID < 0 && !timedOut);
             }
             else
             {
-                // Loop for process start
+                ProcID = GetProcessId(ProcessName);
             }
+
+            if (ProcID >= 0)
+            {
+                IntPtr hProcess = OpenProcess(0x1F0FFF, 1, ProcID);
+                if (hProcess == IntPtr.Zero)
+                {
+                    MessageBox.Show("OpenProcess() Failed!");
+                    return;
+                }
+
+                foreach (string dll in DLL_List)
+                {
+                    try
+                    {
+                        InjectDLL(hProcess, dll);
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine(exception);
+                        throw;
+                    }
+                    MessageBox.Show(this, "Successful");
+                }
+                    
+     
+            }
+            else
+                MessageBox.Show(this, "Process not found");
         }
 
         private void metroButton1_Click(object sender, EventArgs e)
         {
+            // Create an instance of the open file dialog box.
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
+            // Set filter options and filter index.
+            openFileDialog1.Filter = "EXE Files (.exe)|*.exe|All Files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+
+            openFileDialog1.Multiselect = true;
+
+            // Call the ShowDialog method to show the dialog box.
+            DialogResult? userClickedOK = openFileDialog1.ShowDialog();
+
+            // Process input if the user clicked OK.
+            if (userClickedOK == DialogResult.OK)
+            {
+                this.metroTextBox1.Text = openFileDialog1.SafeFileName;
+                ProcessName = openFileDialog1.SafeFileName;
+            }
         }
 
         private void metroLabel2_Click(object sender, EventArgs e)
@@ -181,6 +262,62 @@ namespace SharpInjector
         }
 
         private void autoInjectCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addDLLButton_Click(object sender, EventArgs e)
+        {
+            // Create an instance of the open file dialog box.
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+            // Set filter options and filter index.
+            openFileDialog1.Filter = "DLL Files (.dll)|*.dll|All Files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+
+            openFileDialog1.Multiselect = true;
+
+            // Call the ShowDialog method to show the dialog box.
+            DialogResult? userClickedOK = openFileDialog1.ShowDialog();
+
+            // Process input if the user clicked OK.
+            if (userClickedOK == DialogResult.OK)
+            {
+                //DLL_List.AddRange(openFileDialog1.FileNames);
+                foreach (string f in openFileDialog1.FileNames)
+                {
+                    if (DLL_List.Contains(f))
+                        continue;
+                    DLL_List.Add(f);
+                    metroListView1.Items.Add(f.Substring(f.LastIndexOf("\\")).Replace("\\", ""));
+                }
+            }
+        }
+
+        private void metroTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            if (!metroTextBox1.Text.Contains(".exe"))
+            {
+                metroTextBox1.BackColor = Color.Red;
+                return;
+            }
+
+            metroTextBox1.BackColor = GetProcessId(metroTextBox1.Text) < 0 ? Color.Red : Color.White;
+
+            ProcessName = metroTextBox1.Text;
+        }
+
+        private void metroLabel3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void removeDLLButton_Click(object sender, EventArgs e)
         {
 
         }

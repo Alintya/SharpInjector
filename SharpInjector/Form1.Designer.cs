@@ -34,12 +34,14 @@
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
             this.injectButton = new MetroFramework.Controls.MetroButton();
-            this.autoInjectCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
-            this.addDLLButton = new MetroFramework.Controls.MetroButton();
+            this.metroListView1 = new MetroFramework.Controls.MetroListView();
             this.removeDLLButton = new MetroFramework.Controls.MetroButton();
+            this.addDLLButton = new MetroFramework.Controls.MetroButton();
             this.metroToggle1 = new MetroFramework.Controls.MetroToggle();
+            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
+            this.clearButton = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.metroPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -58,12 +60,12 @@
             this.metroTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroTextBox1.CustomButton.UseSelectable = true;
             this.metroTextBox1.CustomButton.Visible = false;
-            this.metroTextBox1.Lines = new string[] {
-        "metroTextBox1"};
+            this.metroTextBox1.Lines = new string[0];
             this.metroTextBox1.Location = new System.Drawing.Point(23, 90);
             this.metroTextBox1.MaxLength = 32767;
             this.metroTextBox1.Name = "metroTextBox1";
             this.metroTextBox1.PasswordChar = '\0';
+            this.metroTextBox1.PromptText = "Process name";
             this.metroTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.metroTextBox1.SelectedText = "";
             this.metroTextBox1.SelectionLength = 0;
@@ -71,10 +73,11 @@
             this.metroTextBox1.ShortcutsEnabled = true;
             this.metroTextBox1.Size = new System.Drawing.Size(138, 23);
             this.metroTextBox1.TabIndex = 0;
-            this.metroTextBox1.Text = "metroTextBox1";
             this.metroTextBox1.UseSelectable = true;
+            this.metroTextBox1.WaterMark = "Process name";
             this.metroTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.metroTextBox1.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.metroTextBox1.TextChanged += new System.EventHandler(this.metroTextBox1_TextChanged);
             // 
             // processListButton
             // 
@@ -101,24 +104,13 @@
             // 
             // injectButton
             // 
-            this.injectButton.Location = new System.Drawing.Point(179, 200);
+            this.injectButton.Location = new System.Drawing.Point(232, 226);
             this.injectButton.Name = "injectButton";
             this.injectButton.Size = new System.Drawing.Size(75, 23);
             this.injectButton.TabIndex = 4;
             this.injectButton.Text = "Inject";
             this.injectButton.UseSelectable = true;
             this.injectButton.Click += new System.EventHandler(this.metroButton2_Click);
-            // 
-            // autoInjectCheckBox
-            // 
-            this.autoInjectCheckBox.AutoSize = true;
-            this.autoInjectCheckBox.Location = new System.Drawing.Point(23, 205);
-            this.autoInjectCheckBox.Name = "autoInjectCheckBox";
-            this.autoInjectCheckBox.Size = new System.Drawing.Size(83, 15);
-            this.autoInjectCheckBox.TabIndex = 5;
-            this.autoInjectCheckBox.Text = "Auto-inject";
-            this.autoInjectCheckBox.UseSelectable = true;
-            this.autoInjectCheckBox.CheckedChanged += new System.EventHandler(this.autoInjectCheckBox_CheckedChanged);
             // 
             // metroLabel2
             // 
@@ -133,6 +125,8 @@
             // metroPanel1
             // 
             this.metroPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.metroPanel1.Controls.Add(this.clearButton);
+            this.metroPanel1.Controls.Add(this.metroListView1);
             this.metroPanel1.Controls.Add(this.removeDLLButton);
             this.metroPanel1.Controls.Add(this.addDLLButton);
             this.metroPanel1.Controls.Add(this.metroLabel2);
@@ -141,20 +135,24 @@
             this.metroPanel1.HorizontalScrollbarSize = 10;
             this.metroPanel1.Location = new System.Drawing.Point(23, 119);
             this.metroPanel1.Name = "metroPanel1";
-            this.metroPanel1.Size = new System.Drawing.Size(229, 75);
+            this.metroPanel1.Size = new System.Drawing.Size(284, 101);
             this.metroPanel1.TabIndex = 8;
             this.metroPanel1.VerticalScrollbarBarColor = true;
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
             // 
-            // addDLLButton
+            // metroListView1
             // 
-            this.addDLLButton.Location = new System.Drawing.Point(3, 22);
-            this.addDLLButton.Name = "addDLLButton";
-            this.addDLLButton.Size = new System.Drawing.Size(75, 23);
-            this.addDLLButton.TabIndex = 8;
-            this.addDLLButton.Text = "Add";
-            this.addDLLButton.UseSelectable = true;
+            this.metroListView1.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.metroListView1.FullRowSelect = true;
+            this.metroListView1.Location = new System.Drawing.Point(90, 3);
+            this.metroListView1.Name = "metroListView1";
+            this.metroListView1.OwnerDraw = true;
+            this.metroListView1.Size = new System.Drawing.Size(189, 93);
+            this.metroListView1.TabIndex = 10;
+            this.metroListView1.UseCompatibleStateImageBehavior = false;
+            this.metroListView1.UseSelectable = true;
+            this.metroListView1.View = System.Windows.Forms.View.List;
             // 
             // removeDLLButton
             // 
@@ -164,25 +162,56 @@
             this.removeDLLButton.TabIndex = 9;
             this.removeDLLButton.Text = "Remove";
             this.removeDLLButton.UseSelectable = true;
+            this.removeDLLButton.Click += new System.EventHandler(this.removeDLLButton_Click);
+            // 
+            // addDLLButton
+            // 
+            this.addDLLButton.Location = new System.Drawing.Point(3, 22);
+            this.addDLLButton.Name = "addDLLButton";
+            this.addDLLButton.Size = new System.Drawing.Size(75, 23);
+            this.addDLLButton.TabIndex = 8;
+            this.addDLLButton.Text = "Add";
+            this.addDLLButton.UseSelectable = true;
+            this.addDLLButton.Click += new System.EventHandler(this.addDLLButton_Click);
             // 
             // metroToggle1
             // 
             this.metroToggle1.AutoSize = true;
-            this.metroToggle1.Location = new System.Drawing.Point(26, 226);
+            this.metroToggle1.Location = new System.Drawing.Point(27, 232);
             this.metroToggle1.Name = "metroToggle1";
             this.metroToggle1.Size = new System.Drawing.Size(80, 17);
             this.metroToggle1.TabIndex = 9;
             this.metroToggle1.Text = "Aus";
             this.metroToggle1.UseSelectable = true;
             // 
+            // metroLabel3
+            // 
+            this.metroLabel3.AutoSize = true;
+            this.metroLabel3.Location = new System.Drawing.Point(112, 230);
+            this.metroLabel3.Name = "metroLabel3";
+            this.metroLabel3.Size = new System.Drawing.Size(73, 19);
+            this.metroLabel3.TabIndex = 10;
+            this.metroLabel3.Text = "Auto-inject";
+            this.metroLabel3.Click += new System.EventHandler(this.metroLabel3_Click);
+            // 
+            // clearButton
+            // 
+            this.clearButton.Location = new System.Drawing.Point(3, 80);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(75, 23);
+            this.clearButton.TabIndex = 11;
+            this.clearButton.Text = "Clear";
+            this.clearButton.UseSelectable = true;
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(289, 254);
+            this.ClientSize = new System.Drawing.Size(399, 357);
+            this.Controls.Add(this.metroLabel3);
             this.Controls.Add(this.metroToggle1);
             this.Controls.Add(this.metroPanel1);
-            this.Controls.Add(this.autoInjectCheckBox);
             this.Controls.Add(this.injectButton);
             this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.processListButton);
@@ -203,13 +232,15 @@
         private MetroFramework.Controls.MetroButton processListButton;
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Components.MetroStyleManager metroStyleManager1;
-        private MetroFramework.Controls.MetroCheckBox autoInjectCheckBox;
         private MetroFramework.Controls.MetroButton injectButton;
         private MetroFramework.Controls.MetroLabel metroLabel2;
         private MetroFramework.Controls.MetroPanel metroPanel1;
         private MetroFramework.Controls.MetroButton removeDLLButton;
         private MetroFramework.Controls.MetroButton addDLLButton;
         private MetroFramework.Controls.MetroToggle metroToggle1;
+        private MetroFramework.Controls.MetroListView metroListView1;
+        private MetroFramework.Controls.MetroLabel metroLabel3;
+        private MetroFramework.Controls.MetroButton clearButton;
     }
 }
 
