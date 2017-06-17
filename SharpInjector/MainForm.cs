@@ -17,7 +17,7 @@ namespace SharpInjector
 
         private void Process_Name_Textbox_TextChanged(object sender, EventArgs e)
         {
-            if (!Process_Name_Textbox.Text.Contains(".exe"))
+            if (Process_Name_Textbox.Text == String.Empty || !Process_Name_Textbox.Text.Contains(".exe"))
             {
                 Process_Name_Textbox.BackColor = Color.Red;
                 return;
@@ -27,7 +27,17 @@ namespace SharpInjector
 
         private void Choose_Process_Button_Click(object sender, EventArgs e)
         {
-            new ProcessSelectForm().Show();
+            ProcessSelectForm _ProcessSelectForm = new ProcessSelectForm();
+            _ProcessSelectForm.Show();
+            _ProcessSelectForm.FormClosed += ProcessSelectForm_Closed;
+        }
+
+        private void ProcessSelectForm_Closed(object sender, FormClosedEventArgs e)
+        {
+            if (Globals.Selected_Process != null)
+            {
+                Process_Name_Textbox.Text = string.Format("{0}.exe", Globals.Selected_Process.ProcessName);
+            }
         }
 
         private void Add_DLL_Button_Click(object sender, EventArgs e)

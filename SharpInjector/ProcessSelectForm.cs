@@ -75,8 +75,7 @@ namespace SharpInjector
                 MessageBox.Show(this, "Select something first");
                 return;
             }
-
-            if (ProcessIDs.TryGetValue(ListBox.SelectedItem.ToString(), out Globals.Selected_Process))
+            if (ProcessIDs.TryGetValue(ListBox.SelectedItem.ToString(), out Globals.Selected_Process) || WindowIDs.TryGetValue(ListBox.SelectedItem.ToString(), out Globals.Selected_Process))
             {
                 Close();
             }
