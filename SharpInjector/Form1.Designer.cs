@@ -29,218 +29,184 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
-            this.processListButton = new MetroFramework.Controls.MetroButton();
-            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            this.ProcessNameTextbox = new MetroFramework.Controls.MetroTextBox();
+            this.ChooseProcessButton = new MetroFramework.Controls.MetroButton();
             this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
-            this.injectButton = new MetroFramework.Controls.MetroButton();
-            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
+            this.InjectButton = new MetroFramework.Controls.MetroButton();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
-            this.metroListView1 = new MetroFramework.Controls.MetroListView();
-            this.removeDLLButton = new MetroFramework.Controls.MetroButton();
-            this.addDLLButton = new MetroFramework.Controls.MetroButton();
-            this.metroToggle1 = new MetroFramework.Controls.MetroToggle();
-            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
-            this.clearButton = new MetroFramework.Controls.MetroButton();
+            this.DLLList = new MetroFramework.Controls.MetroListView();
+            this.ClearDLLListButton = new MetroFramework.Controls.MetroButton();
+            this.RemoveDLLButton = new MetroFramework.Controls.MetroButton();
+            this.AddDLLButton = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.metroPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // metroTextBox1
+            // ProcessNameTextbox
             // 
             // 
             // 
             // 
-            this.metroTextBox1.CustomButton.Image = null;
-            this.metroTextBox1.CustomButton.Location = new System.Drawing.Point(116, 1);
-            this.metroTextBox1.CustomButton.Name = "";
-            this.metroTextBox1.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.metroTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroTextBox1.CustomButton.TabIndex = 1;
-            this.metroTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTextBox1.CustomButton.UseSelectable = true;
-            this.metroTextBox1.CustomButton.Visible = false;
-            this.metroTextBox1.Lines = new string[0];
-            this.metroTextBox1.Location = new System.Drawing.Point(23, 90);
-            this.metroTextBox1.MaxLength = 32767;
-            this.metroTextBox1.Name = "metroTextBox1";
-            this.metroTextBox1.PasswordChar = '\0';
-            this.metroTextBox1.PromptText = "Process name";
-            this.metroTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.metroTextBox1.SelectedText = "";
-            this.metroTextBox1.SelectionLength = 0;
-            this.metroTextBox1.SelectionStart = 0;
-            this.metroTextBox1.ShortcutsEnabled = true;
-            this.metroTextBox1.Size = new System.Drawing.Size(138, 23);
-            this.metroTextBox1.TabIndex = 0;
-            this.metroTextBox1.UseSelectable = true;
-            this.metroTextBox1.WaterMark = "Process name";
-            this.metroTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.metroTextBox1.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            this.metroTextBox1.TextChanged += new System.EventHandler(this.metroTextBox1_TextChanged);
+            this.ProcessNameTextbox.CustomButton.Image = null;
+            this.ProcessNameTextbox.CustomButton.Location = new System.Drawing.Point(137, 1);
+            this.ProcessNameTextbox.CustomButton.Name = "";
+            this.ProcessNameTextbox.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.ProcessNameTextbox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.ProcessNameTextbox.CustomButton.TabIndex = 1;
+            this.ProcessNameTextbox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.ProcessNameTextbox.CustomButton.UseSelectable = true;
+            this.ProcessNameTextbox.CustomButton.Visible = false;
+            this.ProcessNameTextbox.Lines = new string[0];
+            this.ProcessNameTextbox.Location = new System.Drawing.Point(23, 73);
+            this.ProcessNameTextbox.MaxLength = 32767;
+            this.ProcessNameTextbox.Name = "ProcessNameTextbox";
+            this.ProcessNameTextbox.PasswordChar = '\0';
+            this.ProcessNameTextbox.PromptText = "Process name";
+            this.ProcessNameTextbox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.ProcessNameTextbox.SelectedText = "";
+            this.ProcessNameTextbox.SelectionLength = 0;
+            this.ProcessNameTextbox.SelectionStart = 0;
+            this.ProcessNameTextbox.ShortcutsEnabled = true;
+            this.ProcessNameTextbox.Size = new System.Drawing.Size(147, 23);
+            this.ProcessNameTextbox.TabIndex = 0;
+            this.ProcessNameTextbox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.ProcessNameTextbox.UseSelectable = true;
+            this.ProcessNameTextbox.WaterMark = "Process name";
+            this.ProcessNameTextbox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.ProcessNameTextbox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.ProcessNameTextbox.TextChanged += new System.EventHandler(this.ProcessNameTextbox_TextChanged);
             // 
-            // processListButton
+            // ChooseProcessButton
             // 
-            this.processListButton.Location = new System.Drawing.Point(179, 90);
-            this.processListButton.Name = "processListButton";
-            this.processListButton.Size = new System.Drawing.Size(75, 23);
-            this.processListButton.TabIndex = 2;
-            this.processListButton.Text = "Choose";
-            this.processListButton.UseSelectable = true;
-            this.processListButton.Click += new System.EventHandler(this.metroButton1_Click);
-            // 
-            // metroLabel1
-            // 
-            this.metroLabel1.AutoSize = true;
-            this.metroLabel1.Location = new System.Drawing.Point(23, 68);
-            this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Size = new System.Drawing.Size(53, 19);
-            this.metroLabel1.TabIndex = 3;
-            this.metroLabel1.Text = "Process";
+            this.ChooseProcessButton.Location = new System.Drawing.Point(176, 73);
+            this.ChooseProcessButton.Name = "ChooseProcessButton";
+            this.ChooseProcessButton.Size = new System.Drawing.Size(167, 23);
+            this.ChooseProcessButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.ChooseProcessButton.TabIndex = 2;
+            this.ChooseProcessButton.Text = "Choose";
+            this.ChooseProcessButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.ChooseProcessButton.UseSelectable = true;
+            this.ChooseProcessButton.Click += new System.EventHandler(this.ChooseProcessButton_Click);
             // 
             // metroStyleManager1
             // 
             this.metroStyleManager1.Owner = this;
             // 
-            // injectButton
+            // InjectButton
             // 
-            this.injectButton.Location = new System.Drawing.Point(232, 226);
-            this.injectButton.Name = "injectButton";
-            this.injectButton.Size = new System.Drawing.Size(75, 23);
-            this.injectButton.TabIndex = 4;
-            this.injectButton.Text = "Inject";
-            this.injectButton.UseSelectable = true;
-            this.injectButton.Click += new System.EventHandler(this.metroButton2_Click);
-            // 
-            // metroLabel2
-            // 
-            this.metroLabel2.AutoSize = true;
-            this.metroLabel2.Location = new System.Drawing.Point(3, 0);
-            this.metroLabel2.Name = "metroLabel2";
-            this.metroLabel2.Size = new System.Drawing.Size(35, 19);
-            this.metroLabel2.TabIndex = 7;
-            this.metroLabel2.Text = "DLLs";
-            this.metroLabel2.Click += new System.EventHandler(this.metroLabel2_Click);
+            this.InjectButton.Highlight = true;
+            this.InjectButton.Location = new System.Drawing.Point(23, 189);
+            this.InjectButton.Name = "InjectButton";
+            this.InjectButton.Size = new System.Drawing.Size(83, 39);
+            this.InjectButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.InjectButton.TabIndex = 4;
+            this.InjectButton.Text = "Inject";
+            this.InjectButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.InjectButton.UseSelectable = true;
+            this.InjectButton.Click += new System.EventHandler(this.InjectButton_Click);
             // 
             // metroPanel1
             // 
             this.metroPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.metroPanel1.Controls.Add(this.clearButton);
-            this.metroPanel1.Controls.Add(this.metroListView1);
-            this.metroPanel1.Controls.Add(this.removeDLLButton);
-            this.metroPanel1.Controls.Add(this.addDLLButton);
-            this.metroPanel1.Controls.Add(this.metroLabel2);
+            this.metroPanel1.Controls.Add(this.DLLList);
             this.metroPanel1.HorizontalScrollbarBarColor = true;
             this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel1.HorizontalScrollbarSize = 10;
-            this.metroPanel1.Location = new System.Drawing.Point(23, 119);
+            this.metroPanel1.Location = new System.Drawing.Point(112, 102);
             this.metroPanel1.Name = "metroPanel1";
-            this.metroPanel1.Size = new System.Drawing.Size(284, 101);
+            this.metroPanel1.Size = new System.Drawing.Size(231, 126);
             this.metroPanel1.TabIndex = 8;
+            this.metroPanel1.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.metroPanel1.VerticalScrollbarBarColor = true;
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
             // 
-            // metroListView1
+            // DLLList
             // 
-            this.metroListView1.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.metroListView1.FullRowSelect = true;
-            this.metroListView1.Location = new System.Drawing.Point(90, 3);
-            this.metroListView1.Name = "metroListView1";
-            this.metroListView1.OwnerDraw = true;
-            this.metroListView1.Size = new System.Drawing.Size(189, 93);
-            this.metroListView1.TabIndex = 10;
-            this.metroListView1.UseCompatibleStateImageBehavior = false;
-            this.metroListView1.UseSelectable = true;
-            this.metroListView1.View = System.Windows.Forms.View.List;
+            this.DLLList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.DLLList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.DLLList.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.DLLList.FullRowSelect = true;
+            this.DLLList.Location = new System.Drawing.Point(3, 3);
+            this.DLLList.Name = "DLLList";
+            this.DLLList.OwnerDraw = true;
+            this.DLLList.Size = new System.Drawing.Size(223, 118);
+            this.DLLList.TabIndex = 10;
+            this.DLLList.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.DLLList.UseCompatibleStateImageBehavior = false;
+            this.DLLList.UseCustomBackColor = true;
+            this.DLLList.UseSelectable = true;
+            this.DLLList.View = System.Windows.Forms.View.List;
             // 
-            // removeDLLButton
+            // ClearDLLListButton
             // 
-            this.removeDLLButton.Location = new System.Drawing.Point(3, 51);
-            this.removeDLLButton.Name = "removeDLLButton";
-            this.removeDLLButton.Size = new System.Drawing.Size(75, 23);
-            this.removeDLLButton.TabIndex = 9;
-            this.removeDLLButton.Text = "Remove";
-            this.removeDLLButton.UseSelectable = true;
-            this.removeDLLButton.Click += new System.EventHandler(this.removeDLLButton_Click);
+            this.ClearDLLListButton.Location = new System.Drawing.Point(23, 160);
+            this.ClearDLLListButton.Name = "ClearDLLListButton";
+            this.ClearDLLListButton.Size = new System.Drawing.Size(83, 23);
+            this.ClearDLLListButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.ClearDLLListButton.TabIndex = 11;
+            this.ClearDLLListButton.Text = "Clear";
+            this.ClearDLLListButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.ClearDLLListButton.UseSelectable = true;
             // 
-            // addDLLButton
+            // RemoveDLLButton
             // 
-            this.addDLLButton.Location = new System.Drawing.Point(3, 22);
-            this.addDLLButton.Name = "addDLLButton";
-            this.addDLLButton.Size = new System.Drawing.Size(75, 23);
-            this.addDLLButton.TabIndex = 8;
-            this.addDLLButton.Text = "Add";
-            this.addDLLButton.UseSelectable = true;
-            this.addDLLButton.Click += new System.EventHandler(this.addDLLButton_Click);
+            this.RemoveDLLButton.Location = new System.Drawing.Point(23, 131);
+            this.RemoveDLLButton.Name = "RemoveDLLButton";
+            this.RemoveDLLButton.Size = new System.Drawing.Size(83, 23);
+            this.RemoveDLLButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.RemoveDLLButton.TabIndex = 9;
+            this.RemoveDLLButton.Text = "Remove";
+            this.RemoveDLLButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.RemoveDLLButton.UseSelectable = true;
             // 
-            // metroToggle1
+            // AddDLLButton
             // 
-            this.metroToggle1.AutoSize = true;
-            this.metroToggle1.Location = new System.Drawing.Point(27, 232);
-            this.metroToggle1.Name = "metroToggle1";
-            this.metroToggle1.Size = new System.Drawing.Size(80, 17);
-            this.metroToggle1.TabIndex = 9;
-            this.metroToggle1.Text = "Aus";
-            this.metroToggle1.UseSelectable = true;
-            // 
-            // metroLabel3
-            // 
-            this.metroLabel3.AutoSize = true;
-            this.metroLabel3.Location = new System.Drawing.Point(112, 230);
-            this.metroLabel3.Name = "metroLabel3";
-            this.metroLabel3.Size = new System.Drawing.Size(73, 19);
-            this.metroLabel3.TabIndex = 10;
-            this.metroLabel3.Text = "Auto-inject";
-            this.metroLabel3.Click += new System.EventHandler(this.metroLabel3_Click);
-            // 
-            // clearButton
-            // 
-            this.clearButton.Location = new System.Drawing.Point(3, 80);
-            this.clearButton.Name = "clearButton";
-            this.clearButton.Size = new System.Drawing.Size(75, 23);
-            this.clearButton.TabIndex = 11;
-            this.clearButton.Text = "Clear";
-            this.clearButton.UseSelectable = true;
-            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+            this.AddDLLButton.Location = new System.Drawing.Point(23, 102);
+            this.AddDLLButton.Name = "AddDLLButton";
+            this.AddDLLButton.Size = new System.Drawing.Size(83, 23);
+            this.AddDLLButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.AddDLLButton.TabIndex = 8;
+            this.AddDLLButton.Text = "Add";
+            this.AddDLLButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.AddDLLButton.UseSelectable = true;
+            this.AddDLLButton.Click += new System.EventHandler(this.AddDLLButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(399, 357);
-            this.Controls.Add(this.metroLabel3);
-            this.Controls.Add(this.metroToggle1);
+            this.ClientSize = new System.Drawing.Size(368, 251);
+            this.Controls.Add(this.InjectButton);
+            this.Controls.Add(this.ClearDLLListButton);
             this.Controls.Add(this.metroPanel1);
-            this.Controls.Add(this.injectButton);
-            this.Controls.Add(this.metroLabel1);
-            this.Controls.Add(this.processListButton);
-            this.Controls.Add(this.metroTextBox1);
+            this.Controls.Add(this.RemoveDLLButton);
+            this.Controls.Add(this.AddDLLButton);
+            this.Controls.Add(this.ChooseProcessButton);
+            this.Controls.Add(this.ProcessNameTextbox);
+            this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "SharpInjector";
+            this.Resizable = false;
+            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
+            this.Text = "Sharp Injector";
+            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
             this.metroPanel1.ResumeLayout(false);
-            this.metroPanel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private MetroFramework.Controls.MetroTextBox metroTextBox1;
-        private MetroFramework.Controls.MetroButton processListButton;
-        private MetroFramework.Controls.MetroLabel metroLabel1;
+        private MetroFramework.Controls.MetroTextBox ProcessNameTextbox;
+        private MetroFramework.Controls.MetroButton ChooseProcessButton;
         private MetroFramework.Components.MetroStyleManager metroStyleManager1;
-        private MetroFramework.Controls.MetroButton injectButton;
-        private MetroFramework.Controls.MetroLabel metroLabel2;
+        private MetroFramework.Controls.MetroButton InjectButton;
         private MetroFramework.Controls.MetroPanel metroPanel1;
-        private MetroFramework.Controls.MetroButton removeDLLButton;
-        private MetroFramework.Controls.MetroButton addDLLButton;
-        private MetroFramework.Controls.MetroToggle metroToggle1;
-        private MetroFramework.Controls.MetroListView metroListView1;
-        private MetroFramework.Controls.MetroLabel metroLabel3;
-        private MetroFramework.Controls.MetroButton clearButton;
+        private MetroFramework.Controls.MetroButton RemoveDLLButton;
+        private MetroFramework.Controls.MetroButton AddDLLButton;
+        private MetroFramework.Controls.MetroListView DLLList;
+        private MetroFramework.Controls.MetroButton ClearDLLListButton;
     }
 }
 
