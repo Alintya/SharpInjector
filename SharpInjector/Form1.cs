@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SharpInjector
@@ -26,17 +24,17 @@ namespace SharpInjector
         {
             if (ProcessNameTextbox.Text == String.Empty || !ProcessNameTextbox.Text.Contains(".exe"))
             {
-                MessageBox.Show(this, "Process name is missing .exe extension or empty"); return;
+                MessageBox.Show(this, "Process name is missing .exe extension or empty");
+                return;
             }
 
-            if (DLL_List.Count > 1)
+            if (DLL_List.Count == 0)
             {
-                MemoryManager.PrepareInjection(ProcessNameTextbox.Text, DLL_List);
+                MessageBox.Show(this, "No DLL found");
+                return;
             }
-            else
-            {
-                MemoryManager.PrepareInjection(ProcessNameTextbox.Text, DLL_List[0]);
-            }
+
+            Task.Factory.StartNew(() => MemoryManager.PrepareInjection(ProcessNameTextbox.Text, DLL_List));
         }
 
         private void ChooseProcessButton_Click(object sender, EventArgs e)
