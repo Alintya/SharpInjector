@@ -36,34 +36,6 @@ namespace SharpInjector
         [DllImport("kernel32", SetLastError = true, ExactSpelling = true)]
         private static extern Int32 WaitForSingleObject(IntPtr handle, Int32 milliseconds);
 
-        public void PrepareInjection(string processName, string dll)
-        {
-            Int32 _ProcessID = GetProcessID(processName);
-            if (_ProcessID >= 0)
-            {
-                IntPtr _HandleProcess = OpenProcess(0x1F0FFF, 1, _ProcessID);
-                if (_HandleProcess == IntPtr.Zero)
-                {
-                    MessageBox.Show("OpenProcess() Failed!"); return;
-                }
-
-                try
-                {
-                    InjectDLL(_HandleProcess, dll);
-                }
-                catch (Exception exception)
-                {
-                    Console.WriteLine(exception); throw;
-                }
-
-                MessageBox.Show("Memory Manager", "Successful");
-            }
-            else
-            {
-                MessageBox.Show("Memory Manager", "Process not found");
-            }
-        }
-
         public void PrepareInjection(string processName, List<string> dllList)
         {
             Int32 _ProcessID = GetProcessID(processName);
@@ -75,11 +47,26 @@ namespace SharpInjector
                     MessageBox.Show("OpenProcess() Failed!"); return;
                 }
 
-                foreach (string _DLL in dllList)
+                if (dllList.Count > 1)
+                {
+                    foreach (string _DLL in dllList)
+                    {
+                        try
+                        {
+                            InjectDLL(_HandleProcess, _DLL);
+                        }
+                        catch (Exception exception)
+                        {
+                            Console.WriteLine(exception); throw;
+                        }
+                        MessageBox.Show("Memory Manager", "Successful");
+                    }
+                }
+                else
                 {
                     try
                     {
-                        InjectDLL(_HandleProcess, _DLL);
+                        InjectDLL(_HandleProcess, dllList[0]);
                     }
                     catch (Exception exception)
                     {

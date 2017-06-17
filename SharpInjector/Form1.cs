@@ -13,6 +13,8 @@ namespace SharpInjector
     {
         private List<string> DLL_List { get; set; }
 
+        private Memory MemoryManager => new Memory();
+
         public Form1()
         {
             InitializeComponent();
@@ -27,15 +29,13 @@ namespace SharpInjector
                 MessageBox.Show(this, "Process name is missing .exe extension or empty"); return;
             }
 
-            Memory _MemoryManager = new Memory();
-
             if (DLL_List.Count > 1)
             {
-                _MemoryManager.PrepareInjection(ProcessNameTextbox.Text, DLL_List);
+                MemoryManager.PrepareInjection(ProcessNameTextbox.Text, DLL_List);
             }
             else
             {
-                _MemoryManager.PrepareInjection(ProcessNameTextbox.Text, DLL_List[0]);
+                MemoryManager.PrepareInjection(ProcessNameTextbox.Text, DLL_List[0]);
             }
         }
 
@@ -87,7 +87,7 @@ namespace SharpInjector
                 ProcessNameTextbox.BackColor = Color.Red;
                 return;
             }
-            ProcessNameTextbox.BackColor = _MemoryManager.GetProcessID(ProcessNameTextbox.Text) < 0 ? Color.Red : Color.White;
+            ProcessNameTextbox.BackColor = MemoryManager.GetProcessID(ProcessNameTextbox.Text) < 0 ? Color.Red : Color.White;
         }
     }
 }
