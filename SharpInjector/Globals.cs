@@ -5,7 +5,8 @@ namespace SharpInjector
 {
     internal class Globals
     {
-        public static Process Selected_Process = new Process();
+        public static Process SelectedProcess;
+        // ReSharper disable once InconsistentNaming kappa
         public static List<string> DLL_List = new List<string>();
     }
 }

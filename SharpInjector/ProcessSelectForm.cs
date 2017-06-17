@@ -33,6 +33,11 @@ namespace SharpInjector
                         ProcessIDs.Add(_Formated, _Process);
                         break;
                 }
+
+                foreach (var _ID in ProcessIDs.Keys)
+                {
+                    ListBox.Items.Add(_ID);
+                }
             }
         }
 
@@ -75,7 +80,7 @@ namespace SharpInjector
                 MessageBox.Show(this, "Select something first");
                 return;
             }
-            if (ProcessIDs.TryGetValue(ListBox.SelectedItem.ToString(), out Globals.Selected_Process) || WindowIDs.TryGetValue(ListBox.SelectedItem.ToString(), out Globals.Selected_Process))
+            if (ProcessIDs.TryGetValue(ListBox.SelectedItem.ToString(), out Globals.SelectedProcess) || WindowIDs.TryGetValue(ListBox.SelectedItem.ToString(), out Globals.SelectedProcess))
             {
                 Close();
             }

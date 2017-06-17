@@ -8,7 +8,7 @@ namespace SharpInjector
 
     public partial class MainForm : MetroFramework.Forms.MetroForm
     {
-        private Memory Memory_Manager => new Memory();
+        private static Memory MemoryManager => new Memory();
 
         public MainForm()
         {
@@ -17,26 +17,26 @@ namespace SharpInjector
 
         private void Process_Name_Textbox_TextChanged(object sender, EventArgs e)
         {
-            if (Process_Name_Textbox.Text == String.Empty || !Process_Name_Textbox.Text.Contains(".exe"))
+            if (Process_Name_Textbox.Text == string.Empty || !Process_Name_Textbox.Text.Contains(".exe"))
             {
                 Process_Name_Textbox.BackColor = Color.Red;
                 return;
             }
-            Process_Name_Textbox.BackColor = Memory_Manager.GetProcessID(Process_Name_Textbox.Text) < 0 ? Color.Red : Color.White;
+            Process_Name_Textbox.BackColor = MemoryManager.GetProcessID(Process_Name_Textbox.Text) < 0 ? Color.Red : Color.White;
         }
 
         private void Choose_Process_Button_Click(object sender, EventArgs e)
         {
-            ProcessSelectForm _ProcessSelectForm = new ProcessSelectForm();
-            _ProcessSelectForm.Show();
-            _ProcessSelectForm.FormClosed += ProcessSelectForm_Closed;
+            ProcessSelectForm processSelectForm = new ProcessSelectForm();
+            processSelectForm.Show();
+            processSelectForm.FormClosed += ProcessSelectForm_Closed;
         }
 
         private void ProcessSelectForm_Closed(object sender, FormClosedEventArgs e)
         {
-            if (Globals.Selected_Process != null)
+            if (Globals.SelectedProcess != null)
             {
-                Process_Name_Textbox.Text = string.Format("{0}.exe", Globals.Selected_Process.ProcessName);
+                Process_Name_Textbox.Text = $@"{Globals.SelectedProcess.ProcessName}.exe";
             }
         }
 
@@ -59,7 +59,7 @@ namespace SharpInjector
                         continue;
 
                     Globals.DLL_List.Add(_File);
-                    UI_DLL_List.Items.Add(_File.Substring(_File.LastIndexOf("\\")).Replace("\\", ""));
+                    UI_DLL_List.Items.Add(_File.Substring(_File.LastIndexOf("\\", StringComparison.Ordinal)).Replace("\\", ""));
                 }
             }
         }
@@ -68,7 +68,7 @@ namespace SharpInjector
         {
             foreach (string _DLL in UI_DLL_List.SelectedItems)
             {
-                int _Index = Globals.DLL_List.FindIndex(x => x.Substring(x.LastIndexOf("\\")).Replace("\\", "").Equals(_DLL));
+                int _Index = Globals.DLL_List.FindIndex(x => x.Substring(x.LastIndexOf("\\", StringComparison.Ordinal)).Replace("\\", "").Equals(_DLL));
                 if (_Index != -1)
                 {
                     Globals.DLL_List.RemoveAt(_Index);
@@ -95,7 +95,7 @@ namespace SharpInjector
 
             foreach (string _DLL in Globals.DLL_List)
             {
-                UI_DLL_List.Items.Add(_DLL.Substring(_DLL.LastIndexOf("\\")).Replace("\\", ""));
+                UI_DLL_List.Items.Add(_DLL.Substring(_DLL.LastIndexOf("\\", StringComparison.Ordinal)).Replace("\\", ""));
             }
         }
 
@@ -117,13 +117,13 @@ namespace SharpInjector
             switch (_TestingValue)
             {
                 case 0:
-                    Task.Factory.StartNew(() => Memory_Manager.PrepareInjection(Process_Name_Textbox.Text, Memory.Method.Standard));
+                    Task.Factory.StartNew(() => MemoryManager.PrepareInjection(Process_Name_Textbox.Text, Memory.Method.Standard));
                     return;
                 case 1:
-                    Task.Factory.StartNew(() => Memory_Manager.PrepareInjection(Process_Name_Textbox.Text, Memory.Method.ManualMap));
+                    Task.Factory.StartNew(() => MemoryManager.PrepareInjection(Process_Name_Textbox.Text, Memory.Method.ManualMap));
                     return;
                 case 2:
-                    Task.Factory.StartNew(() => Memory_Manager.PrepareInjection(Process_Name_Textbox.Text, Memory.Method.ThreadHijacking));
+                    Task.Factory.StartNew(() => MemoryManager.PrepareInjection(Process_Name_Textbox.Text, Memory.Method.ThreadHijacking));
                     return;
             }
         }
