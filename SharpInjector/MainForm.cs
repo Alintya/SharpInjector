@@ -7,13 +7,13 @@ using System.Windows.Forms;
 namespace SharpInjector
 {
 
-    public partial class Form1 : MetroFramework.Forms.MetroForm
+    public partial class MainForm : MetroFramework.Forms.MetroForm
     {
         private List<string> DLL_List = new List<string>();
 
         private Memory MemoryManager => new Memory();
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }

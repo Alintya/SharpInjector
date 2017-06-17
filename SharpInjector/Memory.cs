@@ -48,7 +48,7 @@ namespace SharpInjector
             Int32 _ProcessID = GetProcessID(processName);
             if (_ProcessID == -1)
             {
-                MessageBox.Show("Memory Manager", "Process not found");
+                MessageBox.Show("Process not found");
                 return;
             }
 
@@ -71,7 +71,7 @@ namespace SharpInjector
                     throw;
                 }
 
-                MessageBox.Show("Memory Manager", "Successful");
+                MessageBox.Show("Successful");
             }
         }
 
@@ -92,21 +92,21 @@ namespace SharpInjector
             UIntPtr _Injector = GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
             if (_Injector == null)
             {
-                MessageBox.Show(" Injector Error! \n ");
+                MessageBox.Show("Injector Error! \n");
                 return;
             }
 
             IntPtr _HandleThread = CreateRemoteThread(hProcess, (IntPtr)null, 0, _Injector, _AllocateMemory, 0, out _BytesOut);
             if (_HandleThread == null)
             {
-                MessageBox.Show(" hThread [ 1 ] Error! \n ");
+                MessageBox.Show("hThread [ 1 ] Error! \n");
                 return;
             }
 
             int _Result = WaitForSingleObject(_HandleThread, 10 * 1000);
             if (_Result == 0x00000080L || _Result == 0x00000102L || _Result == 0xFFFFFFF)
             {
-                MessageBox.Show(" hThread [ 2 ] Error! \n ");
+                MessageBox.Show("hThread [ 2 ] Error! \n");
                 if (_HandleThread != null) CloseHandle(_HandleThread);
                 return;
             }

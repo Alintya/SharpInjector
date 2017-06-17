@@ -1,6 +1,6 @@
 ﻿namespace SharpInjector
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -48,7 +48,7 @@
             // 
             // 
             this.ProcessNameTextbox.CustomButton.Image = null;
-            this.ProcessNameTextbox.CustomButton.Location = new System.Drawing.Point(137, 1);
+            this.ProcessNameTextbox.CustomButton.Location = new System.Drawing.Point(125, 1);
             this.ProcessNameTextbox.CustomButton.Name = "";
             this.ProcessNameTextbox.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ProcessNameTextbox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
@@ -172,7 +172,7 @@
             this.AddDLLButton.UseSelectable = true;
             this.AddDLLButton.Click += new System.EventHandler(this.AddDLLButton_Click);
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -185,7 +185,7 @@
             this.Controls.Add(this.ChooseProcessButton);
             this.Controls.Add(this.ProcessNameTextbox);
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Resizable = false;
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
             this.Text = "Sharp Injector";
