@@ -34,10 +34,10 @@
             this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
             this.InjectButton = new MetroFramework.Controls.MetroButton();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
-            this.DLLList = new MetroFramework.Controls.MetroListView();
             this.ClearDLLListButton = new MetroFramework.Controls.MetroButton();
             this.RemoveDLLButton = new MetroFramework.Controls.MetroButton();
             this.AddDLLButton = new MetroFramework.Controls.MetroButton();
+            this.UI_DLL_List = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.metroPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -108,7 +108,7 @@
             // metroPanel1
             // 
             this.metroPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.metroPanel1.Controls.Add(this.DLLList);
+            this.metroPanel1.Controls.Add(this.UI_DLL_List);
             this.metroPanel1.HorizontalScrollbarBarColor = true;
             this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel1.HorizontalScrollbarSize = 10;
@@ -121,23 +121,6 @@
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
             // 
-            // DLLList
-            // 
-            this.DLLList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.DLLList.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.DLLList.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.DLLList.FullRowSelect = true;
-            this.DLLList.Location = new System.Drawing.Point(3, 3);
-            this.DLLList.Name = "DLLList";
-            this.DLLList.OwnerDraw = true;
-            this.DLLList.Size = new System.Drawing.Size(223, 118);
-            this.DLLList.TabIndex = 10;
-            this.DLLList.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.DLLList.UseCompatibleStateImageBehavior = false;
-            this.DLLList.UseCustomBackColor = true;
-            this.DLLList.UseSelectable = true;
-            this.DLLList.View = System.Windows.Forms.View.List;
-            // 
             // ClearDLLListButton
             // 
             this.ClearDLLListButton.Location = new System.Drawing.Point(23, 160);
@@ -148,6 +131,7 @@
             this.ClearDLLListButton.Text = "Clear";
             this.ClearDLLListButton.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.ClearDLLListButton.UseSelectable = true;
+            this.ClearDLLListButton.Click += new System.EventHandler(this.ClearDLLListButton_Click);
             // 
             // RemoveDLLButton
             // 
@@ -159,6 +143,7 @@
             this.RemoveDLLButton.Text = "Remove";
             this.RemoveDLLButton.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.RemoveDLLButton.UseSelectable = true;
+            this.RemoveDLLButton.Click += new System.EventHandler(this.RemoveDLLButton_Click);
             // 
             // AddDLLButton
             // 
@@ -171,6 +156,18 @@
             this.AddDLLButton.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.AddDLLButton.UseSelectable = true;
             this.AddDLLButton.Click += new System.EventHandler(this.AddDLLButton_Click);
+            // 
+            // UI_DLL_List
+            // 
+            this.UI_DLL_List.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.UI_DLL_List.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UI_DLL_List.ForeColor = System.Drawing.SystemColors.Menu;
+            this.UI_DLL_List.FormattingEnabled = true;
+            this.UI_DLL_List.Location = new System.Drawing.Point(3, 3);
+            this.UI_DLL_List.Name = "UI_DLL_List";
+            this.UI_DLL_List.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.UI_DLL_List.Size = new System.Drawing.Size(223, 117);
+            this.UI_DLL_List.TabIndex = 2;
             // 
             // MainForm
             // 
@@ -205,8 +202,8 @@
         private MetroFramework.Controls.MetroPanel metroPanel1;
         private MetroFramework.Controls.MetroButton RemoveDLLButton;
         private MetroFramework.Controls.MetroButton AddDLLButton;
-        private MetroFramework.Controls.MetroListView DLLList;
         private MetroFramework.Controls.MetroButton ClearDLLListButton;
+        private System.Windows.Forms.ListBox UI_DLL_List;
     }
 }
 

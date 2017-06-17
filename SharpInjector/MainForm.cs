@@ -9,8 +9,6 @@ namespace SharpInjector
 
     public partial class MainForm : MetroFramework.Forms.MetroForm
     {
-        private List<string> DLL_List = new List<string>();
-
         private Memory MemoryManager => new Memory();
 
         public MainForm()
@@ -26,7 +24,7 @@ namespace SharpInjector
                 return;
             }
 
-            if (DLL_List.Count == 0)
+            if (Globals.DLL_List.Count == 0)
             {
                 MessageBox.Show(this, "No DLL found");
                 return;
@@ -36,13 +34,13 @@ namespace SharpInjector
             switch (_TestingValue)
             {
                 case 0:
-                    Task.Factory.StartNew(() => MemoryManager.PrepareInjection(ProcessNameTextbox.Text, DLL_List, Memory.Method.Standard));
+                    Task.Factory.StartNew(() => MemoryManager.PrepareInjection(ProcessNameTextbox.Text, Memory.Method.Standard));
                     return;
                 case 1:
-                    Task.Factory.StartNew(() => MemoryManager.PrepareInjection(ProcessNameTextbox.Text, DLL_List, Memory.Method.ManualMap));
+                    Task.Factory.StartNew(() => MemoryManager.PrepareInjection(ProcessNameTextbox.Text, Memory.Method.ManualMap));
                     return;
                 case 2:
-                    Task.Factory.StartNew(() => MemoryManager.PrepareInjection(ProcessNameTextbox.Text, DLL_List, Memory.Method.ThreadHijacking));
+                    Task.Factory.StartNew(() => MemoryManager.PrepareInjection(ProcessNameTextbox.Text, Memory.Method.ThreadHijacking));
                     return;
             }
         }
@@ -79,11 +77,11 @@ namespace SharpInjector
             {
                 foreach (string _File in _OpenFileDialog.FileNames)
                 {
-                    if (DLL_List.Contains(_File))
+                    if (Globals.DLL_List.Contains(_File))
                         continue;
 
-                    DLL_List.Add(_File);
-                    DLLList.Items.Add(_File.Substring(_File.LastIndexOf("\\")).Replace("\\", ""));
+                    Globals.DLL_List.Add(_File);
+                    UI_DLL_List.Items.Add(_File.Substring(_File.LastIndexOf("\\")).Replace("\\", ""));
                 }
             }
         }
@@ -96,6 +94,41 @@ namespace SharpInjector
                 return;
             }
             ProcessNameTextbox.BackColor = MemoryManager.GetProcessID(ProcessNameTextbox.Text) < 0 ? Color.Red : Color.White;
+        }
+
+        private void ClearDLLListButton_Click(object sender, EventArgs e)
+        {
+            if (Globals.DLL_List.Count == 0)
+            {
+                MessageBox.Show(this, "DLL List is already empty");
+                return;
+            }
+
+            Globals.DLL_List.Clear();
+            UI_DLL_List.Items.Clear();
+        }
+
+        private void RemoveDLLButton_Click(object sender, EventArgs e)
+        {
+            foreach (string _DLL in UI_DLL_List.SelectedItems)
+            {
+                int _Index = Globals.DLL_List.FindIndex(x => x.Substring(x.LastIndexOf("\\")).Replace("\\", "").Equals(_DLL));
+                if (_Index != -1)
+                {
+                    Globals.DLL_List.RemoveAt(_Index);
+                }
+            }
+            RefreshList();
+        }
+
+        private void RefreshList()
+        {
+            UI_DLL_List.Items.Clear();
+
+            foreach (string _DLL in Globals.DLL_List)
+            {
+                UI_DLL_List.Items.Add(_DLL.Substring(_DLL.LastIndexOf("\\")).Replace("\\", ""));
+            }
         }
     }
 }

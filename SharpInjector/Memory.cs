@@ -43,7 +43,7 @@ namespace SharpInjector
             ManualMap
         }
 
-        public void PrepareInjection(string processName, List<string> dllList, Method method)
+        public void PrepareInjection(string processName, Method method)
         {
             Int32 _ProcessID = GetProcessID(processName);
             if (_ProcessID == -1)
@@ -59,7 +59,7 @@ namespace SharpInjector
                 return;
             }
 
-            foreach (string _DLL in dllList)
+            foreach (string _DLL in Globals.DLL_List)
             {
                 try
                 {
