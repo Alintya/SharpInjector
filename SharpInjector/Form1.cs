@@ -9,15 +9,13 @@ namespace SharpInjector
 
     public partial class Form1 : MetroFramework.Forms.MetroForm
     {
-        private List<string> DLL_List { get; set; }
+        private List<string> DLL_List = new List<string>();
 
         private Memory MemoryManager => new Memory();
 
         public Form1()
         {
             InitializeComponent();
-
-            DLL_List = new List<string>();
         }
 
         private void InjectButton_Click(object sender, EventArgs e)
@@ -34,7 +32,19 @@ namespace SharpInjector
                 return;
             }
 
-            Task.Factory.StartNew(() => MemoryManager.PrepareInjection(ProcessNameTextbox.Text, DLL_List));
+            int _TestingValue = 0;
+            switch (_TestingValue)
+            {
+                case 0:
+                    Task.Factory.StartNew(() => MemoryManager.PrepareInjection(ProcessNameTextbox.Text, DLL_List, Memory.Method.Standard));
+                    return;
+                case 1:
+                    Task.Factory.StartNew(() => MemoryManager.PrepareInjection(ProcessNameTextbox.Text, DLL_List, Memory.Method.ManualMap));
+                    return;
+                case 2:
+                    Task.Factory.StartNew(() => MemoryManager.PrepareInjection(ProcessNameTextbox.Text, DLL_List, Memory.Method.ThreadHijacking));
+                    return;
+            }
         }
 
         private void ChooseProcessButton_Click(object sender, EventArgs e)

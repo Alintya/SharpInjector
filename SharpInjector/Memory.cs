@@ -36,7 +36,14 @@ namespace SharpInjector
         [DllImport("kernel32", SetLastError = true, ExactSpelling = true)]
         private static extern Int32 WaitForSingleObject(IntPtr handle, Int32 milliseconds);
 
-        public void PrepareInjection(string processName, List<string> dllList)
+        public enum Method
+        {
+            Standard,
+            ThreadHijacking,
+            ManualMap
+        }
+
+        public void PrepareInjection(string processName, List<string> dllList, Method method)
         {
             Int32 _ProcessID = GetProcessID(processName);
             if (_ProcessID == -1)
@@ -56,7 +63,7 @@ namespace SharpInjector
             {
                 try
                 {
-                    Inject(_HandleProcess, _DLL);
+                    Inject(_HandleProcess, _DLL, method);
                 }
                 catch (Exception exception)
                 {
@@ -68,13 +75,13 @@ namespace SharpInjector
             }
         }
 
-        private Int32 GetProcessID(String proc)
+        public Int32 GetProcessID(String proc)
         {
             Process[] _ProcessList = Process.GetProcessesByName(proc.Remove(proc.Length - 4));
             return _ProcessList.Length > 0 ? _ProcessList[0].Id : -1;
         }
 
-        private void Inject(IntPtr hProcess, String strDLLName)
+        private void Inject(IntPtr hProcess, String strDLLName, Method method)
         {
             Int32 _LengthWrite = strDLLName.Length + 1;
             IntPtr _AllocateMemory = VirtualAllocEx(hProcess, (IntPtr)null, (uint)_LengthWrite, 0x1000, 0x40);

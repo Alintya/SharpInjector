@@ -67,7 +67,7 @@
             this.ProcessNameTextbox.SelectionLength = 0;
             this.ProcessNameTextbox.SelectionStart = 0;
             this.ProcessNameTextbox.ShortcutsEnabled = true;
-            this.ProcessNameTextbox.Size = new System.Drawing.Size(159, 23);
+            this.ProcessNameTextbox.Size = new System.Drawing.Size(147, 23);
             this.ProcessNameTextbox.TabIndex = 0;
             this.ProcessNameTextbox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.ProcessNameTextbox.UseSelectable = true;
@@ -78,9 +78,9 @@
             // 
             // ChooseProcessButton
             // 
-            this.ChooseProcessButton.Location = new System.Drawing.Point(188, 73);
+            this.ChooseProcessButton.Location = new System.Drawing.Point(176, 73);
             this.ChooseProcessButton.Name = "ChooseProcessButton";
-            this.ChooseProcessButton.Size = new System.Drawing.Size(155, 23);
+            this.ChooseProcessButton.Size = new System.Drawing.Size(167, 23);
             this.ChooseProcessButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ChooseProcessButton.TabIndex = 2;
             this.ChooseProcessButton.Text = "Choose";
