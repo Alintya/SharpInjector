@@ -74,6 +74,8 @@ namespace SharpInjector
 
         private void Choose_Process_Button_Click(object sender, EventArgs e)
         {
+            Choose_Process_Button.Enabled = false;
+
             ProcessSelectForm processSelectForm = new ProcessSelectForm();
             processSelectForm.Show();
             processSelectForm.FormClosed += ProcessSelectForm_Closed;
@@ -81,6 +83,8 @@ namespace SharpInjector
 
         private void ProcessSelectForm_Closed(object sender, FormClosedEventArgs e)
         {
+            Choose_Process_Button.Enabled = true;
+
             if (Globals.SelectedProcess != null)
             {
                 Process_Name_Textbox.Text = $@"{Globals.SelectedProcess.ProcessName}.exe";
