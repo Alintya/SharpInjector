@@ -30,6 +30,7 @@
         {
             this.ListBox = new System.Windows.Forms.ListBox();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
+            this.metroListView1 = new MetroFramework.Controls.MetroListView();
             this.Window_List_Button = new MetroFramework.Controls.MetroButton();
             this.Process_List_Button = new MetroFramework.Controls.MetroButton();
             this.Select_Button = new MetroFramework.Controls.MetroButton();
@@ -53,24 +54,45 @@
             // metroPanel1
             // 
             this.metroPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.metroPanel1.Controls.Add(this.metroListView1);
             this.metroPanel1.Controls.Add(this.ListBox);
             this.metroPanel1.HorizontalScrollbarBarColor = true;
             this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel1.HorizontalScrollbarSize = 10;
             this.metroPanel1.Location = new System.Drawing.Point(23, 33);
             this.metroPanel1.Name = "metroPanel1";
-            this.metroPanel1.Size = new System.Drawing.Size(214, 165);
+            this.metroPanel1.Size = new System.Drawing.Size(241, 240);
             this.metroPanel1.TabIndex = 1;
             this.metroPanel1.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.metroPanel1.VerticalScrollbarBarColor = true;
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
             // 
+            // metroListView1
+            // 
+            this.metroListView1.AutoArrange = false;
+            this.metroListView1.BackColor = System.Drawing.SystemColors.MenuText;
+            this.metroListView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.metroListView1.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.metroListView1.ForeColor = System.Drawing.Color.Beige;
+            this.metroListView1.FullRowSelect = true;
+            this.metroListView1.Location = new System.Drawing.Point(3, 3);
+            this.metroListView1.MultiSelect = false;
+            this.metroListView1.Name = "metroListView1";
+            this.metroListView1.OwnerDraw = true;
+            this.metroListView1.Size = new System.Drawing.Size(233, 231);
+            this.metroListView1.TabIndex = 2;
+            this.metroListView1.UseCompatibleStateImageBehavior = false;
+            this.metroListView1.UseSelectable = true;
+            this.metroListView1.UseStyleColors = true;
+            this.metroListView1.View = System.Windows.Forms.View.Details;
+            // 
             // Window_List_Button
             // 
-            this.Window_List_Button.Location = new System.Drawing.Point(133, 233);
+            this.Window_List_Button.Enabled = false;
+            this.Window_List_Button.Location = new System.Drawing.Point(146, 308);
             this.Window_List_Button.Name = "Window_List_Button";
-            this.Window_List_Button.Size = new System.Drawing.Size(104, 23);
+            this.Window_List_Button.Size = new System.Drawing.Size(118, 23);
             this.Window_List_Button.Style = MetroFramework.MetroColorStyle.Blue;
             this.Window_List_Button.TabIndex = 2;
             this.Window_List_Button.Text = "Window List";
@@ -80,9 +102,10 @@
             // 
             // Process_List_Button
             // 
-            this.Process_List_Button.Location = new System.Drawing.Point(23, 233);
+            this.Process_List_Button.Enabled = false;
+            this.Process_List_Button.Location = new System.Drawing.Point(23, 308);
             this.Process_List_Button.Name = "Process_List_Button";
-            this.Process_List_Button.Size = new System.Drawing.Size(104, 23);
+            this.Process_List_Button.Size = new System.Drawing.Size(117, 23);
             this.Process_List_Button.Style = MetroFramework.MetroColorStyle.Blue;
             this.Process_List_Button.TabIndex = 3;
             this.Process_List_Button.Text = "Process List";
@@ -92,9 +115,9 @@
             // 
             // Select_Button
             // 
-            this.Select_Button.Location = new System.Drawing.Point(23, 262);
+            this.Select_Button.Location = new System.Drawing.Point(23, 337);
             this.Select_Button.Name = "Select_Button";
-            this.Select_Button.Size = new System.Drawing.Size(104, 23);
+            this.Select_Button.Size = new System.Drawing.Size(117, 23);
             this.Select_Button.Style = MetroFramework.MetroColorStyle.Blue;
             this.Select_Button.TabIndex = 4;
             this.Select_Button.Text = "Select";
@@ -104,9 +127,9 @@
             // 
             // Close_Button
             // 
-            this.Close_Button.Location = new System.Drawing.Point(133, 262);
+            this.Close_Button.Location = new System.Drawing.Point(146, 337);
             this.Close_Button.Name = "Close_Button";
-            this.Close_Button.Size = new System.Drawing.Size(104, 23);
+            this.Close_Button.Size = new System.Drawing.Size(118, 23);
             this.Close_Button.Style = MetroFramework.MetroColorStyle.Blue;
             this.Close_Button.TabIndex = 5;
             this.Close_Button.Text = "Close";
@@ -120,7 +143,7 @@
             // 
             // 
             this.SearchTextbox.CustomButton.Image = null;
-            this.SearchTextbox.CustomButton.Location = new System.Drawing.Point(192, 1);
+            this.SearchTextbox.CustomButton.Location = new System.Drawing.Point(219, 1);
             this.SearchTextbox.CustomButton.Name = "";
             this.SearchTextbox.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.SearchTextbox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
@@ -129,7 +152,7 @@
             this.SearchTextbox.CustomButton.UseSelectable = true;
             this.SearchTextbox.CustomButton.Visible = false;
             this.SearchTextbox.Lines = new string[0];
-            this.SearchTextbox.Location = new System.Drawing.Point(23, 204);
+            this.SearchTextbox.Location = new System.Drawing.Point(23, 279);
             this.SearchTextbox.MaxLength = 32767;
             this.SearchTextbox.Name = "SearchTextbox";
             this.SearchTextbox.PasswordChar = '\0';
@@ -139,7 +162,7 @@
             this.SearchTextbox.SelectionLength = 0;
             this.SearchTextbox.SelectionStart = 0;
             this.SearchTextbox.ShortcutsEnabled = true;
-            this.SearchTextbox.Size = new System.Drawing.Size(214, 23);
+            this.SearchTextbox.Size = new System.Drawing.Size(241, 23);
             this.SearchTextbox.Style = MetroFramework.MetroColorStyle.Blue;
             this.SearchTextbox.TabIndex = 6;
             this.SearchTextbox.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -153,7 +176,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(259, 304);
+            this.ClientSize = new System.Drawing.Size(283, 383);
             this.Controls.Add(this.SearchTextbox);
             this.Controls.Add(this.Close_Button);
             this.Controls.Add(this.Select_Button);
@@ -183,5 +206,6 @@
         private MetroFramework.Controls.MetroButton Select_Button;
         private MetroFramework.Controls.MetroButton Close_Button;
         private MetroFramework.Controls.MetroTextBox SearchTextbox;
+        private MetroFramework.Controls.MetroListView metroListView1;
     }
 }
