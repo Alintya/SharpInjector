@@ -42,6 +42,7 @@
             this.Header_Panel = new System.Windows.Forms.Panel();
             this.Header_Close_Label = new MetroFramework.Controls.MetroLabel();
             this.Header_Title = new MetroFramework.Controls.MetroLabel();
+            this.Header_Minimize_Button = new MetroFramework.Controls.MetroLabel();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.metroPanel1.SuspendLayout();
             this.Header_Panel.SuspendLayout();
@@ -199,6 +200,7 @@
             // 
             this.Header_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
             this.Header_Panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Header_Panel.Controls.Add(this.Header_Minimize_Button);
             this.Header_Panel.Controls.Add(this.Header_Close_Label);
             this.Header_Panel.Controls.Add(this.Header_Title);
             this.Header_Panel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -244,6 +246,25 @@
             this.Header_Title.UseCustomForeColor = true;
             this.Header_Title.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Header_Title_MouseMove);
             // 
+            // Header_Minimize_Button
+            // 
+            this.Header_Minimize_Button.AutoSize = true;
+            this.Header_Minimize_Button.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.Header_Minimize_Button.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.Header_Minimize_Button.ForeColor = System.Drawing.Color.White;
+            this.Header_Minimize_Button.Location = new System.Drawing.Point(309, 0);
+            this.Header_Minimize_Button.Name = "Header_Minimize_Button";
+            this.Header_Minimize_Button.Size = new System.Drawing.Size(19, 25);
+            this.Header_Minimize_Button.Style = MetroFramework.MetroColorStyle.Blue;
+            this.Header_Minimize_Button.TabIndex = 16;
+            this.Header_Minimize_Button.Text = "-";
+            this.Header_Minimize_Button.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.Header_Minimize_Button.UseCustomBackColor = true;
+            this.Header_Minimize_Button.UseCustomForeColor = true;
+            this.Header_Minimize_Button.Click += new System.EventHandler(this.Header_Minimize_Button_Click);
+            this.Header_Minimize_Button.MouseEnter += new System.EventHandler(this.Header_Minimize_Button_MouseEnter);
+            this.Header_Minimize_Button.MouseLeave += new System.EventHandler(this.Header_Minimize_Button_MouseLeave);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -261,6 +282,7 @@
             this.Controls.Add(this.Process_Name_Textbox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MainForm";
             this.Text = "Sharp Injector";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -287,6 +309,7 @@
         private System.Windows.Forms.Panel Header_Panel;
         private MetroFramework.Controls.MetroLabel Header_Title;
         private MetroFramework.Controls.MetroLabel Header_Close_Label;
+        private MetroFramework.Controls.MetroLabel Header_Minimize_Button;
     }
 }
 

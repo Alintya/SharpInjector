@@ -66,6 +66,21 @@ namespace SharpInjector
             Header_Close_Label.ForeColor = Color.White;
         }
 
+        private void Header_Minimize_Button_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
+        }
+
+        private void Header_Minimize_Button_MouseEnter(object sender, EventArgs e)
+        {
+            Header_Minimize_Button.ForeColor = Color.LightGray;
+        }
+
+        private void Header_Minimize_Button_MouseLeave(object sender, EventArgs e)
+        {
+            Header_Minimize_Button.ForeColor = Color.White;
+        }
+
         private void Process_Name_Textbox_TextChanged(object sender, EventArgs e)
         {
             if (!Process_Name_Textbox.ContainsFocus)

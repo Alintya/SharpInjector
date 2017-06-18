@@ -28,72 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ListBox = new System.Windows.Forms.ListBox();
-            this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
-            this.Process_ListView = new MetroFramework.Controls.MetroListView();
             this.Window_List_Button = new MetroFramework.Controls.MetroButton();
             this.Process_List_Button = new MetroFramework.Controls.MetroButton();
             this.Select_Button = new MetroFramework.Controls.MetroButton();
             this.Close_Button = new MetroFramework.Controls.MetroButton();
             this.SearchTextbox = new MetroFramework.Controls.MetroTextBox();
             this.Header_Panel = new MetroFramework.Controls.MetroPanel();
+            this.Header_Minimize_Label = new MetroFramework.Controls.MetroLabel();
             this.Header_Title = new MetroFramework.Controls.MetroLabel();
             this.Header_Close_Label = new MetroFramework.Controls.MetroLabel();
-            this.metroPanel1.SuspendLayout();
+            this.Process_ListView = new MetroFramework.Controls.MetroListView();
+            this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.Header_Panel.SuspendLayout();
+            this.metroPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // ListBox
-            // 
-            this.ListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.ListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ListBox.ForeColor = System.Drawing.SystemColors.Menu;
-            this.ListBox.FormattingEnabled = true;
-            this.ListBox.Location = new System.Drawing.Point(3, 3);
-            this.ListBox.Name = "ListBox";
-            this.ListBox.Size = new System.Drawing.Size(206, 156);
-            this.ListBox.Sorted = true;
-            this.ListBox.TabIndex = 0;
-            // 
-            // metroPanel1
-            // 
-            this.metroPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.metroPanel1.Controls.Add(this.Process_ListView);
-            this.metroPanel1.Controls.Add(this.ListBox);
-            this.metroPanel1.HorizontalScrollbarBarColor = true;
-            this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel1.HorizontalScrollbarSize = 10;
-            this.metroPanel1.Location = new System.Drawing.Point(23, 54);
-            this.metroPanel1.Name = "metroPanel1";
-            this.metroPanel1.Size = new System.Drawing.Size(241, 240);
-            this.metroPanel1.TabIndex = 1;
-            this.metroPanel1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroPanel1.VerticalScrollbarBarColor = true;
-            this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel1.VerticalScrollbarSize = 10;
-            // 
-            // Process_ListView
-            // 
-            this.Process_ListView.AutoArrange = false;
-            this.Process_ListView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.Process_ListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Process_ListView.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.Process_ListView.ForeColor = System.Drawing.Color.Beige;
-            this.Process_ListView.FullRowSelect = true;
-            this.Process_ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.Process_ListView.Location = new System.Drawing.Point(3, 3);
-            this.Process_ListView.MultiSelect = false;
-            this.Process_ListView.Name = "Process_ListView";
-            this.Process_ListView.OwnerDraw = true;
-            this.Process_ListView.Size = new System.Drawing.Size(233, 231);
-            this.Process_ListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.Process_ListView.Style = MetroFramework.MetroColorStyle.Blue;
-            this.Process_ListView.TabIndex = 2;
-            this.Process_ListView.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.Process_ListView.UseCompatibleStateImageBehavior = false;
-            this.Process_ListView.UseSelectable = true;
-            this.Process_ListView.UseStyleColors = true;
-            this.Process_ListView.View = System.Windows.Forms.View.Details;
             // 
             // Window_List_Button
             // 
@@ -184,14 +132,15 @@
             // 
             this.Header_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
             this.Header_Panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Header_Panel.Controls.Add(this.Header_Minimize_Label);
             this.Header_Panel.Controls.Add(this.Header_Title);
             this.Header_Panel.Controls.Add(this.Header_Close_Label);
             this.Header_Panel.HorizontalScrollbarBarColor = true;
             this.Header_Panel.HorizontalScrollbarHighlightOnWheel = false;
             this.Header_Panel.HorizontalScrollbarSize = 10;
-            this.Header_Panel.Location = new System.Drawing.Point(-9, 3);
+            this.Header_Panel.Location = new System.Drawing.Point(-9, -7);
             this.Header_Panel.Name = "Header_Panel";
-            this.Header_Panel.Size = new System.Drawing.Size(301, 29);
+            this.Header_Panel.Size = new System.Drawing.Size(301, 39);
             this.Header_Panel.TabIndex = 7;
             this.Header_Panel.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Header_Panel.UseCustomBackColor = true;
@@ -200,13 +149,31 @@
             this.Header_Panel.VerticalScrollbarSize = 10;
             this.Header_Panel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Header_Panel_MouseMove);
             // 
+            // Header_Minimize_Label
+            // 
+            this.Header_Minimize_Label.AutoSize = true;
+            this.Header_Minimize_Label.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.Header_Minimize_Label.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.Header_Minimize_Label.ForeColor = System.Drawing.Color.White;
+            this.Header_Minimize_Label.Location = new System.Drawing.Point(245, 9);
+            this.Header_Minimize_Label.Name = "Header_Minimize_Label";
+            this.Header_Minimize_Label.Size = new System.Drawing.Size(19, 25);
+            this.Header_Minimize_Label.TabIndex = 4;
+            this.Header_Minimize_Label.Text = "-";
+            this.Header_Minimize_Label.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.Header_Minimize_Label.UseCustomBackColor = true;
+            this.Header_Minimize_Label.UseCustomForeColor = true;
+            this.Header_Minimize_Label.Click += new System.EventHandler(this.Header_Minimize_Label_Click);
+            this.Header_Minimize_Label.MouseEnter += new System.EventHandler(this.Header_Minimize_Label_MouseEnter);
+            this.Header_Minimize_Label.MouseLeave += new System.EventHandler(this.Header_Minimize_Label_MouseLeave);
+            // 
             // Header_Title
             // 
             this.Header_Title.AutoSize = true;
             this.Header_Title.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.Header_Title.FontWeight = MetroFramework.MetroLabelWeight.Regular;
             this.Header_Title.ForeColor = System.Drawing.Color.White;
-            this.Header_Title.Location = new System.Drawing.Point(11, 0);
+            this.Header_Title.Location = new System.Drawing.Point(11, 9);
             this.Header_Title.Name = "Header_Title";
             this.Header_Title.Size = new System.Drawing.Size(148, 25);
             this.Header_Title.TabIndex = 3;
@@ -222,7 +189,7 @@
             this.Header_Close_Label.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.Header_Close_Label.FontWeight = MetroFramework.MetroLabelWeight.Bold;
             this.Header_Close_Label.ForeColor = System.Drawing.Color.White;
-            this.Header_Close_Label.Location = new System.Drawing.Point(265, 0);
+            this.Header_Close_Label.Location = new System.Drawing.Point(265, 9);
             this.Header_Close_Label.Name = "Header_Close_Label";
             this.Header_Close_Label.Size = new System.Drawing.Size(24, 25);
             this.Header_Close_Label.TabIndex = 2;
@@ -233,6 +200,45 @@
             this.Header_Close_Label.Click += new System.EventHandler(this.Header_Close_Label_Click);
             this.Header_Close_Label.MouseEnter += new System.EventHandler(this.Header_Close_Label_MouseEnter);
             this.Header_Close_Label.MouseLeave += new System.EventHandler(this.Header_Close_Label_MouseLeave);
+            // 
+            // Process_ListView
+            // 
+            this.Process_ListView.AutoArrange = false;
+            this.Process_ListView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.Process_ListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Process_ListView.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.Process_ListView.ForeColor = System.Drawing.Color.Beige;
+            this.Process_ListView.FullRowSelect = true;
+            this.Process_ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.Process_ListView.Location = new System.Drawing.Point(3, 4);
+            this.Process_ListView.MultiSelect = false;
+            this.Process_ListView.Name = "Process_ListView";
+            this.Process_ListView.OwnerDraw = true;
+            this.Process_ListView.Size = new System.Drawing.Size(233, 231);
+            this.Process_ListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.Process_ListView.Style = MetroFramework.MetroColorStyle.Blue;
+            this.Process_ListView.TabIndex = 2;
+            this.Process_ListView.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.Process_ListView.UseCompatibleStateImageBehavior = false;
+            this.Process_ListView.UseSelectable = true;
+            this.Process_ListView.UseStyleColors = true;
+            this.Process_ListView.View = System.Windows.Forms.View.Details;
+            // 
+            // metroPanel1
+            // 
+            this.metroPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.metroPanel1.Controls.Add(this.Process_ListView);
+            this.metroPanel1.HorizontalScrollbarBarColor = true;
+            this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel1.HorizontalScrollbarSize = 10;
+            this.metroPanel1.Location = new System.Drawing.Point(23, 54);
+            this.metroPanel1.Name = "metroPanel1";
+            this.metroPanel1.Size = new System.Drawing.Size(241, 240);
+            this.metroPanel1.TabIndex = 1;
+            this.metroPanel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroPanel1.VerticalScrollbarBarColor = true;
+            this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel1.VerticalScrollbarSize = 10;
             // 
             // ProcessSelectForm
             // 
@@ -254,25 +260,24 @@
             this.Text = "ProcessSelectForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProcessSelectForm_FormClosing);
             this.Load += new System.EventHandler(this.ProcessSelectForm_Load);
-            this.metroPanel1.ResumeLayout(false);
             this.Header_Panel.ResumeLayout(false);
             this.Header_Panel.PerformLayout();
+            this.metroPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox ListBox;
-        private MetroFramework.Controls.MetroPanel metroPanel1;
         private MetroFramework.Controls.MetroButton Window_List_Button;
         private MetroFramework.Controls.MetroButton Process_List_Button;
         private MetroFramework.Controls.MetroButton Select_Button;
         private MetroFramework.Controls.MetroButton Close_Button;
         private MetroFramework.Controls.MetroTextBox SearchTextbox;
-        private MetroFramework.Controls.MetroListView Process_ListView;
         private MetroFramework.Controls.MetroPanel Header_Panel;
         private MetroFramework.Controls.MetroLabel Header_Title;
         private MetroFramework.Controls.MetroLabel Header_Close_Label;
+        private MetroFramework.Controls.MetroListView Process_ListView;
+        private MetroFramework.Controls.MetroPanel metroPanel1;
+        private MetroFramework.Controls.MetroLabel Header_Minimize_Label;
     }
 }
