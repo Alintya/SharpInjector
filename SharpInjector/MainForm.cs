@@ -20,14 +20,14 @@ namespace SharpInjector
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            
             //>> Maybe look for a better Solution
             Task.Factory.StartNew(() =>
             {
-                while (true) 
+                while (true)
                 {
                     Inject_Button.Style = Globals.SelectedProcess != null && Globals.DLL_List.Any() ? Inject_Button.Style = MetroColorStyle.Green : Inject_Button.Style = MetroColorStyle.Red;
                     Inject_Button.Invoke(new MethodInvoker(() => Inject_Button.Refresh()));
+
                     Thread.Sleep(100);
                 }
             });
@@ -40,29 +40,28 @@ namespace SharpInjector
             {
                 Process_Name_Textbox.Text = $@"{Globals.SelectedProcess.ProcessName}.exe";
                 Process_Name_Textbox.Style = MetroColorStyle.Green;
-                Process_Name_Textbox.Refresh();
-                return;
             }
-
-            Process_Name_Textbox.Style = MetroColorStyle.Red;
-            Globals.SelectedProcess = null;
-
-            if (Process_Name_Textbox.Text.EndsWith(".exe")) 
+            else
             {
-                int processID, instanceCount;
-                processID = MemoryManager.GetProcessID(Process_Name_Textbox.Text, out instanceCount);
+                Process_Name_Textbox.Style = MetroColorStyle.Red;
+                Globals.SelectedProcess = null;
 
-                if (processID != -1)
+                if (Process_Name_Textbox.Text.EndsWith(".exe")) 
                 {
-                    Process_Name_Textbox.Style = MetroColorStyle.Green;
+                    int processID, instanceCount;
+                    processID = MemoryManager.GetProcessID(Process_Name_Textbox.Text, out instanceCount);
 
-                    Globals.SelectedProcess = Process.GetProcessById(processID);
+                    if (processID != -1) 
+                    {
+                        Process_Name_Textbox.Style = MetroColorStyle.Green;
 
-                    if (instanceCount > 1) MetroMessageBox.Show(this, $"Found {instanceCount} instances named '{Process_Name_Textbox.Text}', using the one with ID: {processID} \n\nYou might want to use 'Choose Process' if you want to inject it into a different instance", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Information, 200);
+                        Globals.SelectedProcess = Process.GetProcessById(processID);
 
+                        if (instanceCount > 1) MetroMessageBox.Show(this, $"Found {instanceCount} instances named '{Process_Name_Textbox.Text}', using the one with ID: {processID} \n\nYou might want to use 'Choose Process' if you want to inject it into a different instance", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Information, 200);
+                    }
                 }
             }
-
+            
             Process_Name_Textbox.Refresh();
         }
 

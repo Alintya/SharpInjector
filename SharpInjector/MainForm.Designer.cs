@@ -69,7 +69,6 @@
             this.Process_Name_Textbox.SelectionLength = 0;
             this.Process_Name_Textbox.SelectionStart = 0;
             this.Process_Name_Textbox.ShortcutsEnabled = false;
-            this.Process_Name_Textbox.ShowButton = true;
             this.Process_Name_Textbox.Size = new System.Drawing.Size(155, 23);
             this.Process_Name_Textbox.Style = MetroFramework.MetroColorStyle.Red;
             this.Process_Name_Textbox.TabIndex = 0;

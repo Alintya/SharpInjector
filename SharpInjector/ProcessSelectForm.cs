@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework;
+using SharpInjector.Properties;
 
 namespace SharpInjector
 {
@@ -21,12 +20,8 @@ namespace SharpInjector
 
     public partial class ProcessSelectForm : MetroFramework.Forms.MetroForm
     {
-
-        //Dictionary<string, Process> ProcessIDs = new Dictionary<string, Process> { };
-        //Dictionary<string, Process> WindowIDs = new Dictionary<string, Process> { };
-        List<ProcessContainer> ProcessIds = new List<ProcessContainer>();
-
-        private ImageList imgList = new ImageList { ImageSize = new Size(24, 24) };
+        private List<ProcessContainer> ProcessIDs = new List<ProcessContainer>();
+        private ImageList ImgList = new ImageList { ImageSize = new Size(24, 24) };
 
         public ProcessSelectForm()
         {
@@ -35,171 +30,149 @@ namespace SharpInjector
 
         private void ProcessSelectForm_Load(object sender, EventArgs e)
         {
-            metroListView1.Columns.Add("", metroListView1.Width - 20, HorizontalAlignment.Left);
+            ImgList.ColorDepth = ColorDepth.Depth32Bit;
 
-            metroListView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.None);
-            metroListView1.HeaderStyle = ColumnHeaderStyle.None;
-
-            metroListView1.SmallImageList = imgList;
+            Process_ListView.Columns.Add("", Process_ListView.Width - 20, HorizontalAlignment.Left);
+            Process_ListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.None);
+            Process_ListView.SmallImageList = ImgList;
 
             Task.Factory.StartNew(() =>
             {
                 foreach (Process process in Process.GetProcesses())
                 {
-
-                    if (process.Id <= 0/* || IsWow64Process(process.MainWindowHandle)*/)
+                    if (process.Id <= 0)
                         continue;
 
+                    // TODO: Bessere methode finden & berechtigungs kacke fixen (x32/x64)
                     try
                     {
-                        Icon ico = Icon.ExtractAssociatedIcon(process.MainModule.FileName);
-                        imgList.Images.Add(ico.ToBitmap());
+                        ImgList.Images.Add(Icon.ExtractAssociatedIcon(process.MainModule.FileName).ToBitmap());
                     }
                     catch (Exception)
                     {
-
+                        ImgList.Images.Add(Resources._default);
                     }
 
-                    string _Formatted = $"{ process.Id.ToString().PadLeft(6, '0') } - { process.ProcessName.ToLower() }";
-
-                    ProcessIds.Add(new ProcessContainer
+                    ProcessIDs.Add(new ProcessContainer
                     {
-                        HasWindow = !(string.IsNullOrEmpty(process.MainWindowTitle)),
-                        ImageIndex = imgList.Images.Count - 1,
-                        Name = _Formatted,
+                        HasWindow = !string.IsNullOrEmpty(process.MainWindowTitle),
+                        ImageIndex = ImgList.Images.Count - 1,
+                        Name = $"{ process.Id.ToString().PadLeft(6, '0') } - { process.ProcessName.ToLower() }",
                         Process = process
                     });
-
                 }
 
-                // Wait for List to get populated
-                Invoke((MethodInvoker)
-                    (() =>
-                        {
-                            // TODO Check if window is still there (got opened and immediately closed again
-                            Window_List_Button.Enabled = true;
-                            Process_List_Button.Enabled = true;
-                        }
-                    )
-                );
-
-                void ListboxInvoker()
+                void listboxInvoker()
                 {
-                    foreach (var entry in ProcessIds)
+                    ProcessIDs.ForEach(x =>
                     {
-                        var lvi = new ListViewItem
+                        ListViewItem listViewItem = new ListViewItem
                         {
-                            Name = entry.Name,
-                            ImageIndex = entry.ImageIndex,
-                            Text = entry.Name
+                            Name = x.Name,
+                            ImageIndex = x.ImageIndex,
+                            Text = x.Name
                         };
-                        metroListView1.Items.Add(lvi);
-                    }
+                        Process_ListView.Items.Add(listViewItem);
+                    });
                 }
 
-                metroListView1.Invoke((MethodInvoker) ListboxInvoker);
+                Process_ListView.Invoke((MethodInvoker)listboxInvoker);
 
+                Invoke((MethodInvoker)(() =>
+                {
+                    Window_List_Button.Enabled = true;
+                    Process_List_Button.Enabled = true;
+                }));
             });
         }
 
         private void SearchTextbox_TextChanged(object sender, EventArgs e)
         {
-            List<ProcessContainer> tempList = ProcessIds.Where(x => x.Name.Contains(SearchTextbox.Text.ToLower())).ToList();
+            List<ProcessContainer> tempList = ProcessIDs.Where(x => x.Name.Contains(SearchTextbox.Text.ToLower())).ToList();
 
-            metroListView1.Items.Clear();
+            Process_ListView.Items.Clear();
 
-            tempList.ForEach(x => metroListView1.Items.Add(new ListViewItem
+            tempList.ForEach(x =>
             {
-                Name = x.Name,
-                ImageIndex = x.ImageIndex,
-                Text = x.Name
-            }));
+                ListViewItem listViewItem = new ListViewItem
+                {
+                    Name = x.Name,
+                    ImageIndex = x.ImageIndex,
+                    Text = x.Name
+                };
+                Process_ListView.Items.Add(listViewItem);
+            });
         }
 
         private void Process_List_Button_Click(object sender, EventArgs e)
         {
-            if (ProcessIds.Count == 0)
+            if (ProcessIDs.Count == 0)
             {
                 MetroMessageBox.Show(this, "ProcessIDs List is empty", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                 return;
             }
 
-            if (metroListView1.Items.Count > 0) metroListView1.Items.Clear();
+            if (Process_ListView.Items.Count > 0) Process_ListView.Items.Clear();
 
-            foreach (var entry in ProcessIds)
+            ProcessIDs.ForEach(x =>
             {
-                metroListView1.Items.Add(new ListViewItem
+                ListViewItem listViewItem = new ListViewItem
                 {
-                    Name = entry.Name,
-                    ImageIndex = entry.ImageIndex,
-                    Text = entry.Name
-                });
-            }
+                    Name = x.Name,
+                    ImageIndex = x.ImageIndex,
+                    Text = x.Name
+                };
+                Process_ListView.Items.Add(listViewItem);
+            });
         }
 
         private void Window_List_Button_Click(object sender, EventArgs e)
         {
-            if (ProcessIds.Count(x => x.HasWindow) == 0)
+            if (ProcessIDs.Count(x => x.HasWindow) == 0)
             {
                 MetroMessageBox.Show(this, "No Windows found", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                 return;
             }
 
-            if (metroListView1.Items.Count > 0) metroListView1.Items.Clear();
+            if (Process_ListView.Items.Count > 0) Process_ListView.Items.Clear();
 
-            foreach (var entry in ProcessIds.Where(x => x.HasWindow))
+            ProcessIDs.ForEach(x =>
             {
-                metroListView1.Items.Add(new ListViewItem
+                if (x.HasWindow)
                 {
-                    Name = entry.Name,
-                    ImageIndex = entry.ImageIndex,
-                    Text = entry.Name
-                });
-            }
+                    ListViewItem listViewItem = new ListViewItem
+                    {
+                        Name = x.Name,
+                        ImageIndex = x.ImageIndex,
+                        Text = x.Name
+                    };
+                    Process_ListView.Items.Add(listViewItem);
+                }
+            });
         }
 
         private void Select_Button_Click(object sender, EventArgs e)
         {
-            
-            if (metroListView1.SelectedItems.Count < 1)
+            if (Process_ListView.SelectedItems.Count < 1)
             {
                 MetroMessageBox.Show(this, "Select something first", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                 return;
             }
 
-            var selectedProcess = ProcessIds.FirstOrDefault(x => x.Name == metroListView1.SelectedItems[0].Name);
-            if (selectedProcess.Process != null)
-            {
-                Globals.SelectedProcess = selectedProcess.Process;
-                Close();
-            }
-            else
+            var selectedProcess = ProcessIDs.FirstOrDefault(x => x.Name == Process_ListView.SelectedItems[0].Name);
+            if (selectedProcess.Process == null)
             {
                 MetroMessageBox.Show(this, "Could not find your selected Process", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
+                return;
             }
+
+            Globals.SelectedProcess = selectedProcess.Process;
+            Close();
         }
 
         private void Close_Button_Click(object sender, EventArgs e)
         {
             Close();
         }
-    }
-
-    internal static class NativeMethods
-    {
-        public static bool Is64Bit(Process process)
-        {
-            if (Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE") == "x86")
-                return false;
-
-            bool isWow64;
-            if (!IsWow64Process(process.Handle, out isWow64))
-                throw new Win32Exception();
-            return !isWow64;
-        }
-
-        [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool IsWow64Process([In] IntPtr process, [Out] out bool wow64Process);
     }
 }

@@ -30,7 +30,7 @@
         {
             this.ListBox = new System.Windows.Forms.ListBox();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
-            this.metroListView1 = new MetroFramework.Controls.MetroListView();
+            this.Process_ListView = new MetroFramework.Controls.MetroListView();
             this.Window_List_Button = new MetroFramework.Controls.MetroButton();
             this.Process_List_Button = new MetroFramework.Controls.MetroButton();
             this.Select_Button = new MetroFramework.Controls.MetroButton();
@@ -54,7 +54,7 @@
             // metroPanel1
             // 
             this.metroPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.metroPanel1.Controls.Add(this.metroListView1);
+            this.metroPanel1.Controls.Add(this.Process_ListView);
             this.metroPanel1.Controls.Add(this.ListBox);
             this.metroPanel1.HorizontalScrollbarBarColor = true;
             this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
@@ -68,24 +68,28 @@
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
             // 
-            // metroListView1
+            // Process_ListView
             // 
-            this.metroListView1.AutoArrange = false;
-            this.metroListView1.BackColor = System.Drawing.SystemColors.MenuText;
-            this.metroListView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.metroListView1.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.metroListView1.ForeColor = System.Drawing.Color.Beige;
-            this.metroListView1.FullRowSelect = true;
-            this.metroListView1.Location = new System.Drawing.Point(3, 3);
-            this.metroListView1.MultiSelect = false;
-            this.metroListView1.Name = "metroListView1";
-            this.metroListView1.OwnerDraw = true;
-            this.metroListView1.Size = new System.Drawing.Size(233, 231);
-            this.metroListView1.TabIndex = 2;
-            this.metroListView1.UseCompatibleStateImageBehavior = false;
-            this.metroListView1.UseSelectable = true;
-            this.metroListView1.UseStyleColors = true;
-            this.metroListView1.View = System.Windows.Forms.View.Details;
+            this.Process_ListView.AutoArrange = false;
+            this.Process_ListView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.Process_ListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Process_ListView.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.Process_ListView.ForeColor = System.Drawing.Color.Beige;
+            this.Process_ListView.FullRowSelect = true;
+            this.Process_ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.Process_ListView.Location = new System.Drawing.Point(3, 3);
+            this.Process_ListView.MultiSelect = false;
+            this.Process_ListView.Name = "Process_ListView";
+            this.Process_ListView.OwnerDraw = true;
+            this.Process_ListView.Size = new System.Drawing.Size(233, 231);
+            this.Process_ListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.Process_ListView.Style = MetroFramework.MetroColorStyle.Blue;
+            this.Process_ListView.TabIndex = 2;
+            this.Process_ListView.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.Process_ListView.UseCompatibleStateImageBehavior = false;
+            this.Process_ListView.UseSelectable = true;
+            this.Process_ListView.UseStyleColors = true;
+            this.Process_ListView.View = System.Windows.Forms.View.Details;
             // 
             // Window_List_Button
             // 
@@ -206,6 +210,6 @@
         private MetroFramework.Controls.MetroButton Select_Button;
         private MetroFramework.Controls.MetroButton Close_Button;
         private MetroFramework.Controls.MetroTextBox SearchTextbox;
-        private MetroFramework.Controls.MetroListView metroListView1;
+        private MetroFramework.Controls.MetroListView Process_ListView;
     }
 }
