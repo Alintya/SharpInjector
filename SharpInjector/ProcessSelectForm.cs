@@ -27,7 +27,7 @@ namespace SharpInjector
                     if (process.Id <= 0)
                         continue;
 
-                    string _Formatted = $"{process.Id.ToString("X").PadLeft(6, '0')} - {process.ProcessName}";
+                    string _Formatted = $"{ process.Id.ToString("X").PadLeft(6, '0') } - { process.ProcessName.ToLower() }";
 
                     if (!string.IsNullOrEmpty(process.MainWindowTitle)) WindowIDs.Add(_Formatted, process);
 
@@ -48,7 +48,7 @@ namespace SharpInjector
 
         private void SearchTextbox_TextChanged(object sender, EventArgs e)
         {
-            List<string> tempList = ProcessIDs.Keys.Where(x => x.Contains(SearchTextbox.Text)).ToList();
+            List<string> tempList = ProcessIDs.Keys.Where(x => x.Contains(SearchTextbox.Text.ToLower())).ToList();
 
             ListBox.Items.Clear();
 

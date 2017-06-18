@@ -128,12 +128,12 @@
             this.SearchTextbox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.SearchTextbox.CustomButton.UseSelectable = true;
             this.SearchTextbox.CustomButton.Visible = false;
-            this.SearchTextbox.Lines = new string[] {
-        "Search Process"};
+            this.SearchTextbox.Lines = new string[0];
             this.SearchTextbox.Location = new System.Drawing.Point(23, 204);
             this.SearchTextbox.MaxLength = 32767;
             this.SearchTextbox.Name = "SearchTextbox";
             this.SearchTextbox.PasswordChar = '\0';
+            this.SearchTextbox.PromptText = "Search Process";
             this.SearchTextbox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.SearchTextbox.SelectedText = "";
             this.SearchTextbox.SelectionLength = 0;
@@ -142,9 +142,9 @@
             this.SearchTextbox.Size = new System.Drawing.Size(214, 23);
             this.SearchTextbox.Style = MetroFramework.MetroColorStyle.Blue;
             this.SearchTextbox.TabIndex = 6;
-            this.SearchTextbox.Text = "Search Process";
             this.SearchTextbox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.SearchTextbox.UseSelectable = true;
+            this.SearchTextbox.WaterMark = "Search Process";
             this.SearchTextbox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.SearchTextbox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             this.SearchTextbox.TextChanged += new System.EventHandler(this.SearchTextbox_TextChanged);

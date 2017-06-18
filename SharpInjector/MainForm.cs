@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MetroFramework;
 
 namespace SharpInjector
 {
@@ -13,16 +13,20 @@ namespace SharpInjector
         public MainForm()
         {
             InitializeComponent();
+            Process_Name_Textbox.Style = MetroColorStyle.Red;
         }
 
         private void Process_Name_Textbox_TextChanged(object sender, EventArgs e)
         {
             if (Process_Name_Textbox.Text == string.Empty || !Process_Name_Textbox.Text.Contains(".exe"))
             {
-                Process_Name_Textbox.BackColor = Color.Red;
-                return;
+                Process_Name_Textbox.Style = MetroColorStyle.Red;
             }
-            Process_Name_Textbox.BackColor = MemoryManager.GetProcessID(Process_Name_Textbox.Text) < 0 ? Color.Red : Color.White;
+            else
+            {
+                Process_Name_Textbox.Style = MemoryManager.GetProcessID(Process_Name_Textbox.Text) == -1 ? MetroColorStyle.Red : MetroColorStyle.Green;
+            }
+            Process_Name_Textbox.Refresh();
         }
 
         private void Choose_Process_Button_Click(object sender, EventArgs e)
