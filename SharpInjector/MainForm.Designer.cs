@@ -233,7 +233,7 @@
             this.Header_Title.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.Header_Title.FontWeight = MetroFramework.MetroLabelWeight.Regular;
             this.Header_Title.ForeColor = System.Drawing.Color.White;
-            this.Header_Title.Location = new System.Drawing.Point(-1, 0);
+            this.Header_Title.Location = new System.Drawing.Point(1, 0);
             this.Header_Title.Name = "Header_Title";
             this.Header_Title.Size = new System.Drawing.Size(122, 25);
             this.Header_Title.Style = MetroFramework.MetroColorStyle.Blue;

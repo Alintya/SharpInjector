@@ -37,8 +37,8 @@
             this.Close_Button = new MetroFramework.Controls.MetroButton();
             this.SearchTextbox = new MetroFramework.Controls.MetroTextBox();
             this.Header_Panel = new MetroFramework.Controls.MetroPanel();
-            this.Header_Close_Label = new MetroFramework.Controls.MetroLabel();
             this.Header_Title = new MetroFramework.Controls.MetroLabel();
+            this.Header_Close_Label = new MetroFramework.Controls.MetroLabel();
             this.metroPanel1.SuspendLayout();
             this.Header_Panel.SuspendLayout();
             this.SuspendLayout();
@@ -200,6 +200,22 @@
             this.Header_Panel.VerticalScrollbarSize = 10;
             this.Header_Panel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Header_Panel_MouseMove);
             // 
+            // Header_Title
+            // 
+            this.Header_Title.AutoSize = true;
+            this.Header_Title.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.Header_Title.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.Header_Title.ForeColor = System.Drawing.Color.White;
+            this.Header_Title.Location = new System.Drawing.Point(11, 0);
+            this.Header_Title.Name = "Header_Title";
+            this.Header_Title.Size = new System.Drawing.Size(148, 25);
+            this.Header_Title.TabIndex = 3;
+            this.Header_Title.Text = "Process Selection";
+            this.Header_Title.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.Header_Title.UseCustomBackColor = true;
+            this.Header_Title.UseCustomForeColor = true;
+            this.Header_Title.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Header_Title_MouseMove);
+            // 
             // Header_Close_Label
             // 
             this.Header_Close_Label.AutoSize = true;
@@ -217,22 +233,6 @@
             this.Header_Close_Label.Click += new System.EventHandler(this.Header_Close_Label_Click);
             this.Header_Close_Label.MouseEnter += new System.EventHandler(this.Header_Close_Label_MouseEnter);
             this.Header_Close_Label.MouseLeave += new System.EventHandler(this.Header_Close_Label_MouseLeave);
-            // 
-            // Header_Title
-            // 
-            this.Header_Title.AutoSize = true;
-            this.Header_Title.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.Header_Title.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.Header_Title.ForeColor = System.Drawing.Color.White;
-            this.Header_Title.Location = new System.Drawing.Point(12, -1);
-            this.Header_Title.Name = "Header_Title";
-            this.Header_Title.Size = new System.Drawing.Size(159, 25);
-            this.Header_Title.TabIndex = 3;
-            this.Header_Title.Text = "Process Selection";
-            this.Header_Title.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.Header_Title.UseCustomBackColor = true;
-            this.Header_Title.UseCustomForeColor = true;
-            this.Header_Title.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Header_Title_MouseMove);
             // 
             // ProcessSelectForm
             // 
