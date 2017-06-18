@@ -17,27 +17,35 @@ namespace SharpInjector
 
         private void ProcessSelectForm_Load(object sender, EventArgs e)
         {
-            Process[] _ProcessList = Process.GetProcesses();
-            foreach (Process _Process in _ProcessList)
+
+            Process[] processList = Process.GetProcesses();
+            foreach (Process process in processList)
             {
-                if (_Process.Id == 0)
+                if (process.Id <= 0)
                     continue;
 
-                string _Formated = string.Format("{0} - {1}", _Process.Id.ToString().PadLeft(8, '0'), _Process.ProcessName);
-                switch (!string.IsNullOrEmpty(_Process.MainWindowTitle))
+                string formatted = $"{process.Id.ToString("X").PadLeft(4, '0')} - {process.ProcessName}";
+                switch (!string.IsNullOrEmpty(process.MainWindowTitle))
                 {
                     case true:
-                        WindowIDs.Add(_Formated, _Process);
+                        WindowIDs.Add(formatted, process);
                         break;
                     case false:
-                        ProcessIDs.Add(_Formated, _Process);
+                        ProcessIDs.Add(formatted, process);
                         break;
+                    default:
+                        throw new Exception("Congratz, you broke the Matrix");
                 }
-
-                foreach (var _ID in ProcessIDs.Keys)
+                /*
+                // Fucking strange bug: listbox has like 100 duplicates on first fill without this
+                ListBox.Items.Clear();
+                foreach (var id in ProcessIDs.Keys)
                 {
-                    ListBox.Items.Add(_ID);
+                    ListBox.Items.Add(id);
                 }
+                */
+                // Default Listbox to processes
+                Process_List_Button_Click(this, new EventArgs());
             }
         }
 
@@ -51,9 +59,9 @@ namespace SharpInjector
 
             if (ListBox.Items.Count > 0) ListBox.Items.Clear();
 
-            foreach (var _ID in ProcessIDs.Keys)
+            foreach (var id in ProcessIDs.Keys)
             {
-                ListBox.Items.Add(_ID);
+                ListBox.Items.Add(id);
             }
         }
 
@@ -67,9 +75,9 @@ namespace SharpInjector
 
             if (ListBox.Items.Count > 0) ListBox.Items.Clear();
 
-            foreach (var _ID in WindowIDs.Keys)
+            foreach (var id in WindowIDs.Keys)
             {
-                ListBox.Items.Add(_ID);
+                ListBox.Items.Add(id);
             }
         }
 
