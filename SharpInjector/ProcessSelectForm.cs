@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework;
 using SharpInjector.Properties;
+using System.Threading;
 
 namespace SharpInjector
 {
@@ -23,6 +24,8 @@ namespace SharpInjector
         private List<ProcessContainer> ProcessIDs = new List<ProcessContainer>();
         private ImageList ImgList = new ImageList { ImageSize = new Size(24, 24) };
 
+        private static Thread Form_Loading_Thread { get; set; }
+
         public ProcessSelectForm()
         {
             InitializeComponent();
@@ -38,6 +41,8 @@ namespace SharpInjector
 
             Task.Factory.StartNew(() =>
             {
+                Form_Loading_Thread = Thread.CurrentThread;
+
                 foreach (Process process in Process.GetProcesses())
                 {
                     if (process.Id <= 0)
@@ -173,6 +178,11 @@ namespace SharpInjector
         private void Close_Button_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void ProcessSelectForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Form_Loading_Thread.Abort();
         }
     }
 }

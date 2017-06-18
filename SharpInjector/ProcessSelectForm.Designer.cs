@@ -195,6 +195,7 @@
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
             this.Text = "ProcessSelectForm";
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProcessSelectForm_FormClosing);
             this.Load += new System.EventHandler(this.ProcessSelectForm_Load);
             this.metroPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
