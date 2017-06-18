@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework;
@@ -14,30 +16,49 @@ namespace SharpInjector
         public MainForm()
         {
             InitializeComponent();
-            Process_Name_Textbox.Style = MetroColorStyle.Red;
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            //>> Maybe look for a better Solution
+            Task.Factory.StartNew(() =>
+            {
+                while (true) 
+                {
+                    Inject_Button.Style = Globals.SelectedProcess != null && Globals.DLL_List.Any() ? Inject_Button.Style = MetroColorStyle.Green : Inject_Button.Style = MetroColorStyle.Red;
+                    Inject_Button.Invoke(new MethodInvoker(() => Inject_Button.Refresh()));
+                    Thread.Sleep(50);
+                }
+            });
         }
 
         private void Process_Name_Textbox_TextChanged(object sender, EventArgs e)
         {
-            if ((Globals.SelectedProcess != null && Process_Name_Textbox.Text == Globals.SelectedProcess.ProcessName) || !Process_Name_Textbox.Text.EndsWith(".exe") || sender.GetType() == typeof(MainForm))
-                return;
-
-            int processID, instanceCount;
-            processID = MemoryManager.GetProcessID(Process_Name_Textbox.Text, out instanceCount);
-
-            if (processID != -1)
+            if (!Process_Name_Textbox.ContainsFocus)
             {
+                Process_Name_Textbox.Text = $"{Globals.SelectedProcess.ProcessName}.exe";
                 Process_Name_Textbox.Style = MetroColorStyle.Green;
-
-                Globals.SelectedProcess = Process.GetProcessById(processID);
-
-                if (instanceCount > 1) MetroMessageBox.Show(this, $"Found {instanceCount} instances named '{Process_Name_Textbox.Text}', using the one with ID: {processID} \n\nYou might want to use 'Choose Process' if you want to inject it into a different instance", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Information, 200);
-
-                // TODO display process info on main form
+                return;
             }
-            else
+
+            Process_Name_Textbox.Style = MetroColorStyle.Red;
+            Globals.SelectedProcess = null;
+
+            if (Process_Name_Textbox.Text.EndsWith(".exe")) 
             {
-                Process_Name_Textbox.Style = MetroColorStyle.Red;
+                int processID, instanceCount;
+                processID = MemoryManager.GetProcessID(Process_Name_Textbox.Text, out instanceCount);
+
+                if (processID != -1)
+                {
+                    Process_Name_Textbox.Style = MetroColorStyle.Green;
+
+                    Globals.SelectedProcess = Process.GetProcessById(processID);
+
+                    if (instanceCount > 1) MetroMessageBox.Show(this, $"Found {instanceCount} instances named '{Process_Name_Textbox.Text}', using the one with ID: {processID} \n\nYou might want to use 'Choose Process' if you want to inject it into a different instance", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Information, 200);
+
+                    // TODO display process info on main form
+                }
             }
 
             Process_Name_Textbox.Refresh();
@@ -120,7 +141,7 @@ namespace SharpInjector
         {
             if (Process_Name_Textbox.Text == String.Empty || !Process_Name_Textbox.Text.Contains(".exe"))
             {
-                MetroMessageBox.Show(this, "Process name is missing .exe extension or empty", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 100);
+                MetroMessageBox.Show(this, "No Process selected", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 100);
                 return;
             }
 
@@ -130,8 +151,7 @@ namespace SharpInjector
                 return;
             }
 
-            int _TestingValue = 0;
-            switch (_TestingValue)
+            switch (Inject_Method_Combobox.SelectedIndex)
             {
                 case 0:
                     Task.Factory.StartNew(() => MemoryManager.PrepareInjection(Process_Name_Textbox.Text, Memory.Method.Standard));

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -52,14 +51,13 @@ namespace SharpInjector
         /* TODO remove processName arg */
         public void PrepareInjection(string processName, Method method)
         {
-            Int32 processID = Globals.SelectedProcess.Id;
-            if (processID == -1)
+            if (Globals.SelectedProcess.Id == -1)
             {
                 MetroMessageBox.Show(Form.ActiveForm, "Process not found", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                 return;
             }
 
-            IntPtr handleProcess = OpenProcess(0x1F0FFF, 1, processID);
+            IntPtr handleProcess = OpenProcess(0x1F0FFF, 1, Globals.SelectedProcess.Id);
             if (handleProcess == IntPtr.Zero)
             {
                 MetroMessageBox.Show(Form.ActiveForm, "OpenProcess() Failed!", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
