@@ -9,6 +9,8 @@ namespace SharpInjector
 {
     internal class Memory
     {
+        #region kernel32 imports
+
         [DllImport("kernel32")]
         private static extern IntPtr CreateRemoteThread(IntPtr hProcess, IntPtr lpThreadAttributes, uint dwStackSize, UIntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, out IntPtr lpThreadId);
 
@@ -35,6 +37,8 @@ namespace SharpInjector
 
         [DllImport("kernel32", SetLastError = true, ExactSpelling = true)]
         private static extern Int32 WaitForSingleObject(IntPtr handle, Int32 milliseconds);
+        
+        #endregion
 
         public enum Method
         {
