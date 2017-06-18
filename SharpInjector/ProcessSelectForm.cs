@@ -19,7 +19,7 @@ namespace SharpInjector
         public bool HasWindow;
     }
 
-    public partial class ProcessSelectForm : MetroFramework.Forms.MetroForm
+    public partial class ProcessSelectForm : Form
     {
         private List<ProcessContainer> ProcessIDs = new List<ProcessContainer>();
         private ImageList ImgList = new ImageList { ImageSize = new Size(24, 24) };
@@ -29,6 +29,37 @@ namespace SharpInjector
         public ProcessSelectForm()
         {
             InitializeComponent();
+        }
+
+        private void Header_Panel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+
+            Extra.Drag.ReleaseCapture();
+            Extra.Drag.SendMessage(Handle, Extra.Drag.WM_NCLBUTTONDOWN, Extra.Drag.HT_CAPTION, 0);
+        }
+
+        private void Header_Title_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+
+            Extra.Drag.ReleaseCapture();
+            Extra.Drag.SendMessage(Handle, Extra.Drag.WM_NCLBUTTONDOWN, Extra.Drag.HT_CAPTION, 0);
+        }
+
+        private void Header_Close_Label_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void Header_Close_Label_MouseEnter(object sender, EventArgs e)
+        {
+            Header_Close_Label.ForeColor = Color.LightGray;
+        }
+
+        private void Header_Close_Label_MouseLeave(object sender, EventArgs e)
+        {
+            Header_Close_Label.ForeColor = Color.White;
         }
 
         private void ProcessSelectForm_Load(object sender, EventArgs e)

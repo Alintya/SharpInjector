@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -9,7 +11,7 @@ using MetroFramework;
 namespace SharpInjector
 {
 
-    public partial class MainForm : MetroFramework.Forms.MetroForm
+    public partial class MainForm : Form
     {
         private static Memory MemoryManager => new Memory();
 
@@ -31,7 +33,37 @@ namespace SharpInjector
                     Thread.Sleep(100);
                 }
             });
-            
+        }
+
+        private void Header_Title_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+
+            Extra.Drag.ReleaseCapture();
+            Extra.Drag.SendMessage(Handle, Extra.Drag.WM_NCLBUTTONDOWN, Extra.Drag.HT_CAPTION, 0);
+        }
+
+        private void Header_Panel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+
+            Extra.Drag.ReleaseCapture();
+            Extra.Drag.SendMessage(Handle, Extra.Drag.WM_NCLBUTTONDOWN, Extra.Drag.HT_CAPTION, 0);
+        }
+
+        private void Header_Close_Label_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void Header_Close_Label_MouseEnter(object sender, EventArgs e)
+        {
+            Header_Close_Label.ForeColor = Color.LightGray;
+        }
+
+        private void Header_Close_Label_MouseLeave(object sender, EventArgs e)
+        {
+            Header_Close_Label.ForeColor = Color.White;
         }
 
         private void Process_Name_Textbox_TextChanged(object sender, EventArgs e)
@@ -177,6 +209,5 @@ namespace SharpInjector
                     throw new Exception("gj m8 you broke the matrix");
             }
         }
-
     }
 }
