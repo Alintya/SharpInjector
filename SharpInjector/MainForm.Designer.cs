@@ -62,7 +62,6 @@
             this.Process_Name_Textbox.Name = "Process_Name_Textbox";
             this.Process_Name_Textbox.PasswordChar = '\0';
             this.Process_Name_Textbox.PromptText = "Process name";
-            this.Process_Name_Textbox.ReadOnly = true;
             this.Process_Name_Textbox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.Process_Name_Textbox.SelectedText = "";
             this.Process_Name_Textbox.SelectionLength = 0;
