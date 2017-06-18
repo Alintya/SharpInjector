@@ -83,7 +83,7 @@
             this.Choose_Process_Button.Size = new System.Drawing.Size(167, 23);
             this.Choose_Process_Button.Style = MetroFramework.MetroColorStyle.Blue;
             this.Choose_Process_Button.TabIndex = 2;
-            this.Choose_Process_Button.Text = "Choose";
+            this.Choose_Process_Button.Text = "Choose Process";
             this.Choose_Process_Button.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Choose_Process_Button.UseSelectable = true;
             this.Choose_Process_Button.Click += new System.EventHandler(this.Choose_Process_Button_Click);

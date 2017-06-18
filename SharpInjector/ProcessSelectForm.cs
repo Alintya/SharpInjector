@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MetroFramework;
 
 namespace SharpInjector
 {
@@ -27,22 +28,22 @@ namespace SharpInjector
                     if (process.Id <= 0)
                         continue;
 
-                    string _Formatted = $"{ process.Id.ToString("X").PadLeft(6, '0') } - { process.ProcessName.ToLower() }";
+                    string _Formatted = $"{ process.Id.ToString().PadLeft(6, '0') } - { process.ProcessName.ToLower() }";
 
                     if (!string.IsNullOrEmpty(process.MainWindowTitle)) WindowIDs.Add(_Formatted, process);
 
                     ProcessIDs.Add(_Formatted, process);
                 }
 
-                MethodInvoker listboxInvoker = new MethodInvoker(() =>
+                void ListboxInvoker()
                 {
                     foreach (var id in ProcessIDs.Keys)
                     {
                         ListBox.Items.Add(id);
                     }
-                });
+                }
 
-                ListBox.Invoke(listboxInvoker);
+                ListBox.Invoke((MethodInvoker) ListboxInvoker);
             });
         }
 
@@ -59,7 +60,7 @@ namespace SharpInjector
         {
             if (ProcessIDs.Count == 0)
             {
-                MessageBox.Show(this, "ProcessIDs List is empty");
+                MetroMessageBox.Show(this, "ProcessIDs List is empty", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                 return;
             }
 
@@ -75,7 +76,7 @@ namespace SharpInjector
         {
             if (WindowIDs.Count == 0)
             {
-                MessageBox.Show(this, "WindowIDs List is empty");
+                MetroMessageBox.Show(this, "WindowIDs List is empty", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                 return;
             }
 
@@ -91,7 +92,7 @@ namespace SharpInjector
         {
             if (ListBox.SelectedItem == null)
             {
-                MessageBox.Show(this, "Select something first");
+                MetroMessageBox.Show(this, "Select something first", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                 return;
             }
 
@@ -101,8 +102,7 @@ namespace SharpInjector
             }
             else
             {
-                MessageBox.Show(this, "Could not find your selected Process");
-                return;
+                MetroMessageBox.Show(this, "Could not find your selected Process", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
             }
         }
 

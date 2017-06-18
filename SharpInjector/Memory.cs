@@ -49,7 +49,7 @@ namespace SharpInjector
             ManualMap
         }
 
-        // TODO remove processName arg
+        /* TODO remove processName arg */
         public void PrepareInjection(string processName, Method method)
         {
             var failed = new List<string>();
@@ -57,14 +57,14 @@ namespace SharpInjector
             Int32 processID = Globals.SelectedProcess.Id;
             if (processID == -1)
             {
-                MessageBox.Show("Process not found");
+                MetroMessageBox.Show(Form.ActiveForm, "Process not found", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                 return;
             }
 
             IntPtr handleProcess = OpenProcess(0x1F0FFF, 1, processID);
             if (handleProcess == IntPtr.Zero)
             {
-                MessageBox.Show("OpenProcess() Failed!");
+                MetroMessageBox.Show(Form.ActiveForm, "OpenProcess() Failed!", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                 return;
             }
 
@@ -84,7 +84,7 @@ namespace SharpInjector
             string text = $"Successfully injected {Globals.DLL_List.Count - failed.Count} dlls {Environment.NewLine}";
             if (failed.Count > 0)
             { 
-                text += $"Failed: ";
+                text += "Failed: ";
                 failed.ForEach(x => text += $"{x.ToString()}  ");
             }
 
@@ -110,53 +110,48 @@ namespace SharpInjector
             switch (method)
             {
                 case Method.Standard:
-
+                {
                     UIntPtr injector = GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
-                    if (injector == null)
+                    if (injector == UIntPtr.Zero) 
                     {
-                        MessageBox.Show("Injector Error! \n");
+                        MetroMessageBox.Show(Form.ActiveForm, "Injector Error!", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                         return;
                     }
 
                     IntPtr handleThread = CreateRemoteThread(hProcess, (IntPtr)null, 0, injector, allocateMemory, 0, out bytesOut);
-                    if (handleThread == null)
+                    if (handleThread == IntPtr.Zero) 
                     {
-                        MessageBox.Show("hThread [ 1 ] Error! \n");
+                        MetroMessageBox.Show(Form.ActiveForm, "hThread [ 1 ] Error!", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                         return;
                     }
 
                     int result = WaitForSingleObject(handleThread, 10 * 1000);
-                    if (result == 0x00000080L || result == 0x00000102L || result == 0xFFFFFFF)
+                    if (result == 0x00000080L || result == 0x00000102L || result == 0xFFFFFFF) 
                     {
-                        MessageBox.Show("hThread [ 2 ] Error! \n");
-                        if (handleThread != null) CloseHandle(handleThread);
+                        MetroMessageBox.Show(Form.ActiveForm, "hThread [ 2 ] Error!", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
+                        CloseHandle(handleThread);
                         return;
                     }
 
-                    if (handleThread != null)
-                        CloseHandle(handleThread);
+                    if (handleThread != null) CloseHandle(handleThread);
 
                     break;
-
+                }
                 case Method.ManualMap:
-
+                {
                     throw new NotImplementedException();
-                    break;
+                }
                 case Method.ThreadHijacking:
-
+                {
                     throw new NotImplementedException();
-                    break;
+                }
                 default:
-
                     throw new ArgumentOutOfRangeException("Unsupported injection method");
             }
-
 
             Thread.Sleep(1000);
 
             VirtualFreeEx(hProcess, allocateMemory, (UIntPtr)0, 0x8000);
-
-            return;
         }
     }
 }

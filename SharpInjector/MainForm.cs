@@ -19,23 +19,19 @@ namespace SharpInjector
 
         private void Process_Name_Textbox_TextChanged(object sender, EventArgs e)
         {
-            int instanceCount;
-            int processID;
-
-            if ((Globals.SelectedProcess != null && Process_Name_Textbox.Text == Globals.SelectedProcess.ProcessName) || !Process_Name_Textbox.Text.EndsWith(".exe"))
+            if ((Globals.SelectedProcess != null && Process_Name_Textbox.Text == Globals.SelectedProcess.ProcessName) || !Process_Name_Textbox.Text.EndsWith(".exe") || sender.GetType() == typeof(MainForm))
                 return;
 
+            int processID, instanceCount;
             processID = MemoryManager.GetProcessID(Process_Name_Textbox.Text, out instanceCount);
 
-            if (processID > 0)
+            if (processID != -1)
             {
-                // Valid process
                 Process_Name_Textbox.Style = MetroColorStyle.Green;
 
                 Globals.SelectedProcess = Process.GetProcessById(processID);
 
-                if(instanceCount > 1)
-                    MetroMessageBox.Show(this, string.Format("Found {0} Processes named: {1}, will Inject into the one with ID: {2} \n You might want to use the Choose button.", instanceCount, Process_Name_Textbox.Text, processID), string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Information, 125);
+                if (instanceCount > 1) MetroMessageBox.Show(this, $"Found {instanceCount} instances named '{Process_Name_Textbox.Text}', using the one with ID: {processID} \n\nYou might want to use 'Choose Process' if you want to inject it into a different instance", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Information, 200);
 
                 // TODO display process info on main form
             }
@@ -73,16 +69,15 @@ namespace SharpInjector
 
             DialogResult ? dialogResultOK = openFileDialog.ShowDialog();
 
-            if (dialogResultOK == DialogResult.OK)
-            {
-                foreach (string file in openFileDialog.FileNames)
-                {
-                    if (Globals.DLL_List.Contains(file))
-                        continue;
+            if (dialogResultOK != DialogResult.OK) return;
 
-                    Globals.DLL_List.Add(file);
-                    UI_DLL_List.Items.Add(file.Substring(file.LastIndexOf("\\", StringComparison.Ordinal)).Replace("\\", ""));
-                }
+            foreach (string file in openFileDialog.FileNames)
+            {
+                if (Globals.DLL_List.Contains(file))
+                    continue;
+
+                Globals.DLL_List.Add(file);
+                UI_DLL_List.Items.Add(file.Substring(file.LastIndexOf("\\", StringComparison.Ordinal)).Replace("\\", ""));
             }
         }
 
@@ -103,7 +98,7 @@ namespace SharpInjector
         {
             if (Globals.DLL_List.Count == 0)
             {
-                MessageBox.Show(this, "DLL List is already empty");
+                MetroMessageBox.Show(this, "DLL List is already empty", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 100);
                 return;
             }
 
@@ -125,13 +120,13 @@ namespace SharpInjector
         {
             if (Process_Name_Textbox.Text == String.Empty || !Process_Name_Textbox.Text.Contains(".exe"))
             {
-                MessageBox.Show(this, "Process name is missing .exe extension or empty");
+                MetroMessageBox.Show(this, "Process name is missing .exe extension or empty", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 100);
                 return;
             }
 
             if (Globals.DLL_List.Count == 0)
             {
-                MessageBox.Show(this, "No DLL found");
+                MetroMessageBox.Show(this, "No DLL found", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 100);
                 return;
             }
 
@@ -147,6 +142,8 @@ namespace SharpInjector
                 case 2:
                     Task.Factory.StartNew(() => MemoryManager.PrepareInjection(Process_Name_Textbox.Text, Memory.Method.ThreadHijacking));
                     return;
+                default:
+                    throw new Exception("gj m8 you broke the matrix");
             }
         }
     }
