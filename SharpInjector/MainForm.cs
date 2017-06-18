@@ -42,36 +42,36 @@ namespace SharpInjector
 
         private void Add_DLL_Button_Click(object sender, EventArgs e)
         {
-            OpenFileDialog _OpenFileDialog = new OpenFileDialog();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
             {
-                _OpenFileDialog.Filter = "DLL Files (.dll)|*.dll|All Files (*.*)|*.*";
-                _OpenFileDialog.FilterIndex = 1;
-                _OpenFileDialog.Multiselect = true;
+                openFileDialog.Filter = "DLL Files (.dll)|*.dll|All Files (*.*)|*.*";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.Multiselect = true;
             }
 
-            DialogResult ? _DialogResultOK = _OpenFileDialog.ShowDialog();
+            DialogResult ? dialogResultOK = openFileDialog.ShowDialog();
 
-            if (_DialogResultOK == DialogResult.OK)
+            if (dialogResultOK == DialogResult.OK)
             {
-                foreach (string _File in _OpenFileDialog.FileNames)
+                foreach (string file in openFileDialog.FileNames)
                 {
-                    if (Globals.DLL_List.Contains(_File))
+                    if (Globals.DLL_List.Contains(file))
                         continue;
 
-                    Globals.DLL_List.Add(_File);
-                    UI_DLL_List.Items.Add(_File.Substring(_File.LastIndexOf("\\", StringComparison.Ordinal)).Replace("\\", ""));
+                    Globals.DLL_List.Add(file);
+                    UI_DLL_List.Items.Add(file.Substring(file.LastIndexOf("\\", StringComparison.Ordinal)).Replace("\\", ""));
                 }
             }
         }
 
         private void Remove_DLL_Button_Click(object sender, EventArgs e)
         {
-            foreach (string _DLL in UI_DLL_List.SelectedItems)
+            foreach (string dll in UI_DLL_List.SelectedItems)
             {
-                int _Index = Globals.DLL_List.FindIndex(x => x.Substring(x.LastIndexOf("\\", StringComparison.Ordinal)).Replace("\\", "").Equals(_DLL));
-                if (_Index != -1)
+                int index = Globals.DLL_List.FindIndex(x => x.Substring(x.LastIndexOf("\\", StringComparison.Ordinal)).Replace("\\", "").Equals(dll));
+                if (index != -1)
                 {
-                    Globals.DLL_List.RemoveAt(_Index);
+                    Globals.DLL_List.RemoveAt(index);
                 }
             }
             RefreshList();
@@ -93,9 +93,9 @@ namespace SharpInjector
         {
             UI_DLL_List.Items.Clear();
 
-            foreach (string _DLL in Globals.DLL_List)
+            foreach (string dll in Globals.DLL_List)
             {
-                UI_DLL_List.Items.Add(_DLL.Substring(_DLL.LastIndexOf("\\", StringComparison.Ordinal)).Replace("\\", ""));
+                UI_DLL_List.Items.Add(dll.Substring(dll.LastIndexOf("\\", StringComparison.Ordinal)).Replace("\\", ""));
             }
         }
 

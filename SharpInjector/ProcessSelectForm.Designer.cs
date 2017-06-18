@@ -34,6 +34,7 @@
             this.Process_List_Button = new MetroFramework.Controls.MetroButton();
             this.Select_Button = new MetroFramework.Controls.MetroButton();
             this.Close_Button = new MetroFramework.Controls.MetroButton();
+            this.SearchTextbox = new MetroFramework.Controls.MetroTextBox();
             this.metroPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,7 +68,7 @@
             // 
             // Window_List_Button
             // 
-            this.Window_List_Button.Location = new System.Drawing.Point(133, 204);
+            this.Window_List_Button.Location = new System.Drawing.Point(133, 233);
             this.Window_List_Button.Name = "Window_List_Button";
             this.Window_List_Button.Size = new System.Drawing.Size(104, 23);
             this.Window_List_Button.Style = MetroFramework.MetroColorStyle.Blue;
@@ -79,7 +80,7 @@
             // 
             // Process_List_Button
             // 
-            this.Process_List_Button.Location = new System.Drawing.Point(23, 204);
+            this.Process_List_Button.Location = new System.Drawing.Point(23, 233);
             this.Process_List_Button.Name = "Process_List_Button";
             this.Process_List_Button.Size = new System.Drawing.Size(104, 23);
             this.Process_List_Button.Style = MetroFramework.MetroColorStyle.Blue;
@@ -91,7 +92,7 @@
             // 
             // Select_Button
             // 
-            this.Select_Button.Location = new System.Drawing.Point(23, 233);
+            this.Select_Button.Location = new System.Drawing.Point(23, 262);
             this.Select_Button.Name = "Select_Button";
             this.Select_Button.Size = new System.Drawing.Size(104, 23);
             this.Select_Button.Style = MetroFramework.MetroColorStyle.Blue;
@@ -103,7 +104,7 @@
             // 
             // Close_Button
             // 
-            this.Close_Button.Location = new System.Drawing.Point(133, 233);
+            this.Close_Button.Location = new System.Drawing.Point(133, 262);
             this.Close_Button.Name = "Close_Button";
             this.Close_Button.Size = new System.Drawing.Size(104, 23);
             this.Close_Button.Style = MetroFramework.MetroColorStyle.Blue;
@@ -113,11 +114,47 @@
             this.Close_Button.UseSelectable = true;
             this.Close_Button.Click += new System.EventHandler(this.Close_Button_Click);
             // 
+            // SearchTextbox
+            // 
+            // 
+            // 
+            // 
+            this.SearchTextbox.CustomButton.Image = null;
+            this.SearchTextbox.CustomButton.Location = new System.Drawing.Point(192, 1);
+            this.SearchTextbox.CustomButton.Name = "";
+            this.SearchTextbox.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.SearchTextbox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.SearchTextbox.CustomButton.TabIndex = 1;
+            this.SearchTextbox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.SearchTextbox.CustomButton.UseSelectable = true;
+            this.SearchTextbox.CustomButton.Visible = false;
+            this.SearchTextbox.Lines = new string[] {
+        "Search Process"};
+            this.SearchTextbox.Location = new System.Drawing.Point(23, 204);
+            this.SearchTextbox.MaxLength = 32767;
+            this.SearchTextbox.Name = "SearchTextbox";
+            this.SearchTextbox.PasswordChar = '\0';
+            this.SearchTextbox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.SearchTextbox.SelectedText = "";
+            this.SearchTextbox.SelectionLength = 0;
+            this.SearchTextbox.SelectionStart = 0;
+            this.SearchTextbox.ShortcutsEnabled = true;
+            this.SearchTextbox.Size = new System.Drawing.Size(214, 23);
+            this.SearchTextbox.Style = MetroFramework.MetroColorStyle.Blue;
+            this.SearchTextbox.TabIndex = 6;
+            this.SearchTextbox.Text = "Search Process";
+            this.SearchTextbox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.SearchTextbox.UseSelectable = true;
+            this.SearchTextbox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.SearchTextbox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.SearchTextbox.TextChanged += new System.EventHandler(this.SearchTextbox_TextChanged);
+            // 
             // ProcessSelectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(259, 277);
+            this.ClientSize = new System.Drawing.Size(259, 304);
+            this.Controls.Add(this.SearchTextbox);
             this.Controls.Add(this.Close_Button);
             this.Controls.Add(this.Select_Button);
             this.Controls.Add(this.Process_List_Button);
@@ -145,5 +182,6 @@
         private MetroFramework.Controls.MetroButton Process_List_Button;
         private MetroFramework.Controls.MetroButton Select_Button;
         private MetroFramework.Controls.MetroButton Close_Button;
+        private MetroFramework.Controls.MetroTextBox SearchTextbox;
     }
 }

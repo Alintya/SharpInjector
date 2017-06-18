@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SharpInjector
@@ -17,36 +19,40 @@ namespace SharpInjector
 
         private void ProcessSelectForm_Load(object sender, EventArgs e)
         {
-
-            Process[] processList = Process.GetProcesses();
-            foreach (Process process in processList)
+            Task.Factory.StartNew(() =>
             {
-                if (process.Id <= 0)
-                    continue;
+                Process[] processList = Process.GetProcesses();
+                foreach (Process process in processList)
+                {
+                    if (process.Id <= 0)
+                        continue;
 
-                string formatted = $"{process.Id.ToString("X").PadLeft(4, '0')} - {process.ProcessName}";
-                switch (!string.IsNullOrEmpty(process.MainWindowTitle))
-                {
-                    case true:
-                        WindowIDs.Add(formatted, process);
-                        break;
-                    case false:
-                        ProcessIDs.Add(formatted, process);
-                        break;
-                    default:
-                        throw new Exception("Congratz, you broke the Matrix");
+                    string _Formatted = $"{process.Id.ToString("X").PadLeft(6, '0')} - {process.ProcessName}";
+
+                    if (!string.IsNullOrEmpty(process.MainWindowTitle)) WindowIDs.Add(_Formatted, process);
+
+                    ProcessIDs.Add(_Formatted, process);
                 }
-                /*
-                // Fucking strange bug: listbox has like 100 duplicates on first fill without this
-                ListBox.Items.Clear();
-                foreach (var id in ProcessIDs.Keys)
+
+                MethodInvoker listboxInvoker = new MethodInvoker(() =>
                 {
-                    ListBox.Items.Add(id);
-                }
-                */
-                // Default Listbox to processes
-                Process_List_Button_Click(this, new EventArgs());
-            }
+                    foreach (var id in ProcessIDs.Keys)
+                    {
+                        ListBox.Items.Add(id);
+                    }
+                });
+
+                ListBox.Invoke(listboxInvoker);
+            });
+        }
+
+        private void SearchTextbox_TextChanged(object sender, EventArgs e)
+        {
+            List<string> tempList = ProcessIDs.Keys.Where(x => x.Contains(SearchTextbox.Text)).ToList();
+
+            ListBox.Items.Clear();
+
+            tempList.ForEach(x => ListBox.Items.Add(x));
         }
 
         private void Process_List_Button_Click(object sender, EventArgs e)
@@ -88,7 +94,8 @@ namespace SharpInjector
                 MessageBox.Show(this, "Select something first");
                 return;
             }
-            if (ProcessIDs.TryGetValue(ListBox.SelectedItem.ToString(), out Globals.SelectedProcess) || WindowIDs.TryGetValue(ListBox.SelectedItem.ToString(), out Globals.SelectedProcess))
+
+            if (ProcessIDs.TryGetValue(ListBox.SelectedItem.ToString(), out Globals.SelectedProcess))
             {
                 Close();
             }

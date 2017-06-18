@@ -45,25 +45,25 @@ namespace SharpInjector
 
         public void PrepareInjection(string processName, Method method)
         {
-            Int32 _ProcessID = GetProcessID(processName);
-            if (_ProcessID == -1)
+            Int32 processID = GetProcessID(processName);
+            if (processID == -1)
             {
                 MessageBox.Show("Process not found");
                 return;
             }
 
-            IntPtr _HandleProcess = OpenProcess(0x1F0FFF, 1, _ProcessID);
-            if (_HandleProcess == IntPtr.Zero)
+            IntPtr handleProcess = OpenProcess(0x1F0FFF, 1, processID);
+            if (handleProcess == IntPtr.Zero)
             {
                 MessageBox.Show("OpenProcess() Failed!");
                 return;
             }
 
-            foreach (string _DLL in Globals.DLL_List)
+            foreach (string dll in Globals.DLL_List)
             {
                 try
                 {
-                    Inject(_HandleProcess, _DLL, method);
+                    Inject(handleProcess, dll, method);
                 }
                 catch (Exception exception)
                 {
@@ -77,45 +77,45 @@ namespace SharpInjector
 
         public Int32 GetProcessID(String proc)
         {
-            Process[] _ProcessList = Process.GetProcessesByName(proc.Remove(proc.Length - 4));
-            return _ProcessList.Length > 0 ? _ProcessList[0].Id : -1;
+            Process[] processList = Process.GetProcessesByName(proc.Remove(proc.Length - 4));
+            return processList.Length > 0 ? processList[0].Id : -1;
         }
 
         private void Inject(IntPtr hProcess, String strDLLName, Method method)
         {
-            Int32 _LengthWrite = strDLLName.Length + 1;
-            IntPtr _AllocateMemory = VirtualAllocEx(hProcess, (IntPtr)null, (uint)_LengthWrite, 0x1000, 0x40);
+            Int32 lengthWrite = strDLLName.Length + 1;
+            IntPtr allocateMemory = VirtualAllocEx(hProcess, (IntPtr)null, (uint)lengthWrite, 0x1000, 0x40);
 
-            IntPtr _BytesOut;
-            WriteProcessMemory(hProcess, _AllocateMemory, strDLLName, (UIntPtr)_LengthWrite, out _BytesOut);
+            IntPtr bytesOut;
+            WriteProcessMemory(hProcess, allocateMemory, strDLLName, (UIntPtr)lengthWrite, out bytesOut);
 
-            UIntPtr _Injector = GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
-            if (_Injector == null)
+            UIntPtr injector = GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
+            if (injector == null)
             {
                 MessageBox.Show("Injector Error! \n");
                 return;
             }
 
-            IntPtr _HandleThread = CreateRemoteThread(hProcess, (IntPtr)null, 0, _Injector, _AllocateMemory, 0, out _BytesOut);
-            if (_HandleThread == null)
+            IntPtr handleThread = CreateRemoteThread(hProcess, (IntPtr)null, 0, injector, allocateMemory, 0, out bytesOut);
+            if (handleThread == null)
             {
                 MessageBox.Show("hThread [ 1 ] Error! \n");
                 return;
             }
 
-            int _Result = WaitForSingleObject(_HandleThread, 10 * 1000);
-            if (_Result == 0x00000080L || _Result == 0x00000102L || _Result == 0xFFFFFFF)
+            int result = WaitForSingleObject(handleThread, 10 * 1000);
+            if (result == 0x00000080L || result == 0x00000102L || result == 0xFFFFFFF)
             {
                 MessageBox.Show("hThread [ 2 ] Error! \n");
-                if (_HandleThread != null) CloseHandle(_HandleThread);
+                if (handleThread != null) CloseHandle(handleThread);
                 return;
             }
 
             Thread.Sleep(1000);
 
-            VirtualFreeEx(hProcess, _AllocateMemory, (UIntPtr)0, 0x8000);
+            VirtualFreeEx(hProcess, allocateMemory, (UIntPtr)0, 0x8000);
 
-            if (_HandleThread != null) CloseHandle(_HandleThread);
+            if (handleThread != null) CloseHandle(handleThread);
 
             return;
         }
