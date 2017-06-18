@@ -88,6 +88,8 @@ namespace SharpInjector
                     Window_List_Button.Enabled = true;
                     Process_List_Button.Enabled = true;
                 }));
+
+                Form_Loading_Thread = null;
             });
         }
 
@@ -182,7 +184,7 @@ namespace SharpInjector
 
         private void ProcessSelectForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Form_Loading_Thread.Abort();
+            if (Form_Loading_Thread != null && Form_Loading_Thread.IsAlive) Form_Loading_Thread.Abort();
         }
     }
 }
