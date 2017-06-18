@@ -28,10 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.Process_Name_Textbox = new MetroFramework.Controls.MetroTextBox();
             this.Choose_Process_Button = new MetroFramework.Controls.MetroButton();
-            this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
             this.Inject_Button = new MetroFramework.Controls.MetroButton();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.UI_DLL_List = new System.Windows.Forms.ListBox();
@@ -39,13 +37,13 @@
             this.Remove_DLL_Button = new MetroFramework.Controls.MetroButton();
             this.Add_DLL_Button = new MetroFramework.Controls.MetroButton();
             this.Inject_Method_Combobox = new MetroFramework.Controls.MetroComboBox();
-            this.Header_Panel = new System.Windows.Forms.Panel();
+            this.Header_Line_Panel = new System.Windows.Forms.Panel();
             this.Header_Close_Label = new MetroFramework.Controls.MetroLabel();
-            this.Header_Title = new MetroFramework.Controls.MetroLabel();
+            this.Header_Title_Text = new MetroFramework.Controls.MetroLabel();
             this.Header_Minimize_Button = new MetroFramework.Controls.MetroLabel();
-            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
+            this.Header_Background_Panel = new MetroFramework.Controls.MetroPanel();
             this.metroPanel1.SuspendLayout();
-            this.Header_Panel.SuspendLayout();
+            this.Header_Background_Panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // Process_Name_Textbox
@@ -64,7 +62,7 @@
             this.Process_Name_Textbox.CustomButton.UseSelectable = true;
             this.Process_Name_Textbox.CustomButton.Visible = false;
             this.Process_Name_Textbox.Lines = new string[0];
-            this.Process_Name_Textbox.Location = new System.Drawing.Point(25, 47);
+            this.Process_Name_Textbox.Location = new System.Drawing.Point(26, 66);
             this.Process_Name_Textbox.MaxLength = 32767;
             this.Process_Name_Textbox.Name = "Process_Name_Textbox";
             this.Process_Name_Textbox.PasswordChar = '\0';
@@ -87,7 +85,7 @@
             // 
             // Choose_Process_Button
             // 
-            this.Choose_Process_Button.Location = new System.Drawing.Point(186, 47);
+            this.Choose_Process_Button.Location = new System.Drawing.Point(187, 66);
             this.Choose_Process_Button.Name = "Choose_Process_Button";
             this.Choose_Process_Button.Size = new System.Drawing.Size(148, 23);
             this.Choose_Process_Button.Style = MetroFramework.MetroColorStyle.Blue;
@@ -97,14 +95,10 @@
             this.Choose_Process_Button.UseSelectable = true;
             this.Choose_Process_Button.Click += new System.EventHandler(this.Choose_Process_Button_Click);
             // 
-            // metroStyleManager1
-            // 
-            this.metroStyleManager1.Owner = this;
-            // 
             // Inject_Button
             // 
             this.Inject_Button.Highlight = true;
-            this.Inject_Button.Location = new System.Drawing.Point(25, 181);
+            this.Inject_Button.Location = new System.Drawing.Point(26, 200);
             this.Inject_Button.Name = "Inject_Button";
             this.Inject_Button.Size = new System.Drawing.Size(180, 25);
             this.Inject_Button.Style = MetroFramework.MetroColorStyle.Red;
@@ -121,7 +115,7 @@
             this.metroPanel1.HorizontalScrollbarBarColor = true;
             this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel1.HorizontalScrollbarSize = 10;
-            this.metroPanel1.Location = new System.Drawing.Point(114, 76);
+            this.metroPanel1.Location = new System.Drawing.Point(115, 95);
             this.metroPanel1.Name = "metroPanel1";
             this.metroPanel1.Size = new System.Drawing.Size(220, 99);
             this.metroPanel1.TabIndex = 8;
@@ -144,7 +138,7 @@
             // 
             // Clear_DLL_List_Button
             // 
-            this.Clear_DLL_List_Button.Location = new System.Drawing.Point(25, 134);
+            this.Clear_DLL_List_Button.Location = new System.Drawing.Point(26, 153);
             this.Clear_DLL_List_Button.Name = "Clear_DLL_List_Button";
             this.Clear_DLL_List_Button.Size = new System.Drawing.Size(83, 41);
             this.Clear_DLL_List_Button.Style = MetroFramework.MetroColorStyle.Blue;
@@ -156,7 +150,7 @@
             // 
             // Remove_DLL_Button
             // 
-            this.Remove_DLL_Button.Location = new System.Drawing.Point(25, 105);
+            this.Remove_DLL_Button.Location = new System.Drawing.Point(26, 124);
             this.Remove_DLL_Button.Name = "Remove_DLL_Button";
             this.Remove_DLL_Button.Size = new System.Drawing.Size(83, 23);
             this.Remove_DLL_Button.Style = MetroFramework.MetroColorStyle.Blue;
@@ -168,7 +162,7 @@
             // 
             // Add_DLL_Button
             // 
-            this.Add_DLL_Button.Location = new System.Drawing.Point(25, 76);
+            this.Add_DLL_Button.Location = new System.Drawing.Point(26, 95);
             this.Add_DLL_Button.Name = "Add_DLL_Button";
             this.Add_DLL_Button.Size = new System.Drawing.Size(83, 23);
             this.Add_DLL_Button.Style = MetroFramework.MetroColorStyle.Blue;
@@ -188,7 +182,7 @@
             "Standard",
             "Manual Mapping",
             "Thread Hijacking"});
-            this.Inject_Method_Combobox.Location = new System.Drawing.Point(211, 181);
+            this.Inject_Method_Combobox.Location = new System.Drawing.Point(212, 200);
             this.Inject_Method_Combobox.Name = "Inject_Method_Combobox";
             this.Inject_Method_Combobox.Size = new System.Drawing.Size(123, 25);
             this.Inject_Method_Combobox.Style = MetroFramework.MetroColorStyle.Blue;
@@ -196,32 +190,29 @@
             this.Inject_Method_Combobox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Inject_Method_Combobox.UseSelectable = true;
             // 
-            // Header_Panel
+            // Header_Line_Panel
             // 
-            this.Header_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.Header_Panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Header_Panel.Controls.Add(this.Header_Minimize_Button);
-            this.Header_Panel.Controls.Add(this.Header_Close_Label);
-            this.Header_Panel.Controls.Add(this.Header_Title);
-            this.Header_Panel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Header_Panel.Location = new System.Drawing.Point(0, 0);
-            this.Header_Panel.Name = "Header_Panel";
-            this.Header_Panel.Size = new System.Drawing.Size(356, 29);
-            this.Header_Panel.TabIndex = 13;
-            this.Header_Panel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Header_Panel_MouseMove);
+            this.Header_Line_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
+            this.Header_Line_Panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Header_Line_Panel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Header_Line_Panel.Location = new System.Drawing.Point(0, 0);
+            this.Header_Line_Panel.Name = "Header_Line_Panel";
+            this.Header_Line_Panel.Size = new System.Drawing.Size(360, 7);
+            this.Header_Line_Panel.TabIndex = 13;
+            this.Header_Line_Panel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Header_Line_Panel_MouseMove);
             // 
             // Header_Close_Label
             // 
             this.Header_Close_Label.AutoSize = true;
             this.Header_Close_Label.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.Header_Close_Label.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.Header_Close_Label.FontWeight = MetroFramework.MetroLabelWeight.Regular;
             this.Header_Close_Label.ForeColor = System.Drawing.Color.White;
-            this.Header_Close_Label.Location = new System.Drawing.Point(331, 0);
+            this.Header_Close_Label.Location = new System.Drawing.Point(337, 10);
             this.Header_Close_Label.Name = "Header_Close_Label";
-            this.Header_Close_Label.Size = new System.Drawing.Size(24, 25);
+            this.Header_Close_Label.Size = new System.Drawing.Size(20, 25);
             this.Header_Close_Label.Style = MetroFramework.MetroColorStyle.Blue;
             this.Header_Close_Label.TabIndex = 15;
-            this.Header_Close_Label.Text = "X";
+            this.Header_Close_Label.Text = "x";
             this.Header_Close_Label.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Header_Close_Label.UseCustomBackColor = true;
             this.Header_Close_Label.UseCustomForeColor = true;
@@ -229,35 +220,35 @@
             this.Header_Close_Label.MouseEnter += new System.EventHandler(this.Header_Close_Label_MouseEnter);
             this.Header_Close_Label.MouseLeave += new System.EventHandler(this.Header_Close_Label_MouseLeave);
             // 
-            // Header_Title
+            // Header_Title_Text
             // 
-            this.Header_Title.AutoSize = true;
-            this.Header_Title.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.Header_Title.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.Header_Title.ForeColor = System.Drawing.Color.White;
-            this.Header_Title.Location = new System.Drawing.Point(1, 0);
-            this.Header_Title.Name = "Header_Title";
-            this.Header_Title.Size = new System.Drawing.Size(122, 25);
-            this.Header_Title.Style = MetroFramework.MetroColorStyle.Blue;
-            this.Header_Title.TabIndex = 14;
-            this.Header_Title.Text = "Sharp Injector";
-            this.Header_Title.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.Header_Title.UseCustomBackColor = true;
-            this.Header_Title.UseCustomForeColor = true;
-            this.Header_Title.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Header_Title_MouseMove);
+            this.Header_Title_Text.AutoSize = true;
+            this.Header_Title_Text.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.Header_Title_Text.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.Header_Title_Text.ForeColor = System.Drawing.Color.White;
+            this.Header_Title_Text.Location = new System.Drawing.Point(26, 25);
+            this.Header_Title_Text.Name = "Header_Title_Text";
+            this.Header_Title_Text.Size = new System.Drawing.Size(122, 25);
+            this.Header_Title_Text.Style = MetroFramework.MetroColorStyle.Blue;
+            this.Header_Title_Text.TabIndex = 14;
+            this.Header_Title_Text.Text = "Sharp Injector";
+            this.Header_Title_Text.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.Header_Title_Text.UseCustomBackColor = true;
+            this.Header_Title_Text.UseCustomForeColor = true;
+            this.Header_Title_Text.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Header_Title_Text_MouseMove);
             // 
             // Header_Minimize_Button
             // 
             this.Header_Minimize_Button.AutoSize = true;
             this.Header_Minimize_Button.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.Header_Minimize_Button.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.Header_Minimize_Button.FontWeight = MetroFramework.MetroLabelWeight.Regular;
             this.Header_Minimize_Button.ForeColor = System.Drawing.Color.White;
-            this.Header_Minimize_Button.Location = new System.Drawing.Point(309, 0);
+            this.Header_Minimize_Button.Location = new System.Drawing.Point(316, 7);
             this.Header_Minimize_Button.Name = "Header_Minimize_Button";
             this.Header_Minimize_Button.Size = new System.Drawing.Size(19, 25);
             this.Header_Minimize_Button.Style = MetroFramework.MetroColorStyle.Blue;
             this.Header_Minimize_Button.TabIndex = 16;
-            this.Header_Minimize_Button.Text = "-";
+            this.Header_Minimize_Button.Text = "_";
             this.Header_Minimize_Button.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Header_Minimize_Button.UseCustomBackColor = true;
             this.Header_Minimize_Button.UseCustomForeColor = true;
@@ -265,13 +256,33 @@
             this.Header_Minimize_Button.MouseEnter += new System.EventHandler(this.Header_Minimize_Button_MouseEnter);
             this.Header_Minimize_Button.MouseLeave += new System.EventHandler(this.Header_Minimize_Button_MouseLeave);
             // 
+            // Header_Background_Panel
+            // 
+            this.Header_Background_Panel.Controls.Add(this.Header_Title_Text);
+            this.Header_Background_Panel.Controls.Add(this.Header_Minimize_Button);
+            this.Header_Background_Panel.Controls.Add(this.Header_Close_Label);
+            this.Header_Background_Panel.Controls.Add(this.Header_Line_Panel);
+            this.Header_Background_Panel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Header_Background_Panel.HorizontalScrollbarBarColor = true;
+            this.Header_Background_Panel.HorizontalScrollbarHighlightOnWheel = false;
+            this.Header_Background_Panel.HorizontalScrollbarSize = 10;
+            this.Header_Background_Panel.Location = new System.Drawing.Point(0, 0);
+            this.Header_Background_Panel.Name = "Header_Background_Panel";
+            this.Header_Background_Panel.Size = new System.Drawing.Size(360, 60);
+            this.Header_Background_Panel.TabIndex = 17;
+            this.Header_Background_Panel.UseCustomBackColor = true;
+            this.Header_Background_Panel.VerticalScrollbarBarColor = true;
+            this.Header_Background_Panel.VerticalScrollbarHighlightOnWheel = false;
+            this.Header_Background_Panel.VerticalScrollbarSize = 10;
+            this.Header_Background_Panel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Header_Background_Panel_MouseMove);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.ClientSize = new System.Drawing.Size(356, 228);
-            this.Controls.Add(this.Header_Panel);
+            this.ClientSize = new System.Drawing.Size(360, 247);
+            this.Controls.Add(this.Header_Background_Panel);
             this.Controls.Add(this.Inject_Method_Combobox);
             this.Controls.Add(this.Inject_Button);
             this.Controls.Add(this.Clear_DLL_List_Button);
@@ -286,10 +297,9 @@
             this.Name = "MainForm";
             this.Text = "Sharp Injector";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
             this.metroPanel1.ResumeLayout(false);
-            this.Header_Panel.ResumeLayout(false);
-            this.Header_Panel.PerformLayout();
+            this.Header_Background_Panel.ResumeLayout(false);
+            this.Header_Background_Panel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -298,7 +308,6 @@
 
         private MetroFramework.Controls.MetroTextBox Process_Name_Textbox;
         private MetroFramework.Controls.MetroButton Choose_Process_Button;
-        private MetroFramework.Components.MetroStyleManager metroStyleManager1;
         private MetroFramework.Controls.MetroButton Inject_Button;
         private MetroFramework.Controls.MetroPanel metroPanel1;
         private MetroFramework.Controls.MetroButton Remove_DLL_Button;
@@ -306,10 +315,11 @@
         private MetroFramework.Controls.MetroButton Clear_DLL_List_Button;
         private System.Windows.Forms.ListBox UI_DLL_List;
         private MetroFramework.Controls.MetroComboBox Inject_Method_Combobox;
-        private System.Windows.Forms.Panel Header_Panel;
-        private MetroFramework.Controls.MetroLabel Header_Title;
+        private System.Windows.Forms.Panel Header_Line_Panel;
+        private MetroFramework.Controls.MetroLabel Header_Title_Text;
         private MetroFramework.Controls.MetroLabel Header_Close_Label;
         private MetroFramework.Controls.MetroLabel Header_Minimize_Button;
+        private MetroFramework.Controls.MetroPanel Header_Background_Panel;
     }
 }
 

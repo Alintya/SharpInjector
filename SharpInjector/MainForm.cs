@@ -2,10 +2,10 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using MetroFramework;
 
 namespace SharpInjector
@@ -20,22 +20,9 @@ namespace SharpInjector
             InitializeComponent();
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            //>> Maybe look for a better Solution
-            Task.Factory.StartNew(() =>
-            {
-                while (true)
-                {
-                    Inject_Button.Style = Globals.SelectedProcess != null && Globals.DLL_List.Any() ? Inject_Button.Style = MetroColorStyle.Green : Inject_Button.Style = MetroColorStyle.Red;
-                    Inject_Button.Invoke(new MethodInvoker(() => Inject_Button.Refresh()));
+        #region Custom Design
 
-                    Thread.Sleep(100);
-                }
-            });
-        }
-
-        private void Header_Title_MouseMove(object sender, MouseEventArgs e)
+        private void Header_Background_Panel_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
 
@@ -43,10 +30,16 @@ namespace SharpInjector
             Extra.Drag.SendMessage(Handle, Extra.Drag.WM_NCLBUTTONDOWN, Extra.Drag.HT_CAPTION, 0);
         }
 
-        private void Header_Panel_MouseMove(object sender, MouseEventArgs e)
+        private void Header_Line_Panel_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
 
+            Extra.Drag.ReleaseCapture();
+            Extra.Drag.SendMessage(Handle, Extra.Drag.WM_NCLBUTTONDOWN, Extra.Drag.HT_CAPTION, 0);
+        }
+
+        private void Header_Title_Text_MouseMove(object sender, MouseEventArgs e)
+        {
             Extra.Drag.ReleaseCapture();
             Extra.Drag.SendMessage(Handle, Extra.Drag.WM_NCLBUTTONDOWN, Extra.Drag.HT_CAPTION, 0);
         }
@@ -79,6 +72,23 @@ namespace SharpInjector
         private void Header_Minimize_Button_MouseLeave(object sender, EventArgs e)
         {
             Header_Minimize_Button.ForeColor = Color.White;
+        }
+
+        #endregion
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            //>> Maybe look for a better Solution
+            Task.Factory.StartNew(() =>
+            {
+                while (true)
+                {
+                    Inject_Button.Style = Globals.SelectedProcess != null && Globals.DLL_List.Any() ? Inject_Button.Style = MetroColorStyle.Green : Inject_Button.Style = MetroColorStyle.Red;
+                    Inject_Button.Invoke(new MethodInvoker(() => Inject_Button.Refresh()));
+
+                    Thread.Sleep(100);
+                }
+            });
         }
 
         private void Process_Name_Textbox_TextChanged(object sender, EventArgs e)

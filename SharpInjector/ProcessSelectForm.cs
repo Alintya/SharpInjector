@@ -5,9 +5,10 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MetroFramework;
 using SharpInjector.Properties;
 using System.Threading;
+
+using MetroFramework;
 
 namespace SharpInjector
 {
@@ -31,7 +32,9 @@ namespace SharpInjector
             InitializeComponent();
         }
 
-        private void Header_Panel_MouseMove(object sender, MouseEventArgs e)
+        #region Custom Design
+
+        private void Header_Background_Panel_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
 
@@ -39,7 +42,15 @@ namespace SharpInjector
             Extra.Drag.SendMessage(Handle, Extra.Drag.WM_NCLBUTTONDOWN, Extra.Drag.HT_CAPTION, 0);
         }
 
-        private void Header_Title_MouseMove(object sender, MouseEventArgs e)
+        private void Header_Line_Panel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+
+            Extra.Drag.ReleaseCapture();
+            Extra.Drag.SendMessage(Handle, Extra.Drag.WM_NCLBUTTONDOWN, Extra.Drag.HT_CAPTION, 0);
+        }
+
+        private void Header_Title_Label_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
 
@@ -76,6 +87,8 @@ namespace SharpInjector
         {
             Header_Minimize_Label.ForeColor = Color.White;
         }
+
+        #endregion
 
         private void ProcessSelectForm_Load(object sender, EventArgs e)
         {
