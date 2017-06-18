@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using MetroFramework;
 
 namespace SharpInjector
 {
@@ -47,11 +49,12 @@ namespace SharpInjector
             ManualMap
         }
 
+        // TODO remove processName arg
         public void PrepareInjection(string processName, Method method)
         {
             var failed = new List<string>();
 
-            Int32 processID = GetProcessID(processName);
+            Int32 processID = Globals.SelectedProcess.Id;
             if (processID == -1)
             {
                 MessageBox.Show("Process not found");
@@ -85,12 +88,14 @@ namespace SharpInjector
                 failed.ForEach(x => text += $"{x.ToString()}  ");
             }
 
-            MessageBox.Show(text);
+            // TODO catch user response in case of error to show log
+            MetroMessageBox.Show(Form.ActiveForm, text, "Done", failed.Count > 0 ? MessageBoxButtons.YesNo : MessageBoxButtons.OK, failed.Count > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
         }
 
-        public Int32 GetProcessID(String proc)
+        public Int32 GetProcessID(String proc, out int instances)
         {
             Process[] processList = Process.GetProcessesByName(proc.Remove(proc.Length - 4));
+            instances = processList.Length;
             return processList.Length > 0 ? processList[0].Id : -1;
         }
 

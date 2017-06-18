@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework;
@@ -18,14 +19,31 @@ namespace SharpInjector
 
         private void Process_Name_Textbox_TextChanged(object sender, EventArgs e)
         {
-            if (Process_Name_Textbox.Text == string.Empty || !Process_Name_Textbox.Text.Contains(".exe"))
+            int instanceCount;
+            int processID;
+
+            if ((Globals.SelectedProcess != null && Process_Name_Textbox.Text == Globals.SelectedProcess.ProcessName) || !Process_Name_Textbox.Text.EndsWith(".exe"))
+                return;
+
+            processID = MemoryManager.GetProcessID(Process_Name_Textbox.Text, out instanceCount);
+
+            if (processID > 0)
             {
-                Process_Name_Textbox.Style = MetroColorStyle.Red;
+                // Valid process
+                Process_Name_Textbox.Style = MetroColorStyle.Green;
+
+                Globals.SelectedProcess = Process.GetProcessById(processID);
+
+                if(instanceCount > 1)
+                    MetroMessageBox.Show(this, string.Format("Found {0} Processes named: {1}, will Inject into the one with ID: {2} \n You might want to use the Choose button.", instanceCount, Process_Name_Textbox.Text, processID), string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Information, 125);
+
+                // TODO display process info on main form
             }
             else
             {
-                Process_Name_Textbox.Style = MemoryManager.GetProcessID(Process_Name_Textbox.Text) == -1 ? MetroColorStyle.Red : MetroColorStyle.Green;
+                Process_Name_Textbox.Style = MetroColorStyle.Red;
             }
+
             Process_Name_Textbox.Refresh();
         }
 
