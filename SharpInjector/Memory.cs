@@ -52,8 +52,6 @@ namespace SharpInjector
         /* TODO remove processName arg */
         public void PrepareInjection(string processName, Method method)
         {
-            var failed = new List<string>();
-
             Int32 processID = Globals.SelectedProcess.Id;
             if (processID == -1)
             {
@@ -68,6 +66,7 @@ namespace SharpInjector
                 return;
             }
 
+            var failed = new List<string>();
             foreach (string dll in Globals.DLL_List)
             {
                 try
