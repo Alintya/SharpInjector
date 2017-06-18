@@ -38,17 +38,19 @@
             this.Clear_DLL_List_Button = new MetroFramework.Controls.MetroButton();
             this.Remove_DLL_Button = new MetroFramework.Controls.MetroButton();
             this.Add_DLL_Button = new MetroFramework.Controls.MetroButton();
+            this.Inject_Method_Combobox = new MetroFramework.Controls.MetroComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.metroPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // Process_Name_Textbox
             // 
+            this.Process_Name_Textbox.CausesValidation = false;
             // 
             // 
             // 
             this.Process_Name_Textbox.CustomButton.Image = null;
-            this.Process_Name_Textbox.CustomButton.Location = new System.Drawing.Point(125, 1);
+            this.Process_Name_Textbox.CustomButton.Location = new System.Drawing.Point(133, 1);
             this.Process_Name_Textbox.CustomButton.Name = "";
             this.Process_Name_Textbox.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.Process_Name_Textbox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
@@ -66,8 +68,9 @@
             this.Process_Name_Textbox.SelectedText = "";
             this.Process_Name_Textbox.SelectionLength = 0;
             this.Process_Name_Textbox.SelectionStart = 0;
-            this.Process_Name_Textbox.ShortcutsEnabled = true;
-            this.Process_Name_Textbox.Size = new System.Drawing.Size(147, 23);
+            this.Process_Name_Textbox.ShortcutsEnabled = false;
+            this.Process_Name_Textbox.Size = new System.Drawing.Size(155, 23);
+            this.Process_Name_Textbox.Style = MetroFramework.MetroColorStyle.Red;
             this.Process_Name_Textbox.TabIndex = 0;
             this.Process_Name_Textbox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Process_Name_Textbox.UseSelectable = true;
@@ -75,15 +78,16 @@
             this.Process_Name_Textbox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.Process_Name_Textbox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             this.Process_Name_Textbox.TextChanged += new System.EventHandler(this.Process_Name_Textbox_TextChanged);
+            this.Process_Name_Textbox.StyleChanged += new System.EventHandler(this.Process_Name_Textbox_StyleChanged);
             // 
             // Choose_Process_Button
             // 
-            this.Choose_Process_Button.Location = new System.Drawing.Point(176, 73);
+            this.Choose_Process_Button.Location = new System.Drawing.Point(184, 73);
             this.Choose_Process_Button.Name = "Choose_Process_Button";
-            this.Choose_Process_Button.Size = new System.Drawing.Size(167, 23);
+            this.Choose_Process_Button.Size = new System.Drawing.Size(148, 23);
             this.Choose_Process_Button.Style = MetroFramework.MetroColorStyle.Blue;
             this.Choose_Process_Button.TabIndex = 2;
-            this.Choose_Process_Button.Text = "Choose";
+            this.Choose_Process_Button.Text = "Choose Process";
             this.Choose_Process_Button.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Choose_Process_Button.UseSelectable = true;
             this.Choose_Process_Button.Click += new System.EventHandler(this.Choose_Process_Button_Click);
@@ -95,10 +99,10 @@
             // Inject_Button
             // 
             this.Inject_Button.Highlight = true;
-            this.Inject_Button.Location = new System.Drawing.Point(23, 189);
+            this.Inject_Button.Location = new System.Drawing.Point(23, 207);
             this.Inject_Button.Name = "Inject_Button";
-            this.Inject_Button.Size = new System.Drawing.Size(83, 39);
-            this.Inject_Button.Style = MetroFramework.MetroColorStyle.Blue;
+            this.Inject_Button.Size = new System.Drawing.Size(180, 25);
+            this.Inject_Button.Style = MetroFramework.MetroColorStyle.Red;
             this.Inject_Button.TabIndex = 4;
             this.Inject_Button.Text = "Inject";
             this.Inject_Button.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -114,7 +118,7 @@
             this.metroPanel1.HorizontalScrollbarSize = 10;
             this.metroPanel1.Location = new System.Drawing.Point(112, 102);
             this.metroPanel1.Name = "metroPanel1";
-            this.metroPanel1.Size = new System.Drawing.Size(231, 126);
+            this.metroPanel1.Size = new System.Drawing.Size(220, 99);
             this.metroPanel1.TabIndex = 8;
             this.metroPanel1.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.metroPanel1.VerticalScrollbarBarColor = true;
@@ -130,14 +134,14 @@
             this.UI_DLL_List.Location = new System.Drawing.Point(3, 3);
             this.UI_DLL_List.Name = "UI_DLL_List";
             this.UI_DLL_List.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.UI_DLL_List.Size = new System.Drawing.Size(223, 117);
+            this.UI_DLL_List.Size = new System.Drawing.Size(212, 91);
             this.UI_DLL_List.TabIndex = 2;
             // 
             // Clear_DLL_List_Button
             // 
             this.Clear_DLL_List_Button.Location = new System.Drawing.Point(23, 160);
             this.Clear_DLL_List_Button.Name = "Clear_DLL_List_Button";
-            this.Clear_DLL_List_Button.Size = new System.Drawing.Size(83, 23);
+            this.Clear_DLL_List_Button.Size = new System.Drawing.Size(83, 41);
             this.Clear_DLL_List_Button.Style = MetroFramework.MetroColorStyle.Blue;
             this.Clear_DLL_List_Button.TabIndex = 11;
             this.Clear_DLL_List_Button.Text = "Clear";
@@ -169,11 +173,30 @@
             this.Add_DLL_Button.UseSelectable = true;
             this.Add_DLL_Button.Click += new System.EventHandler(this.Add_DLL_Button_Click);
             // 
+            // Inject_Method_Combobox
+            // 
+            this.Inject_Method_Combobox.FontSize = MetroFramework.MetroComboBoxSize.Small;
+            this.Inject_Method_Combobox.FontWeight = MetroFramework.MetroComboBoxWeight.Light;
+            this.Inject_Method_Combobox.FormattingEnabled = true;
+            this.Inject_Method_Combobox.ItemHeight = 19;
+            this.Inject_Method_Combobox.Items.AddRange(new object[] {
+            "Standard",
+            "Manual Mapping",
+            "Thread Hijacking"});
+            this.Inject_Method_Combobox.Location = new System.Drawing.Point(209, 207);
+            this.Inject_Method_Combobox.Name = "Inject_Method_Combobox";
+            this.Inject_Method_Combobox.Size = new System.Drawing.Size(123, 25);
+            this.Inject_Method_Combobox.Style = MetroFramework.MetroColorStyle.Blue;
+            this.Inject_Method_Combobox.TabIndex = 12;
+            this.Inject_Method_Combobox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.Inject_Method_Combobox.UseSelectable = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(368, 251);
+            this.ClientSize = new System.Drawing.Size(358, 255);
+            this.Controls.Add(this.Inject_Method_Combobox);
             this.Controls.Add(this.Inject_Button);
             this.Controls.Add(this.Clear_DLL_List_Button);
             this.Controls.Add(this.metroPanel1);
@@ -187,6 +210,7 @@
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
             this.Text = "Sharp Injector";
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
             this.metroPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -204,6 +228,7 @@
         private MetroFramework.Controls.MetroButton Add_DLL_Button;
         private MetroFramework.Controls.MetroButton Clear_DLL_List_Button;
         private System.Windows.Forms.ListBox UI_DLL_List;
+        private MetroFramework.Controls.MetroComboBox Inject_Method_Combobox;
     }
 }
 

@@ -1,14 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using MetroFramework;
+using SharpInjector.Properties;
+using System.Threading;
 
 namespace SharpInjector
 {
+    public struct ProcessContainer
+    {
+        public string Name;
+        public Process Process;
+        public int ImageIndex;
+        public bool HasWindow;
+    }
+
     public partial class ProcessSelectForm : MetroFramework.Forms.MetroForm
     {
-        Dictionary<string, Process> ProcessIDs = new Dictionary<string, Process> { };
-        Dictionary<string, Process> WindowIDs = new Dictionary<string, Process> { };
+        private List<ProcessContainer> ProcessIDs = new List<ProcessContainer>();
+        private ImageList ImgList = new ImageList { ImageSize = new Size(24, 24) };
+
+        private static Thread Form_Loading_Thread { get; set; }
 
         public ProcessSelectForm()
         {
@@ -17,78 +33,156 @@ namespace SharpInjector
 
         private void ProcessSelectForm_Load(object sender, EventArgs e)
         {
-            Process[] _ProcessList = Process.GetProcesses();
-            foreach (Process _Process in _ProcessList)
-            {
-                if (_Process.Id == 0)
-                    continue;
+            ImgList.ColorDepth = ColorDepth.Depth32Bit;
 
-                string _Formated = string.Format("{0} - {1}", _Process.Id.ToString().PadLeft(8, '0'), _Process.ProcessName);
-                switch (!string.IsNullOrEmpty(_Process.MainWindowTitle))
+            Process_ListView.Columns.Add("", Process_ListView.Width - 20, HorizontalAlignment.Left);
+            Process_ListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.None);
+            Process_ListView.SmallImageList = ImgList;
+
+            Task.Factory.StartNew(() =>
+            {
+                Form_Loading_Thread = Thread.CurrentThread;
+
+                foreach (Process process in Process.GetProcesses())
                 {
-                    case true:
-                        WindowIDs.Add(_Formated, _Process);
-                        break;
-                    case false:
-                        ProcessIDs.Add(_Formated, _Process);
-                        break;
+                    if (process.Id <= 0)
+                        continue;
+
+                    // TODO: Bessere methode finden & berechtigungs kacke fixen (x32/x64)
+                    try
+                    {
+                        ImgList.Images.Add(Icon.ExtractAssociatedIcon(process.MainModule.FileName).ToBitmap());
+                    }
+                    catch (Exception)
+                    {
+                        ImgList.Images.Add(Resources._default);
+                    }
+
+                    ProcessIDs.Add(new ProcessContainer
+                    {
+                        HasWindow = !string.IsNullOrEmpty(process.MainWindowTitle),
+                        ImageIndex = ImgList.Images.Count - 1,
+                        Name = $"{ process.Id.ToString().PadLeft(6, '0') } - { process.ProcessName.ToLower() }",
+                        Process = process
+                    });
                 }
-            }
+
+                void listboxInvoker()
+                {
+                    ProcessIDs.ForEach(x =>
+                    {
+                        ListViewItem listViewItem = new ListViewItem
+                        {
+                            Name = x.Name,
+                            ImageIndex = x.ImageIndex,
+                            Text = x.Name
+                        };
+                        Process_ListView.Items.Add(listViewItem);
+                    });
+                }
+
+                Process_ListView.Invoke((MethodInvoker)listboxInvoker);
+
+                Invoke((MethodInvoker)(() =>
+                {
+                    Window_List_Button.Enabled = true;
+                    Process_List_Button.Enabled = true;
+                }));
+            });
+        }
+
+        private void SearchTextbox_TextChanged(object sender, EventArgs e)
+        {
+            List<ProcessContainer> tempList = ProcessIDs.Where(x => x.Name.Contains(SearchTextbox.Text.ToLower())).ToList();
+
+            Process_ListView.Items.Clear();
+
+            tempList.ForEach(x =>
+            {
+                ListViewItem listViewItem = new ListViewItem
+                {
+                    Name = x.Name,
+                    ImageIndex = x.ImageIndex,
+                    Text = x.Name
+                };
+                Process_ListView.Items.Add(listViewItem);
+            });
         }
 
         private void Process_List_Button_Click(object sender, EventArgs e)
         {
             if (ProcessIDs.Count == 0)
             {
-                MessageBox.Show(this, "ProcessIDs List is empty");
+                MetroMessageBox.Show(this, "ProcessIDs List is empty", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                 return;
             }
 
-            if (ListBox.Items.Count > 0) ListBox.Items.Clear();
+            if (Process_ListView.Items.Count > 0) Process_ListView.Items.Clear();
 
-            foreach (var _ID in ProcessIDs.Keys)
+            ProcessIDs.ForEach(x =>
             {
-                ListBox.Items.Add(_ID);
-            }
+                ListViewItem listViewItem = new ListViewItem
+                {
+                    Name = x.Name,
+                    ImageIndex = x.ImageIndex,
+                    Text = x.Name
+                };
+                Process_ListView.Items.Add(listViewItem);
+            });
         }
 
         private void Window_List_Button_Click(object sender, EventArgs e)
         {
-            if (WindowIDs.Count == 0)
+            if (ProcessIDs.Count(x => x.HasWindow) == 0)
             {
-                MessageBox.Show(this, "WindowIDs List is empty");
+                MetroMessageBox.Show(this, "No Windows found", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                 return;
             }
 
-            if (ListBox.Items.Count > 0) ListBox.Items.Clear();
+            if (Process_ListView.Items.Count > 0) Process_ListView.Items.Clear();
 
-            foreach (var _ID in WindowIDs.Keys)
+            ProcessIDs.ForEach(x =>
             {
-                ListBox.Items.Add(_ID);
-            }
+                if (x.HasWindow)
+                {
+                    ListViewItem listViewItem = new ListViewItem
+                    {
+                        Name = x.Name,
+                        ImageIndex = x.ImageIndex,
+                        Text = x.Name
+                    };
+                    Process_ListView.Items.Add(listViewItem);
+                }
+            });
         }
 
         private void Select_Button_Click(object sender, EventArgs e)
         {
-            if (ListBox.SelectedItem == null)
+            if (Process_ListView.SelectedItems.Count < 1)
             {
-                MessageBox.Show(this, "Select something first");
+                MetroMessageBox.Show(this, "Select something first", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                 return;
             }
-            if (ProcessIDs.TryGetValue(ListBox.SelectedItem.ToString(), out Globals.Selected_Process) || WindowIDs.TryGetValue(ListBox.SelectedItem.ToString(), out Globals.Selected_Process))
+
+            var selectedProcess = ProcessIDs.FirstOrDefault(x => x.Name == Process_ListView.SelectedItems[0].Name);
+            if (selectedProcess.Process == null)
             {
-                Close();
-            }
-            else
-            {
-                MessageBox.Show(this, "Could not find your selected Process");
+                MetroMessageBox.Show(this, "Could not find your selected Process", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                 return;
             }
+
+            Globals.SelectedProcess = selectedProcess.Process;
+            Close();
         }
 
         private void Close_Button_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void ProcessSelectForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Form_Loading_Thread.Abort();
         }
     }
 }
