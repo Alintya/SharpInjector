@@ -20,6 +20,7 @@ namespace SharpInjector
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            
             //>> Maybe look for a better Solution
             Task.Factory.StartNew(() =>
             {
@@ -27,17 +28,19 @@ namespace SharpInjector
                 {
                     Inject_Button.Style = Globals.SelectedProcess != null && Globals.DLL_List.Any() ? Inject_Button.Style = MetroColorStyle.Green : Inject_Button.Style = MetroColorStyle.Red;
                     Inject_Button.Invoke(new MethodInvoker(() => Inject_Button.Refresh()));
-                    Thread.Sleep(50);
+                    Thread.Sleep(100);
                 }
             });
+            
         }
 
         private void Process_Name_Textbox_TextChanged(object sender, EventArgs e)
         {
             if (!Process_Name_Textbox.ContainsFocus)
             {
-                Process_Name_Textbox.Text = $"{Globals.SelectedProcess.ProcessName}.exe";
+                Process_Name_Textbox.Text = $@"{Globals.SelectedProcess.ProcessName}.exe";
                 Process_Name_Textbox.Style = MetroColorStyle.Green;
+                Process_Name_Textbox.Refresh();
                 return;
             }
 
@@ -57,11 +60,16 @@ namespace SharpInjector
 
                     if (instanceCount > 1) MetroMessageBox.Show(this, $"Found {instanceCount} instances named '{Process_Name_Textbox.Text}', using the one with ID: {processID} \n\nYou might want to use 'Choose Process' if you want to inject it into a different instance", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Information, 200);
 
-                    // TODO display process info on main form
                 }
             }
 
             Process_Name_Textbox.Refresh();
+        }
+
+        private void Process_Name_Textbox_StyleChanged(object sender, EventArgs e)
+        {
+            MessageBox.Show(Process_Name_Textbox.Style.ToString());
+            // TODO use to display process info or "not found" string
         }
 
         private void Choose_Process_Button_Click(object sender, EventArgs e)
@@ -166,5 +174,6 @@ namespace SharpInjector
                     throw new Exception("gj m8 you broke the matrix");
             }
         }
+
     }
 }

@@ -45,11 +45,12 @@
             // 
             // Process_Name_Textbox
             // 
+            this.Process_Name_Textbox.CausesValidation = false;
             // 
             // 
             // 
             this.Process_Name_Textbox.CustomButton.Image = null;
-            this.Process_Name_Textbox.CustomButton.Location = new System.Drawing.Point(125, 1);
+            this.Process_Name_Textbox.CustomButton.Location = new System.Drawing.Point(133, 1);
             this.Process_Name_Textbox.CustomButton.Name = "";
             this.Process_Name_Textbox.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.Process_Name_Textbox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
@@ -67,7 +68,8 @@
             this.Process_Name_Textbox.SelectedText = "";
             this.Process_Name_Textbox.SelectionLength = 0;
             this.Process_Name_Textbox.SelectionStart = 0;
-            this.Process_Name_Textbox.ShortcutsEnabled = true;
+            this.Process_Name_Textbox.ShortcutsEnabled = false;
+            this.Process_Name_Textbox.ShowButton = true;
             this.Process_Name_Textbox.Size = new System.Drawing.Size(155, 23);
             this.Process_Name_Textbox.Style = MetroFramework.MetroColorStyle.Red;
             this.Process_Name_Textbox.TabIndex = 0;
@@ -77,6 +79,7 @@
             this.Process_Name_Textbox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.Process_Name_Textbox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             this.Process_Name_Textbox.TextChanged += new System.EventHandler(this.Process_Name_Textbox_TextChanged);
+            this.Process_Name_Textbox.StyleChanged += new System.EventHandler(this.Process_Name_Textbox_StyleChanged);
             // 
             // Choose_Process_Button
             // 
