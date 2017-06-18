@@ -45,6 +45,8 @@ namespace SharpInjector
 
         public void PrepareInjection(string processName, Method method)
         {
+            var failed = new List<string>();
+
             Int32 processID = GetProcessID(processName);
             if (processID == -1)
             {
@@ -68,11 +70,18 @@ namespace SharpInjector
                 catch (Exception exception)
                 {
                     Console.WriteLine(exception);
-                    throw;
+                    failed.Add(dll);
                 }
-
-                MessageBox.Show("Successful");
             }
+
+            string text = $"Successfully injected {Globals.DLL_List.Count - failed.Count} dlls {Environment.NewLine}";
+            if (failed.Count > 0)
+            { 
+                text += $"Failed: ";
+                failed.ForEach(x => text += $"{x.ToString()}  ");
+            }
+
+            MessageBox.Show(text);
         }
 
         public Int32 GetProcessID(String proc)
@@ -89,33 +98,54 @@ namespace SharpInjector
             IntPtr bytesOut;
             WriteProcessMemory(hProcess, allocateMemory, strDLLName, (UIntPtr)lengthWrite, out bytesOut);
 
-            UIntPtr injector = GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
-            if (injector == null)
+            switch (method)
             {
-                MessageBox.Show("Injector Error! \n");
-                return;
+                case Method.Standard:
+
+                    UIntPtr injector = GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
+                    if (injector == null)
+                    {
+                        MessageBox.Show("Injector Error! \n");
+                        return;
+                    }
+
+                    IntPtr handleThread = CreateRemoteThread(hProcess, (IntPtr)null, 0, injector, allocateMemory, 0, out bytesOut);
+                    if (handleThread == null)
+                    {
+                        MessageBox.Show("hThread [ 1 ] Error! \n");
+                        return;
+                    }
+
+                    int result = WaitForSingleObject(handleThread, 10 * 1000);
+                    if (result == 0x00000080L || result == 0x00000102L || result == 0xFFFFFFF)
+                    {
+                        MessageBox.Show("hThread [ 2 ] Error! \n");
+                        if (handleThread != null) CloseHandle(handleThread);
+                        return;
+                    }
+
+                    if (handleThread != null)
+                        CloseHandle(handleThread);
+
+                    break;
+
+                case Method.ManualMap:
+
+                    throw new NotImplementedException();
+                    break;
+                case Method.ThreadHijacking:
+
+                    throw new NotImplementedException();
+                    break;
+                default:
+
+                    throw new ArgumentOutOfRangeException("Unsupported injection method");
             }
 
-            IntPtr handleThread = CreateRemoteThread(hProcess, (IntPtr)null, 0, injector, allocateMemory, 0, out bytesOut);
-            if (handleThread == null)
-            {
-                MessageBox.Show("hThread [ 1 ] Error! \n");
-                return;
-            }
-
-            int result = WaitForSingleObject(handleThread, 10 * 1000);
-            if (result == 0x00000080L || result == 0x00000102L || result == 0xFFFFFFF)
-            {
-                MessageBox.Show("hThread [ 2 ] Error! \n");
-                if (handleThread != null) CloseHandle(handleThread);
-                return;
-            }
 
             Thread.Sleep(1000);
 
             VirtualFreeEx(hProcess, allocateMemory, (UIntPtr)0, 0x8000);
-
-            if (handleThread != null) CloseHandle(handleThread);
 
             return;
         }
