@@ -122,7 +122,7 @@ namespace SharpInjector
                         {
                             HasWindow = !string.IsNullOrEmpty(process.MainWindowTitle),
                             ImageIndex = ImgList.Images.Count - 1,
-                            Name = $"{process.Id.ToString().PadLeft(6, '0')} - ({(Is64b ? "x64" : "x32")}) - {process.ProcessName.ToLower()}",
+                            Name = $"{process.Id.ToString().PadLeft(6, '0')} - ({(Is64b ? "x64" : "x86")}) - {process.ProcessName.ToLower()}",
                             Process = process,
                             IsWow64 = Is64b
                         });
