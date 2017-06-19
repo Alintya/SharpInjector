@@ -223,12 +223,14 @@
             this.Process_ListView.ForeColor = System.Drawing.SystemColors.Menu;
             this.Process_ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.Process_ListView.Location = new System.Drawing.Point(3, 3);
+            this.Process_ListView.MultiSelect = false;
             this.Process_ListView.Name = "Process_ListView";
             this.Process_ListView.Size = new System.Drawing.Size(233, 232);
             this.Process_ListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.Process_ListView.TabIndex = 2;
             this.Process_ListView.UseCompatibleStateImageBehavior = false;
             this.Process_ListView.View = System.Windows.Forms.View.Details;
+            this.Process_ListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Process_ListView_MouseDoubleClick);
             // 
             // Header_Background_Panel
             // 

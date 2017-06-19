@@ -7,8 +7,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
-
 using MetroFramework;
+using Color = System.Drawing.Color;
+using HorizontalAlignment = System.Windows.Forms.HorizontalAlignment;
+using Size = System.Drawing.Size;
 
 namespace SharpInjector
 {
@@ -26,7 +28,7 @@ namespace SharpInjector
         private enum Filter
         {
             Window,
-            All
+            None
         }
 
         private List<ProcessContainer> ProcessIDs = new List<ProcessContainer>();
@@ -116,7 +118,7 @@ namespace SharpInjector
 
                     try
                     {
-                        ImgList.Images.Add(Icon.ExtractAssociatedIcon(process.MainModule.FileName).ToBitmap());
+                        ImgList.Images.Add(Icon.ExtractAssociatedIcon(process.MainModule.FileName));
 
                         bool Is64b = Extra.NativeMethods.IsWin64Emulator(process);
                         ProcessIDs.Add(new ProcessContainer
@@ -136,7 +138,7 @@ namespace SharpInjector
                     }
                 }
 
-                Process_ListView.Invoke(new MethodInvoker(() => RefreshList(Filter.All, ProcessIDs)));
+                Process_ListView.Invoke(new MethodInvoker(() => RefreshList(Filter.None, ProcessIDs)));
 
                 Invoke((MethodInvoker)(() =>
                 {
@@ -148,9 +150,17 @@ namespace SharpInjector
             });
         }
 
+        private void Process_ListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (Process_ListView.GetItemAt(e.X, e.Y).Name.Length > 1) 
+            {
+                Select_Button_Click(sender, e);
+            }
+        }
+
         private void SearchTextbox_TextChanged(object sender, EventArgs e)
         {
-            RefreshList(Filter.All, ProcessIDs.Where(x => x.Name.Contains(SearchTextbox.Text.ToLower())).ToList());
+            RefreshList(Filter.None, ProcessIDs.Where(x => x.Name.Contains(SearchTextbox.Text.ToLower())).ToList());
         }
 
         private void Process_List_Button_Click(object sender, EventArgs e)
@@ -160,7 +170,7 @@ namespace SharpInjector
                 MetroMessageBox.Show(this, "ProcessID List is empty", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                 return;
             }
-            RefreshList(Filter.All, ProcessIDs);
+            RefreshList(Filter.None, ProcessIDs);
         }
 
         private void Window_List_Button_Click(object sender, EventArgs e)
@@ -208,7 +218,7 @@ namespace SharpInjector
 
             list.ForEach(x =>
             {
-                if (filter == Filter.All) 
+                if (filter == Filter.None) 
                 {
                     ListViewItem listViewItem = new ListViewItem
                     {
