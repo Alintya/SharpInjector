@@ -223,5 +223,28 @@ namespace SharpInjector
                     throw new Exception("gj m8 you broke the matrix");
             }
         }
+
+        private void Inject_Method_Combobox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            /* TODO: Animation 
+            while (true) 
+            {
+                Application.DoEvents();
+
+                if (sizeY <= 248) return;
+
+                if (sizeY < 238) interval = Stopwatch.Frequency / 60.0;
+
+                if (Stopwatch.GetTimestamp() >= lastTick + interval) 
+                {
+                    lastTick = Stopwatch.GetTimestamp();
+                    sizeY--;
+
+                    this.ClientSize = new Size(360, sizeY);
+                    this.Invalidate();
+                }
+                Thread.Sleep(1);
+            } */
+        }
     }
 }

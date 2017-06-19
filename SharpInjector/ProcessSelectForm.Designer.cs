@@ -33,13 +33,13 @@
             this.Select_Button = new MetroFramework.Controls.MetroButton();
             this.Close_Button = new MetroFramework.Controls.MetroButton();
             this.SearchTextbox = new MetroFramework.Controls.MetroTextBox();
-            this.Header_Line_Panel = new MetroFramework.Controls.MetroPanel();
             this.Header_Minimize_Label = new MetroFramework.Controls.MetroLabel();
             this.Header_Title_Label = new MetroFramework.Controls.MetroLabel();
             this.Header_Close_Label = new MetroFramework.Controls.MetroLabel();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.Process_ListView = new System.Windows.Forms.ListView();
             this.Header_Background_Panel = new MetroFramework.Controls.MetroPanel();
+            this.Header_Line_Panel = new MetroFramework.Controls.MetroPanel();
             this.metroPanel1.SuspendLayout();
             this.Header_Background_Panel.SuspendLayout();
             this.SuspendLayout();
@@ -128,25 +128,6 @@
             this.SearchTextbox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.SearchTextbox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             this.SearchTextbox.TextChanged += new System.EventHandler(this.SearchTextbox_TextChanged);
-            // 
-            // Header_Line_Panel
-            // 
-            this.Header_Line_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.Header_Line_Panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Header_Line_Panel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Header_Line_Panel.HorizontalScrollbarBarColor = true;
-            this.Header_Line_Panel.HorizontalScrollbarHighlightOnWheel = false;
-            this.Header_Line_Panel.HorizontalScrollbarSize = 10;
-            this.Header_Line_Panel.Location = new System.Drawing.Point(0, 0);
-            this.Header_Line_Panel.Name = "Header_Line_Panel";
-            this.Header_Line_Panel.Size = new System.Drawing.Size(287, 7);
-            this.Header_Line_Panel.TabIndex = 7;
-            this.Header_Line_Panel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.Header_Line_Panel.UseCustomBackColor = true;
-            this.Header_Line_Panel.VerticalScrollbarBarColor = true;
-            this.Header_Line_Panel.VerticalScrollbarHighlightOnWheel = false;
-            this.Header_Line_Panel.VerticalScrollbarSize = 10;
-            this.Header_Line_Panel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Header_Line_Panel_MouseMove);
             // 
             // Header_Minimize_Label
             // 
@@ -252,6 +233,25 @@
             this.Header_Background_Panel.VerticalScrollbarSize = 10;
             this.Header_Background_Panel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Header_Background_Panel_MouseMove);
             // 
+            // Header_Line_Panel
+            // 
+            this.Header_Line_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
+            this.Header_Line_Panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Header_Line_Panel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Header_Line_Panel.HorizontalScrollbarBarColor = true;
+            this.Header_Line_Panel.HorizontalScrollbarHighlightOnWheel = false;
+            this.Header_Line_Panel.HorizontalScrollbarSize = 10;
+            this.Header_Line_Panel.Location = new System.Drawing.Point(0, 0);
+            this.Header_Line_Panel.Name = "Header_Line_Panel";
+            this.Header_Line_Panel.Size = new System.Drawing.Size(287, 7);
+            this.Header_Line_Panel.TabIndex = 7;
+            this.Header_Line_Panel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.Header_Line_Panel.UseCustomBackColor = true;
+            this.Header_Line_Panel.VerticalScrollbarBarColor = true;
+            this.Header_Line_Panel.VerticalScrollbarHighlightOnWheel = false;
+            this.Header_Line_Panel.VerticalScrollbarSize = 10;
+            this.Header_Line_Panel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Header_Line_Panel_MouseMove);
+            // 
             // ProcessSelectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -284,12 +284,12 @@
         private MetroFramework.Controls.MetroButton Select_Button;
         private MetroFramework.Controls.MetroButton Close_Button;
         private MetroFramework.Controls.MetroTextBox SearchTextbox;
-        private MetroFramework.Controls.MetroPanel Header_Line_Panel;
         private MetroFramework.Controls.MetroLabel Header_Title_Label;
         private MetroFramework.Controls.MetroLabel Header_Close_Label;
         private MetroFramework.Controls.MetroPanel metroPanel1;
         private MetroFramework.Controls.MetroLabel Header_Minimize_Label;
         private MetroFramework.Controls.MetroPanel Header_Background_Panel;
         private System.Windows.Forms.ListView Process_ListView;
+        private MetroFramework.Controls.MetroPanel Header_Line_Panel;
     }
 }

@@ -188,6 +188,7 @@
             this.Inject_Method_Combobox.TabIndex = 12;
             this.Inject_Method_Combobox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Inject_Method_Combobox.UseSelectable = true;
+            this.Inject_Method_Combobox.SelectedIndexChanged += new System.EventHandler(this.Inject_Method_Combobox_SelectedIndexChanged);
             // 
             // Header_Line_Panel
             // 
@@ -203,10 +204,11 @@
             // Header_Close_Label
             // 
             this.Header_Close_Label.AutoSize = true;
+            this.Header_Close_Label.Dock = System.Windows.Forms.DockStyle.Right;
             this.Header_Close_Label.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.Header_Close_Label.FontWeight = MetroFramework.MetroLabelWeight.Regular;
             this.Header_Close_Label.ForeColor = System.Drawing.Color.White;
-            this.Header_Close_Label.Location = new System.Drawing.Point(337, 10);
+            this.Header_Close_Label.Location = new System.Drawing.Point(340, 7);
             this.Header_Close_Label.Name = "Header_Close_Label";
             this.Header_Close_Label.Size = new System.Drawing.Size(20, 25);
             this.Header_Close_Label.Style = MetroFramework.MetroColorStyle.Blue;
@@ -239,10 +241,11 @@
             // Header_Minimize_Button
             // 
             this.Header_Minimize_Button.AutoSize = true;
+            this.Header_Minimize_Button.Dock = System.Windows.Forms.DockStyle.Right;
             this.Header_Minimize_Button.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.Header_Minimize_Button.FontWeight = MetroFramework.MetroLabelWeight.Regular;
             this.Header_Minimize_Button.ForeColor = System.Drawing.Color.White;
-            this.Header_Minimize_Button.Location = new System.Drawing.Point(316, 7);
+            this.Header_Minimize_Button.Location = new System.Drawing.Point(321, 7);
             this.Header_Minimize_Button.Name = "Header_Minimize_Button";
             this.Header_Minimize_Button.Size = new System.Drawing.Size(19, 25);
             this.Header_Minimize_Button.Style = MetroFramework.MetroColorStyle.Blue;
@@ -280,7 +283,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.ClientSize = new System.Drawing.Size(360, 247);
+            this.ClientSize = new System.Drawing.Size(360, 248);
             this.Controls.Add(this.Header_Background_Panel);
             this.Controls.Add(this.Inject_Method_Combobox);
             this.Controls.Add(this.Inject_Button);
@@ -294,6 +297,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Sharp Injector";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.metroPanel1.ResumeLayout(false);
