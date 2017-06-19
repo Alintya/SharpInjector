@@ -26,22 +26,22 @@ namespace SharpInjector
         {
             if (e.Button != MouseButtons.Left) return;
 
-            Extra.Drag.ReleaseCapture();
-            Extra.Drag.SendMessage(Handle, Extra.Drag.WM_NCLBUTTONDOWN, Extra.Drag.HT_CAPTION, 0);
+            Extra.Customs.ReleaseCapture();
+            Extra.Customs.SendMessage(Handle, Extra.Customs.WM_NCLBUTTONDOWN, Extra.Customs.HT_CAPTION, 0);
         }
 
         private void Header_Line_Panel_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
 
-            Extra.Drag.ReleaseCapture();
-            Extra.Drag.SendMessage(Handle, Extra.Drag.WM_NCLBUTTONDOWN, Extra.Drag.HT_CAPTION, 0);
+            Extra.Customs.ReleaseCapture();
+            Extra.Customs.SendMessage(Handle, Extra.Customs.WM_NCLBUTTONDOWN, Extra.Customs.HT_CAPTION, 0);
         }
 
         private void Header_Title_Text_MouseMove(object sender, MouseEventArgs e)
         {
-            Extra.Drag.ReleaseCapture();
-            Extra.Drag.SendMessage(Handle, Extra.Drag.WM_NCLBUTTONDOWN, Extra.Drag.HT_CAPTION, 0);
+            Extra.Customs.ReleaseCapture();
+            Extra.Customs.SendMessage(Handle, Extra.Customs.WM_NCLBUTTONDOWN, Extra.Customs.HT_CAPTION, 0);
         }
 
         private void Header_Close_Label_Click(object sender, EventArgs e)
