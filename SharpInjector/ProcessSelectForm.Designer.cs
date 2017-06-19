@@ -38,8 +38,8 @@
             this.Header_Title_Label = new MetroFramework.Controls.MetroLabel();
             this.Header_Close_Label = new MetroFramework.Controls.MetroLabel();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
-            this.Header_Background_Panel = new MetroFramework.Controls.MetroPanel();
             this.Process_ListView = new System.Windows.Forms.ListView();
+            this.Header_Background_Panel = new MetroFramework.Controls.MetroPanel();
             this.metroPanel1.SuspendLayout();
             this.Header_Background_Panel.SuspendLayout();
             this.SuspendLayout();
@@ -216,6 +216,20 @@
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
             // 
+            // Process_ListView
+            // 
+            this.Process_ListView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.Process_ListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Process_ListView.ForeColor = System.Drawing.SystemColors.Menu;
+            this.Process_ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.Process_ListView.Location = new System.Drawing.Point(3, 3);
+            this.Process_ListView.Name = "Process_ListView";
+            this.Process_ListView.Size = new System.Drawing.Size(233, 232);
+            this.Process_ListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.Process_ListView.TabIndex = 2;
+            this.Process_ListView.UseCompatibleStateImageBehavior = false;
+            this.Process_ListView.View = System.Windows.Forms.View.Details;
+            // 
             // Header_Background_Panel
             // 
             this.Header_Background_Panel.Controls.Add(this.Header_Line_Panel);
@@ -236,26 +250,12 @@
             this.Header_Background_Panel.VerticalScrollbarSize = 10;
             this.Header_Background_Panel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Header_Background_Panel_MouseMove);
             // 
-            // Process_ListView
-            // 
-            this.Process_ListView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.Process_ListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Process_ListView.ForeColor = System.Drawing.SystemColors.Menu;
-            this.Process_ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.Process_ListView.Location = new System.Drawing.Point(3, 3);
-            this.Process_ListView.Name = "Process_ListView";
-            this.Process_ListView.Size = new System.Drawing.Size(233, 232);
-            this.Process_ListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.Process_ListView.TabIndex = 2;
-            this.Process_ListView.UseCompatibleStateImageBehavior = false;
-            this.Process_ListView.View = System.Windows.Forms.View.Details;
-            // 
             // ProcessSelectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.ClientSize = new System.Drawing.Size(287, 405);
+            this.ClientSize = new System.Drawing.Size(287, 408);
             this.Controls.Add(this.Header_Background_Panel);
             this.Controls.Add(this.SearchTextbox);
             this.Controls.Add(this.Close_Button);
