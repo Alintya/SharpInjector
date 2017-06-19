@@ -152,10 +152,9 @@ namespace SharpInjector
 
         private void Process_ListView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (Process_ListView.GetItemAt(e.X, e.Y).Name.Length > 1) 
-            {
-                Select_Button_Click(sender, e);
-            }
+            if (Process_ListView.GetItemAt(e.X, e.Y).Name.Length == 0) return;
+
+            Select_Button_Click(sender, e);
         }
 
         private void SearchTextbox_TextChanged(object sender, EventArgs e)

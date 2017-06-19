@@ -103,29 +103,20 @@ namespace SharpInjector
                 Process_Name_Textbox.Style = MetroColorStyle.Red;
                 Globals.SelectedProcess = null;
 
-                if (Process_Name_Textbox.Text.EndsWith(".exe")) 
-                {
-                    int processID, instanceCount;
-                    processID = MemoryManager.GetProcessID(Process_Name_Textbox.Text, out instanceCount);
+                if (!Process_Name_Textbox.Text.EndsWith(".exe")) return;
 
-                    if (processID != -1) 
-                    {
-                        Process_Name_Textbox.Style = MetroColorStyle.Green;
+                int processID, instanceCount;
+                processID = MemoryManager.GetProcessID(Process_Name_Textbox.Text, out instanceCount);
 
-                        Globals.SelectedProcess = Process.GetProcessById(processID);
+                if (processID == -1) return;
 
-                        if (instanceCount > 1) MetroMessageBox.Show(this, $"Found {instanceCount} instances named '{Process_Name_Textbox.Text}', using the one with ID: {processID} \n\nYou might want to use 'Choose Process' if you want to inject it into a different instance", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Information, 200);
-                    }
-                }
+                Process_Name_Textbox.Style = MetroColorStyle.Green;
+
+                Globals.SelectedProcess = Process.GetProcessById(processID);
+
+                if (instanceCount > 1) MetroMessageBox.Show(this, $"Found {instanceCount} instances named '{Process_Name_Textbox.Text}', using the one with ID: {processID} \n\nYou might want to use 'Choose Process' if you want to inject it into a different instance", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Information, 200);
             }
-            
             Process_Name_Textbox.Refresh();
-        }
-
-        private void Process_Name_Textbox_StyleChanged(object sender, EventArgs e)
-        {
-            MessageBox.Show(Process_Name_Textbox.Style.ToString());
-            // TODO use to display process info or "not found" string
         }
 
         private void Choose_Process_Button_Click(object sender, EventArgs e)
@@ -141,10 +132,9 @@ namespace SharpInjector
         {
             Choose_Process_Button.Enabled = true;
 
-            if (Globals.SelectedProcess != null)
-            {
-                Process_Name_Textbox.Text = $@"{Globals.SelectedProcess.ProcessName}.exe";
-            }
+            if (Globals.SelectedProcess == null) return;
+
+            Process_Name_Textbox.Text = $@"{Globals.SelectedProcess.ProcessName}.exe";
         }
 
         private void Add_DLL_Button_Click(object sender, EventArgs e)
@@ -175,10 +165,9 @@ namespace SharpInjector
             foreach (string dll in UI_DLL_List.SelectedItems)
             {
                 int index = Globals.DLL_List.FindIndex(x => x.Substring(x.LastIndexOf("\\", StringComparison.Ordinal)).Replace("\\", "").Equals(dll));
-                if (index != -1)
-                {
-                    Globals.DLL_List.RemoveAt(index);
-                }
+                if (index == -1) continue;
+
+                Globals.DLL_List.RemoveAt(index);
             }
             RefreshList();
         }
