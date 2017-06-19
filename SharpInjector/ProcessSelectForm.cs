@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -122,12 +123,14 @@ namespace SharpInjector
                         {
                             HasWindow = !string.IsNullOrEmpty(process.MainWindowTitle),
                             ImageIndex = ImgList.Images.Count - 1,
-                            Name = $"{process.Id.ToString().PadLeft(6, '0')} - ({(Is64b ? "x64" : "x86")}) - {process.ProcessName.ToLower()}",
+                            // TODO offer config to show as hex
+                            Name = $"{process.Id/*.PadLeft(6, '0')*/:D5} - ({(Is64b ? "x64" : "x86")}) - {process.ProcessName.ToLower()}",
+                            // format specifier faster as PadLeft?
                             Process = process,
                             IsWow64 = Is64b
                         });
                     }
-                    catch (Exception)
+                    catch (Win32Exception accessDeniedException)
                     {
                         //ImgList.Images.Add(Resources._default);
                     }
