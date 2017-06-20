@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 using MetroFramework;
 
 namespace SharpInjector
@@ -105,8 +104,8 @@ namespace SharpInjector
 
                 if (!Process_Name_Textbox.Text.EndsWith(".exe")) return;
 
-                int processID, instanceCount;
-                processID = MemoryManager.GetProcessID(Process_Name_Textbox.Text, out instanceCount);
+                int instanceCount;
+                var processID = MemoryManager.GetProcessID(Process_Name_Textbox.Text, out instanceCount);
 
                 if (processID == -1) return;
 
