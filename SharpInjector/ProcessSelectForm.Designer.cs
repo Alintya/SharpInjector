@@ -113,7 +113,7 @@
             this.SearchTextbox.MaxLength = 32767;
             this.SearchTextbox.Name = "SearchTextbox";
             this.SearchTextbox.PasswordChar = '\0';
-            this.SearchTextbox.PromptText = "Search Process";
+            //this.SearchTextbox.PromptText = "Search Process";
             this.SearchTextbox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.SearchTextbox.SelectedText = "";
             this.SearchTextbox.SelectionLength = 0;

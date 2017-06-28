@@ -135,6 +135,8 @@ namespace SharpInjector
                     catch (Win32Exception accessDeniedException)
                     {
                         //ImgList.Images.Add(Resources._default);
+                        // TODO replace with logging
+                        Console.WriteLine(process.ProcessName + Environment.NewLine + accessDeniedException.Message);
                     }
                 }
 

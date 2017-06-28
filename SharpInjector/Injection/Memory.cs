@@ -6,7 +6,7 @@ using System.Threading;
 using System.Windows.Forms;
 using MetroFramework;
 
-namespace SharpInjector
+namespace SharpInjector.Injection
 {
     internal class Memory
     {
@@ -78,10 +78,10 @@ namespace SharpInjector
                 }
             }
 
-            string text = $"Successfully injected {Globals.DLL_List.Count - failed.Count} dlls {Environment.NewLine}";
+            string text = $"Successfully injected {Globals.DLL_List.Count - failed.Count} dlls";
             if (failed.Count > 0)
             { 
-                text += "Failed: ";
+                text += $"{Environment.NewLine}Failed: ";
                 failed.ForEach(x => text += $"{x.ToString()}  ");
             }
 
@@ -131,16 +131,17 @@ namespace SharpInjector
                     }
 
                     if (handleThread != null) CloseHandle(handleThread);
-
                     break;
                 }
                 case Method.ManualMap:
                 {
                     throw new NotImplementedException();
+                    break;
                 }
                 case Method.ThreadHijacking:
                 {
                     throw new NotImplementedException();
+                    break;
                 }
                 default:
                     throw new ArgumentOutOfRangeException("Unsupported injection method");

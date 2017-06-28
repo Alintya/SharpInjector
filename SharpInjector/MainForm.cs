@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework;
+using SharpInjector.Injection;
 
 namespace SharpInjector
 {
@@ -77,7 +78,7 @@ namespace SharpInjector
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            //>> Maybe look for a better Solution
+            // TODO >> Maybe look for a better Solution
             Task.Factory.StartNew(() =>
             {
                 while (true)
