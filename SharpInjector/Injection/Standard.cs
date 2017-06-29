@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MetroFramework;
+
 using static SharpInjector.Extra;
+
+using MetroFramework;
 
 namespace SharpInjector.Injection
 {
@@ -17,10 +15,10 @@ namespace SharpInjector.Injection
             UIntPtr injector = NativeMethods.GetProcAddress(NativeMethods.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
 
             Int32 lengthWrite = dll.Length + 1;
-            IntPtr allocateMemory = Extra.NativeMethods.VirtualAllocEx(hProcess, (IntPtr)null, (uint)lengthWrite, 0x1000, 0x40);
+            IntPtr allocateMemory = NativeMethods.VirtualAllocEx(hProcess, (IntPtr)null, (uint)lengthWrite, 0x1000, 0x40);
 
             IntPtr bytesOut;
-            Extra.NativeMethods.WriteProcessMemory(hProcess, allocateMemory, dll, (UIntPtr)lengthWrite, out bytesOut);
+            NativeMethods.WriteProcessMemory(hProcess, allocateMemory, dll, (UIntPtr)lengthWrite, out bytesOut);
 
             if (injector == UIntPtr.Zero)
             {
@@ -43,13 +41,11 @@ namespace SharpInjector.Injection
                 return;
             }
 
-            if (handleThread != null) NativeMethods.CloseHandle(handleThread);
+            NativeMethods.CloseHandle(handleThread);
 
             Thread.Sleep(1000);
 
             NativeMethods.VirtualFreeEx(hProcess, allocateMemory, (UIntPtr)0, 0x8000);
         }
-        
-
     }
 }
