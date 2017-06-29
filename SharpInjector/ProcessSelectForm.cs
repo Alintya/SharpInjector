@@ -7,10 +7,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
-using MetroFramework;
 using Color = System.Drawing.Color;
 using HorizontalAlignment = System.Windows.Forms.HorizontalAlignment;
 using Size = System.Drawing.Size;
+
+using MetroFramework;
 
 namespace SharpInjector
 {

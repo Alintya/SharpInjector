@@ -41,13 +41,12 @@ namespace SharpInjector
         }
 
 
-        private bool Init()
+        private void Init()
         {
             lock (this)
             {
                 // Fail if logfile is void
-                if (string.IsNullOrEmpty(_logFilename))
-                    return false;
+                if (string.IsNullOrEmpty(_logFilename)) return;
 
                 // Delete log file if it exists
                 if (!_append)
@@ -58,7 +57,7 @@ namespace SharpInjector
                     }
                     catch (Exception)
                     {
-                        return false;
+                        return;
                     }
                 }
 
@@ -72,7 +71,7 @@ namespace SharpInjector
                     catch (Exception)
                     {
                         _logFile = null;
-                        return false;
+                        return;
                     }
                 }
                 else
@@ -84,12 +83,10 @@ namespace SharpInjector
                     catch (Exception)
                     {
                         _logFile = null;
-                        return false;
+                        return;
                     }
                 }
                 _logFile.AutoFlush = true;
-
-                return true;
             }
         }
 
@@ -141,8 +138,7 @@ namespace SharpInjector
             lock (this)
             {
                 // Ignore message logging is paused or it doesn't pass the filter
-                if ((_levels & (uint)level) != (uint)level)
-                    return true;
+                if ((_levels & (uint)level) != (uint)level) return true;
 
                 // Write log message
                 DateTime tmNow = DateTime.Now;
@@ -151,6 +147,5 @@ namespace SharpInjector
                 return true;
             }
         }
-
     }
 }

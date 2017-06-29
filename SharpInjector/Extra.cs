@@ -62,8 +62,6 @@ namespace SharpInjector
                 bool retVal;
                 return IsWow64Process(process.Handle, out retVal) && retVal;
             }
-
-
         }
     }
 }
