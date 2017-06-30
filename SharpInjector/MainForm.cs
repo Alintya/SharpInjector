@@ -80,6 +80,8 @@ namespace SharpInjector
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            Inject_Method_Combobox.SelectedIndex = 0;
+
             // TODO >> Maybe look for a better Solution
             Task.Factory.StartNew(() =>
             {
