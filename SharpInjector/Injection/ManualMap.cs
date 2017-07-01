@@ -8,6 +8,9 @@ namespace SharpInjector.Injection
 {
     internal static class ManualMap
     {
+        public static void Inject(IntPtr processHandlePtr, string dll)
+        {
 
+        }
     }
 }

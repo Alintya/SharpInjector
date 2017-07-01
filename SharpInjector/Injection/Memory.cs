@@ -73,7 +73,7 @@ namespace SharpInjector.Injection
                 {
                     try
                     {
-                        Task.Factory.StartNew(() => Injection.Standard.Inject(hProcess, strDLLName));
+                        Injection.Standard.Inject(hProcess, strDLLName);
                     }
                     catch (Exception)
                     {
@@ -89,7 +89,14 @@ namespace SharpInjector.Injection
                 }
                 case Method.ThreadHijacking:
                 {
-                    throw new NotImplementedException();
+                    try
+                    {
+                        Injection.ThreadHijack.Inject(hProcess, strDLLName);
+                    }
+                    catch (Exception )
+                    {
+                        throw;
+                    }
                     break;
                 }
                 default:
