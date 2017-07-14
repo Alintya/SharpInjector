@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,16 +18,18 @@ namespace SharpInjector.Injection
             ManualMap
         }
 
-        /* TODO remove processName arg */
         public void PrepareInjection(string processName, Method method)
         {
-            if (Globals.SelectedProcess.Id == -1)
+            int procId = GetProcessID(processName);
+             
+
+            if (procId == -1)
             {
                 MetroMessageBox.Show(Form.ActiveForm, "Process not found", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                 return;
             }
 
-            IntPtr handleProcess = Extra.NativeMethods.OpenProcess(0x1F0FFF, 1, Globals.SelectedProcess.Id);
+            IntPtr handleProcess = Extra.NativeMethods.OpenProcess(0x1F0FFF, 1, procId);
             if (handleProcess == IntPtr.Zero)
             {
                 MetroMessageBox.Show(Form.ActiveForm, "OpenProcess() Failed!", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
@@ -58,6 +61,34 @@ namespace SharpInjector.Injection
             MetroMessageBox.Show(Form.ActiveForm, text, "Done", failed.Count > 0 ? MessageBoxButtons.YesNo : MessageBoxButtons.OK, failed.Count > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
         }
 
+        public Int32 GetProcessID(String proc)
+        {
+            int pId;
+
+            Process[] processList = Process.GetProcessesByName(proc.Remove(proc.Length - 4));
+
+            if (processList.Length > 1)
+            {
+                try
+                {
+                    pId = processList.First(x => x.Id == Globals.SelectedProcess.Id).Id;
+                }
+                catch (InvalidOperationException e)
+                {
+                    pId = -1;
+                }
+
+
+                if (pId > 0)
+                    return pId;
+                // TODO: Prompt to choose process
+                // Init Process select form with given processes?
+                MetroMessageBox.Show(Form.ActiveForm, "Found multiple instances");
+            }
+
+            return processList.Length > 0 ? processList[0].Id : -1;
+        }
+
         public Int32 GetProcessID(String proc, out int instances)
         {
             Process[] processList = Process.GetProcessesByName(proc.Remove(proc.Length - 4));
@@ -65,7 +96,7 @@ namespace SharpInjector.Injection
             return processList.Length > 0 ? processList[0].Id : -1;
         }
 
-        private void Inject(IntPtr hProcess, String strDLLName, Method method)
+        private static void Inject(IntPtr hProcess, String strDLLName, Method method)
         {
             switch (method)
             {

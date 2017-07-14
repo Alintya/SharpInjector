@@ -43,11 +43,11 @@ namespace SharpInjector.Injection
                 return;
             }
 
-            NativeMethods.CloseHandle(handleThread);
-
             Thread.Sleep(1000);
 
             NativeMethods.VirtualFreeEx(processHandlePtr, allocateMemory, 0, 0x8000);
+
+            NativeMethods.CloseHandle(handleThread);
         }
 
         public static IntPtr CreateMultiLoadStub(string[] paths, IntPtr hProcess, out IntPtr pModuleBuffer, uint nullmodule = 0)
