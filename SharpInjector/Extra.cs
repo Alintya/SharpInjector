@@ -87,6 +87,7 @@ namespace SharpInjector
             public static bool IsWin64Emulator(Process process)
             {
                 if (Environment.OSVersion.Version.Major <= 5 && (Environment.OSVersion.Version.Major != 5 || Environment.OSVersion.Version.Minor < 1)) return false;
+                if (!Environment.Is64BitProcess) return false;
 
                 bool retVal;
                 return IsWow64Process(process.Handle, out retVal) && retVal;
