@@ -1,46 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Threading;
+using System.Diagnostics;
 using System.Windows.Forms;
+using System.Collections.Generic;
+
 using MetroFramework;
 
 namespace SharpInjector
 {
     internal class Memory
     {
-        #region kernel32 imports
-
-        [DllImport("kernel32")]
-        private static extern IntPtr CreateRemoteThread(IntPtr hProcess, IntPtr lpThreadAttributes, uint dwStackSize, UIntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, out IntPtr lpThreadId);
-
-        [DllImport("kernel32.dll")]
-        private static extern IntPtr OpenProcess(UInt32 dwDesiredAccess, Int32 bInheritHandle, Int32 dwProcessId);
-
-        [DllImport("kernel32.dll")]
-        private static extern Int32 CloseHandle(IntPtr hObject);
-
-        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
-        private static extern bool VirtualFreeEx(IntPtr hProcess, IntPtr lpAddress, UIntPtr dwSize, uint dwFreeType);
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Ansi, ExactSpelling = true)]
-        private static extern UIntPtr GetProcAddress(IntPtr hModule, string procName);
-
-        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
-        private static extern IntPtr VirtualAllocEx(IntPtr hProcess, IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);
-
-        [DllImport("kernel32.dll")]
-        private static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, string lpBuffer, UIntPtr nSize, out IntPtr lpNumberOfBytesWritten);
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-        private static extern IntPtr GetModuleHandle(string lpModuleName);
-
-        [DllImport("kernel32", SetLastError = true, ExactSpelling = true)]
-        private static extern Int32 WaitForSingleObject(IntPtr handle, Int32 milliseconds);
-        
-        #endregion
-
         public enum Method
         {
             Standard,
@@ -49,98 +18,105 @@ namespace SharpInjector
         }
 
         /* TODO remove processName arg */
-        public void PrepareInjection(string processName, Method method)
+        public void Inject(string processName, Method method)
         {
-            if (Globals.SelectedProcess.Id == -1)
+            if (Globals.Selected_Process.Id == -1)
             {
                 MetroMessageBox.Show(Form.ActiveForm, "Process not found", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                 return;
             }
 
-            IntPtr handleProcess = OpenProcess(0x1F0FFF, 1, Globals.SelectedProcess.Id);
-            if (handleProcess == IntPtr.Zero)
+            IntPtr process_handle = Extra.Imports.OpenProcess(0x1F0FFF, 1, Globals.Selected_Process.Id);
+            if (process_handle == IntPtr.Zero)
             {
-                MetroMessageBox.Show(Form.ActiveForm, "OpenProcess() Failed!", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
+                MetroMessageBox.Show(Form.ActiveForm, "Cannot open handle to process", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                 return;
             }
 
-            var failed = new List<string>();
-            foreach (string dll in Globals.DLL_List)
+            List<string> failed_injections = new List<string>();
+
+            foreach (string dll in Globals.Dll_list)
             {
                 try
                 {
-                    Inject(handleProcess, dll, method);
+                    Inject(process_handle, dll, method);
                 }
-                catch (Exception exception)
+                catch /*(Exception exception)*/
                 {
-                    Console.WriteLine(exception);
-                    failed.Add(dll);
+                    failed_injections.Add(dll);
                 }
             }
 
-            string text = $"Successfully injected {Globals.DLL_List.Count - failed.Count} dlls {Environment.NewLine}";
-            if (failed.Count > 0)
-            { 
+            string text = $"Successfully injected {Globals.Dll_list.Count - failed_injections.Count} dlls {Environment.NewLine}";
+
+            if (failed_injections.Count > 0)
+            {
                 text += "Failed: ";
-                failed.ForEach(x => text += $"{x.ToString()}  ");
+                failed_injections.ForEach(x => text += $"{x.ToString()}  ");
             }
 
             // TODO catch user response in case of error to show log
-            MetroMessageBox.Show(Form.ActiveForm, text, "Done", failed.Count > 0 ? MessageBoxButtons.YesNo : MessageBoxButtons.OK, failed.Count > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
+            // MetroMessageBox.Show(Form.ActiveForm, text, "Done", failed_injections.Count > 0 ? MessageBoxButtons.YesNo : MessageBoxButtons.OK, failed_injections.Count > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
+
+            MessageBox.Show(Form.ActiveForm, text, "Done", failed_injections.Count > 0 ? MessageBoxButtons.YesNo : MessageBoxButtons.OK, failed_injections.Count > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
         }
 
         public Int32 GetProcessID(String proc, out int instances)
         {
             Process[] processList = Process.GetProcessesByName(proc.Remove(proc.Length - 4));
+
             instances = processList.Length;
+
             return processList.Length > 0 ? processList[0].Id : -1;
         }
 
-        private void Inject(IntPtr hProcess, String strDLLName, Method method)
+        private void Inject(IntPtr hProcess, string strDLLName, Method method)
         {
-            Int32 lengthWrite = strDLLName.Length + 1;
-            IntPtr allocateMemory = VirtualAllocEx(hProcess, (IntPtr)null, (uint)lengthWrite, 0x1000, 0x40);
+            int length_write = strDLLName.Length + 1;
 
-            IntPtr bytesOut;
-            WriteProcessMemory(hProcess, allocateMemory, strDLLName, (UIntPtr)lengthWrite, out bytesOut);
+            IntPtr allocated_memory = Extra.Imports.VirtualAllocEx(hProcess, IntPtr.Zero, (uint)length_write, 0x1000, 0x40);
+
+            Extra.Imports.WriteProcessMemory(hProcess, allocated_memory, strDLLName, (UIntPtr)length_write, out IntPtr bytesOut);
 
             switch (method)
             {
                 case Method.Standard:
                 {
-                    UIntPtr injector = GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
-                    if (injector == UIntPtr.Zero) 
+                    UIntPtr injector = Extra.Imports.GetProcAddress(Extra.Imports.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
+                    if (injector == UIntPtr.Zero)
                     {
                         MetroMessageBox.Show(Form.ActiveForm, "Injector Error!", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                         return;
                     }
 
-                    IntPtr handleThread = CreateRemoteThread(hProcess, (IntPtr)null, 0, injector, allocateMemory, 0, out bytesOut);
-                    if (handleThread == IntPtr.Zero) 
+                    IntPtr thread_handle = Extra.Imports.CreateRemoteThread(hProcess, IntPtr.Zero, 0, injector, allocated_memory, 0, out bytesOut);
+                    if (thread_handle == IntPtr.Zero)
                     {
-                        MetroMessageBox.Show(Form.ActiveForm, "hThread [ 1 ] Error!", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
+                        MetroMessageBox.Show(Form.ActiveForm, "hThread [1] Error!", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
                         return;
                     }
 
-                    int result = WaitForSingleObject(handleThread, 10 * 1000);
-                    if (result == 0x00000080L || result == 0x00000102L || result == 0xFFFFFFF) 
+                    int result = Extra.Imports.WaitForSingleObject(thread_handle, 10 * 1000);
+                    if (result == 0x00000080L || result == 0x00000102L || result == 0xFFFFFFF)
                     {
-                        MetroMessageBox.Show(Form.ActiveForm, "hThread [ 2 ] Error!", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
-                        CloseHandle(handleThread);
+                        MetroMessageBox.Show(Form.ActiveForm, "hThread [2] Error!", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 115);
+
+                        Extra.Imports.CloseHandle(thread_handle);
+
                         return;
                     }
 
-                    if (handleThread != null) CloseHandle(handleThread);
+                    if (thread_handle != null) Extra.Imports.CloseHandle(thread_handle);
 
                     break;
                 }
                 case Method.ManualMap:
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("Not Implemented!");
                 }
                 case Method.ThreadHijacking:
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("Not Implemented!");
                 }
                 default:
                     throw new ArgumentOutOfRangeException("Unsupported injection method");
@@ -148,7 +124,7 @@ namespace SharpInjector
 
             Thread.Sleep(1000);
 
-            VirtualFreeEx(hProcess, allocateMemory, (UIntPtr)0, 0x8000);
+            Extra.Imports.VirtualFreeEx(hProcess, allocated_memory, (UIntPtr)0, 0x8000);
         }
     }
 }

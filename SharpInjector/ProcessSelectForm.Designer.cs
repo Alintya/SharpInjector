@@ -43,9 +43,9 @@
             this.metroPanel1.SuspendLayout();
             this.Header_Background_Panel.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // Window_List_Button
-            // 
+            //
             this.Window_List_Button.Enabled = false;
             this.Window_List_Button.Location = new System.Drawing.Point(146, 333);
             this.Window_List_Button.Name = "Window_List_Button";
@@ -56,9 +56,9 @@
             this.Window_List_Button.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Window_List_Button.UseSelectable = true;
             this.Window_List_Button.Click += new System.EventHandler(this.Window_List_Button_Click);
-            // 
+            //
             // Process_List_Button
-            // 
+            //
             this.Process_List_Button.Enabled = false;
             this.Process_List_Button.Location = new System.Drawing.Point(23, 333);
             this.Process_List_Button.Name = "Process_List_Button";
@@ -69,9 +69,9 @@
             this.Process_List_Button.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Process_List_Button.UseSelectable = true;
             this.Process_List_Button.Click += new System.EventHandler(this.Process_List_Button_Click);
-            // 
+            //
             // Select_Button
-            // 
+            //
             this.Select_Button.Location = new System.Drawing.Point(23, 362);
             this.Select_Button.Name = "Select_Button";
             this.Select_Button.Size = new System.Drawing.Size(117, 23);
@@ -81,9 +81,9 @@
             this.Select_Button.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Select_Button.UseSelectable = true;
             this.Select_Button.Click += new System.EventHandler(this.Select_Button_Click);
-            // 
+            //
             // Close_Button
-            // 
+            //
             this.Close_Button.Location = new System.Drawing.Point(146, 362);
             this.Close_Button.Name = "Close_Button";
             this.Close_Button.Size = new System.Drawing.Size(118, 23);
@@ -93,12 +93,12 @@
             this.Close_Button.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Close_Button.UseSelectable = true;
             this.Close_Button.Click += new System.EventHandler(this.Close_Button_Click);
-            // 
+            //
             // SearchTextbox
-            // 
-            // 
-            // 
-            // 
+            //
+            //
+            //
+            //
             this.SearchTextbox.CustomButton.Image = null;
             this.SearchTextbox.CustomButton.Location = new System.Drawing.Point(219, 1);
             this.SearchTextbox.CustomButton.Name = "";
@@ -113,7 +113,7 @@
             this.SearchTextbox.MaxLength = 32767;
             this.SearchTextbox.Name = "SearchTextbox";
             this.SearchTextbox.PasswordChar = '\0';
-            this.SearchTextbox.PromptText = "Search Process";
+            this.SearchTextbox.WaterMark = "Search Process";
             this.SearchTextbox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.SearchTextbox.SelectedText = "";
             this.SearchTextbox.SelectionLength = 0;
@@ -128,9 +128,9 @@
             this.SearchTextbox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.SearchTextbox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             this.SearchTextbox.TextChanged += new System.EventHandler(this.SearchTextbox_TextChanged);
-            // 
+            //
             // Header_Line_Panel
-            // 
+            //
             this.Header_Line_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
             this.Header_Line_Panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Header_Line_Panel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -147,9 +147,9 @@
             this.Header_Line_Panel.VerticalScrollbarHighlightOnWheel = false;
             this.Header_Line_Panel.VerticalScrollbarSize = 10;
             this.Header_Line_Panel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Header_Line_Panel_MouseMove);
-            // 
+            //
             // Header_Minimize_Label
-            // 
+            //
             this.Header_Minimize_Label.AutoSize = true;
             this.Header_Minimize_Label.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.Header_Minimize_Label.FontWeight = MetroFramework.MetroLabelWeight.Regular;
@@ -165,9 +165,9 @@
             this.Header_Minimize_Label.Click += new System.EventHandler(this.Header_Minimize_Label_Click);
             this.Header_Minimize_Label.MouseEnter += new System.EventHandler(this.Header_Minimize_Label_MouseEnter);
             this.Header_Minimize_Label.MouseLeave += new System.EventHandler(this.Header_Minimize_Label_MouseLeave);
-            // 
+            //
             // Header_Title_Label
-            // 
+            //
             this.Header_Title_Label.AutoSize = true;
             this.Header_Title_Label.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.Header_Title_Label.FontWeight = MetroFramework.MetroLabelWeight.Regular;
@@ -181,9 +181,9 @@
             this.Header_Title_Label.UseCustomBackColor = true;
             this.Header_Title_Label.UseCustomForeColor = true;
             this.Header_Title_Label.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Header_Title_Label_MouseMove);
-            // 
+            //
             // Header_Close_Label
-            // 
+            //
             this.Header_Close_Label.AutoSize = true;
             this.Header_Close_Label.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.Header_Close_Label.FontWeight = MetroFramework.MetroLabelWeight.Regular;
@@ -199,9 +199,9 @@
             this.Header_Close_Label.Click += new System.EventHandler(this.Header_Close_Label_Click);
             this.Header_Close_Label.MouseEnter += new System.EventHandler(this.Header_Close_Label_MouseEnter);
             this.Header_Close_Label.MouseLeave += new System.EventHandler(this.Header_Close_Label_MouseLeave);
-            // 
+            //
             // metroPanel1
-            // 
+            //
             this.metroPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.metroPanel1.Controls.Add(this.Process_ListView);
             this.metroPanel1.HorizontalScrollbarBarColor = true;
@@ -215,9 +215,9 @@
             this.metroPanel1.VerticalScrollbarBarColor = true;
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
-            // 
+            //
             // Process_ListView
-            // 
+            //
             this.Process_ListView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.Process_ListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Process_ListView.ForeColor = System.Drawing.SystemColors.Menu;
@@ -229,9 +229,9 @@
             this.Process_ListView.TabIndex = 2;
             this.Process_ListView.UseCompatibleStateImageBehavior = false;
             this.Process_ListView.View = System.Windows.Forms.View.Details;
-            // 
+            //
             // Header_Background_Panel
-            // 
+            //
             this.Header_Background_Panel.Controls.Add(this.Header_Line_Panel);
             this.Header_Background_Panel.Controls.Add(this.Header_Minimize_Label);
             this.Header_Background_Panel.Controls.Add(this.Header_Title_Label);
@@ -249,9 +249,9 @@
             this.Header_Background_Panel.VerticalScrollbarHighlightOnWheel = false;
             this.Header_Background_Panel.VerticalScrollbarSize = 10;
             this.Header_Background_Panel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Header_Background_Panel_MouseMove);
-            // 
+            //
             // ProcessSelectForm
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));

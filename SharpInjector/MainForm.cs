@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
+using System.Drawing;
 using System.Threading;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 
 using MetroFramework;
 
@@ -13,7 +13,7 @@ namespace SharpInjector
 
     public partial class MainForm : Form
     {
-        private static Memory MemoryManager => new Memory();
+        private static Memory Memory_manager => new Memory();
 
         public MainForm()
         {
@@ -26,64 +26,43 @@ namespace SharpInjector
         {
             if (e.Button != MouseButtons.Left) return;
 
-            Extra.Drag.ReleaseCapture();
-            Extra.Drag.SendMessage(Handle, Extra.Drag.WM_NCLBUTTONDOWN, Extra.Drag.HT_CAPTION, 0);
+            Extra.Imports.ReleaseCapture();
+            Extra.Imports.SendMessage(Handle, Extra.Drag.WM_NCLBUTTONDOWN, Extra.Drag.HT_CAPTION, 0);
         }
 
         private void Header_Line_Panel_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
 
-            Extra.Drag.ReleaseCapture();
-            Extra.Drag.SendMessage(Handle, Extra.Drag.WM_NCLBUTTONDOWN, Extra.Drag.HT_CAPTION, 0);
+            Extra.Imports.ReleaseCapture();
+            Extra.Imports.SendMessage(Handle, Extra.Drag.WM_NCLBUTTONDOWN, Extra.Drag.HT_CAPTION, 0);
         }
 
         private void Header_Title_Text_MouseMove(object sender, MouseEventArgs e)
         {
-            Extra.Drag.ReleaseCapture();
-            Extra.Drag.SendMessage(Handle, Extra.Drag.WM_NCLBUTTONDOWN, Extra.Drag.HT_CAPTION, 0);
+            Extra.Imports.ReleaseCapture();
+            Extra.Imports.SendMessage(Handle, Extra.Drag.WM_NCLBUTTONDOWN, Extra.Drag.HT_CAPTION, 0);
         }
 
-        private void Header_Close_Label_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void Header_Close_Label_MouseEnter(object sender, EventArgs e)
-        {
-            Header_Close_Label.ForeColor = Color.LightGray;
-        }
-
-        private void Header_Close_Label_MouseLeave(object sender, EventArgs e)
-        {
-            Header_Close_Label.ForeColor = Color.White;
-        }
-
-        private void Header_Minimize_Button_Click(object sender, EventArgs e)
-        {
-            WindowState = FormWindowState.Minimized;
-        }
-
-        private void Header_Minimize_Button_MouseEnter(object sender, EventArgs e)
-        {
-            Header_Minimize_Button.ForeColor = Color.LightGray;
-        }
-
-        private void Header_Minimize_Button_MouseLeave(object sender, EventArgs e)
-        {
-            Header_Minimize_Button.ForeColor = Color.White;
-        }
+        private void Header_Close_Label_Click(object sender, EventArgs e) => Close();
+        private void Header_Close_Label_MouseEnter(object sender, EventArgs e) => Header_Close_Label.ForeColor = Color.LightGray;
+        private void Header_Close_Label_MouseLeave(object sender, EventArgs e) => Header_Close_Label.ForeColor = Color.White;
+        private void Header_Minimize_Button_Click(object sender, EventArgs e) => WindowState = FormWindowState.Minimized;
+        private void Header_Minimize_Button_MouseEnter(object sender, EventArgs e) => Header_Minimize_Button.ForeColor = Color.LightGray;
+        private void Header_Minimize_Button_MouseLeave(object sender, EventArgs e) => Header_Minimize_Button.ForeColor = Color.White;
 
         #endregion
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            Inject_Method_Combobox.SelectedIndex = 0;
+
             //>> Maybe look for a better Solution
             Task.Factory.StartNew(() =>
             {
                 while (true)
                 {
-                    Inject_Button.Style = Globals.SelectedProcess != null && Globals.DLL_List.Any() ? Inject_Button.Style = MetroColorStyle.Green : Inject_Button.Style = MetroColorStyle.Red;
+                    Inject_Button.Style = (Globals.Selected_Process != null && Globals.Dll_list.Any()) ? Inject_Button.Style = MetroColorStyle.Green : Inject_Button.Style = MetroColorStyle.Red;
                     Inject_Button.Invoke(new MethodInvoker(() => Inject_Button.Refresh()));
 
                     Thread.Sleep(100);
@@ -95,30 +74,30 @@ namespace SharpInjector
         {
             if (!Process_Name_Textbox.ContainsFocus)
             {
-                Process_Name_Textbox.Text = $@"{Globals.SelectedProcess.ProcessName}.exe";
+                Process_Name_Textbox.Text = Globals.Selected_Process.ProcessName;
                 Process_Name_Textbox.Style = MetroColorStyle.Green;
             }
             else
             {
                 Process_Name_Textbox.Style = MetroColorStyle.Red;
-                Globals.SelectedProcess = null;
+                Globals.Selected_Process = null;
 
-                if (Process_Name_Textbox.Text.EndsWith(".exe")) 
+                if (Process_Name_Textbox.Text.Length > 0)
                 {
-                    int processID, instanceCount;
-                    processID = MemoryManager.GetProcessID(Process_Name_Textbox.Text, out instanceCount);
+                    int processID;
+                    processID = Memory_manager.GetProcessID($"{ Process_Name_Textbox.Text }.exe", out int instanceCount);
 
-                    if (processID != -1) 
+                    if (processID != -1)
                     {
                         Process_Name_Textbox.Style = MetroColorStyle.Green;
 
-                        Globals.SelectedProcess = Process.GetProcessById(processID);
+                        Globals.Selected_Process = Process.GetProcessById(processID);
 
                         if (instanceCount > 1) MetroMessageBox.Show(this, $"Found {instanceCount} instances named '{Process_Name_Textbox.Text}', using the one with ID: {processID} \n\nYou might want to use 'Choose Process' if you want to inject it into a different instance", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Information, 200);
                     }
                 }
             }
-            
+
             Process_Name_Textbox.Refresh();
         }
 
@@ -132,40 +111,39 @@ namespace SharpInjector
         {
             Choose_Process_Button.Enabled = false;
 
-            ProcessSelectForm processSelectForm = new ProcessSelectForm();
-            processSelectForm.Show();
-            processSelectForm.FormClosed += ProcessSelectForm_Closed;
+            ProcessSelectForm process_select_form = new ProcessSelectForm();
+            {
+                process_select_form.Show();
+                process_select_form.FormClosed += ProcessSelectForm_Closed;
+            }
         }
 
         private void ProcessSelectForm_Closed(object sender, FormClosedEventArgs e)
         {
             Choose_Process_Button.Enabled = true;
 
-            if (Globals.SelectedProcess != null)
-            {
-                Process_Name_Textbox.Text = $@"{Globals.SelectedProcess.ProcessName}.exe";
-            }
+            if (Globals.Selected_Process != null) Process_Name_Textbox.Text = $@"{Globals.Selected_Process.ProcessName}.exe";
         }
 
         private void Add_DLL_Button_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            OpenFileDialog open_file_dialog = new OpenFileDialog();
             {
-                openFileDialog.Filter = "DLL Files (.dll)|*.dll|All Files (*.*)|*.*";
-                openFileDialog.FilterIndex = 1;
-                openFileDialog.Multiselect = true;
+                open_file_dialog.Filter = "DLL Files (.dll)|*.dll|All Files (*.*)|*.*";
+                open_file_dialog.FilterIndex = 1;
+                open_file_dialog.Multiselect = true;
             }
 
-            DialogResult ? dialogResultOK = openFileDialog.ShowDialog();
+            DialogResult ? dialog_result = open_file_dialog.ShowDialog();
 
-            if (dialogResultOK != DialogResult.OK) return;
+            if (dialog_result != DialogResult.OK) return;
 
-            foreach (string file in openFileDialog.FileNames)
+            foreach (string file in open_file_dialog.FileNames)
             {
-                if (Globals.DLL_List.Contains(file))
-                    continue;
+                if (Globals.Dll_list.Contains(file)) continue;
 
-                Globals.DLL_List.Add(file);
+                Globals.Dll_list.Add(file);
+
                 UI_DLL_List.Items.Add(file.Substring(file.LastIndexOf("\\", StringComparison.Ordinal)).Replace("\\", ""));
             }
         }
@@ -174,10 +152,11 @@ namespace SharpInjector
         {
             foreach (string dll in UI_DLL_List.SelectedItems)
             {
-                int index = Globals.DLL_List.FindIndex(x => x.Substring(x.LastIndexOf("\\", StringComparison.Ordinal)).Replace("\\", "").Equals(dll));
+                int index = Globals.Dll_list.FindIndex(x => x.Substring(x.LastIndexOf("\\", StringComparison.Ordinal)).Replace("\\", "").Equals(dll));
+
                 if (index != -1)
                 {
-                    Globals.DLL_List.RemoveAt(index);
+                    Globals.Dll_list.RemoveAt(index);
                 }
             }
             RefreshList();
@@ -185,13 +164,13 @@ namespace SharpInjector
 
         private void Clear_DLL_List_Button_Click(object sender, EventArgs e)
         {
-            if (Globals.DLL_List.Count == 0)
+            if (Globals.Dll_list.Count == 0)
             {
                 MetroMessageBox.Show(this, "DLL List is already empty", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 100);
                 return;
             }
 
-            Globals.DLL_List.Clear();
+            Globals.Dll_list.Clear();
             UI_DLL_List.Items.Clear();
         }
 
@@ -199,36 +178,39 @@ namespace SharpInjector
         {
             UI_DLL_List.Items.Clear();
 
-            foreach (string dll in Globals.DLL_List)
-            {
-                UI_DLL_List.Items.Add(dll.Substring(dll.LastIndexOf("\\", StringComparison.Ordinal)).Replace("\\", ""));
-            }
+            foreach (string dll in Globals.Dll_list) UI_DLL_List.Items.Add(dll.Substring(dll.LastIndexOf("\\", StringComparison.Ordinal)).Replace("\\", ""));
         }
 
         private void Inject_Button_Click(object sender, EventArgs e)
         {
-            if (Process_Name_Textbox.Text == String.Empty || !Process_Name_Textbox.Text.Contains(".exe"))
+            if (Process_Name_Textbox.Text == String.Empty || Process_Name_Textbox.Text.Length < 0)
             {
                 MetroMessageBox.Show(this, "No Process selected", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 100);
                 return;
             }
 
-            if (Globals.DLL_List.Count == 0)
+            if (Globals.Dll_list.Count == 0)
             {
                 MetroMessageBox.Show(this, "No DLL found", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 100);
+                return;
+            }
+
+            if (Inject_Method_Combobox.SelectedIndex < 0)
+            {
+                MetroMessageBox.Show(this, "Select a Inject Method first", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error, 100);
                 return;
             }
 
             switch (Inject_Method_Combobox.SelectedIndex)
             {
                 case 0:
-                    Task.Factory.StartNew(() => MemoryManager.PrepareInjection(Process_Name_Textbox.Text, Memory.Method.Standard));
+                    Task.Factory.StartNew(() => Memory_manager.Inject(Process_Name_Textbox.Text, Memory.Method.Standard));
                     return;
                 case 1:
-                    Task.Factory.StartNew(() => MemoryManager.PrepareInjection(Process_Name_Textbox.Text, Memory.Method.ManualMap));
+                    Task.Factory.StartNew(() => Memory_manager.Inject(Process_Name_Textbox.Text, Memory.Method.ManualMap));
                     return;
                 case 2:
-                    Task.Factory.StartNew(() => MemoryManager.PrepareInjection(Process_Name_Textbox.Text, Memory.Method.ThreadHijacking));
+                    Task.Factory.StartNew(() => Memory_manager.Inject(Process_Name_Textbox.Text, Memory.Method.ThreadHijacking));
                     return;
                 default:
                     throw new Exception("gj m8 you broke the matrix");

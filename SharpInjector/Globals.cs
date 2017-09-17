@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace SharpInjector
 {
     internal class Globals
     {
-        public static Process SelectedProcess;
-        public static List<string> DLL_List = new List<string>();
+        public static Process Selected_Process;
+        public static List<string> Dll_list = new List<string>();
     }
 }
