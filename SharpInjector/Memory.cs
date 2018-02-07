@@ -18,7 +18,7 @@ namespace SharpInjector
         }
 
         /* TODO remove processName arg */
-        public void Inject(string processName, Method method)
+        public void Inject(Method method)
         {
             if (Globals.Selected_Process.Id == -1)
             {
@@ -47,6 +47,8 @@ namespace SharpInjector
                 }
             }
 
+            Globals.Last_Pid = Globals.Selected_Process.Id;
+
             string text = $"Successfully injected {Globals.Dll_list.Count - failed_injections.Count} dlls {Environment.NewLine}";
 
             if (failed_injections.Count > 0)
@@ -58,7 +60,7 @@ namespace SharpInjector
             // TODO catch user response in case of error to show log
             // MetroMessageBox.Show(Form.ActiveForm, text, "Done", failed_injections.Count > 0 ? MessageBoxButtons.YesNo : MessageBoxButtons.OK, failed_injections.Count > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
 
-            MessageBox.Show(Form.ActiveForm, text, "Done", failed_injections.Count > 0 ? MessageBoxButtons.YesNo : MessageBoxButtons.OK, failed_injections.Count > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
+            //MessageBox.Show(Form.ActiveForm, text, "Done", failed_injections.Count > 0 ? MessageBoxButtons.YesNo : MessageBoxButtons.OK, failed_injections.Count > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
         }
 
         public Int32 GetProcessID(String proc, out int instances)
