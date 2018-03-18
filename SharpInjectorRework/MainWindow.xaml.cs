@@ -78,8 +78,9 @@ namespace SharpInjectorRework
             if (SelectProcessButton.IsEnabled)
                 SelectProcessButton.IsEnabled = false;
 
-            Utilities.Globals.WindowProcessSelection.Show();
-            Utilities.Globals.WindowProcessSelection.Closed += ProcessSelectionWindow_Closed;
+            var processSelectionWindow = new ProcessSelectionWindow();
+            processSelectionWindow.Show();
+            processSelectionWindow.Closed += ProcessSelectionWindow_Closed;
         }
 
         private void ProcessSelectionWindow_Closed(object sender, EventArgs e)
