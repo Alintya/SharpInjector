@@ -1,3 +1,16 @@
 # SharpInjectorRework - Current Design
 
-![PREVIEW](https://i.imgur.com/HJx8sfD.gifv)
+![Design Preview](https://i.imgur.com/tBwCB5Z.png)
+
+##TODO:
+________
+
+-Config System
+
+-Auto Inject
+
+-Injection
+
+-Select Process Window
+
+-Final Design
