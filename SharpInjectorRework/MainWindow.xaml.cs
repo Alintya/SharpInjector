@@ -83,14 +83,6 @@ namespace SharpInjectorRework
             processSelectionWindow.Closed += ProcessSelectionWindow_Closed;
         }
 
-        private void ProcessSelectionWindow_Closed(object sender, EventArgs e)
-        {
-            if (!SelectProcessButton.IsEnabled)
-                SelectProcessButton.IsEnabled = true;
-
-            // TODO:
-        }
-
         #endregion UI EVENTS
 
         #region CUSTOM UI EVENTS
@@ -139,6 +131,14 @@ namespace SharpInjectorRework
 #endif
 
             DllsListBox.Items.Remove(e.DllName());
+        }
+
+        private void ProcessSelectionWindow_Closed(object sender, EventArgs e)
+        {
+            if (!SelectProcessButton.IsEnabled)
+                SelectProcessButton.IsEnabled = true;
+
+            // TODO:
         }
 
         #endregion CUSTOM EVENTS

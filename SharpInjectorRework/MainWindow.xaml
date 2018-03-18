@@ -75,10 +75,10 @@
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>
-        <Button x:Name="RemoveSelectedItemButton" Content="REMOVE SELECTED" HorizontalAlignment="Left" Margin="48,91,0,0" VerticalAlignment="Top" Width="116" Style="{DynamicResource MaterialButton}" Height="28" Foreground="#FFB6B6B6" Click="RemoveSelectedItemButton_Click"/>
-        <Button x:Name="AddDllButton" Content="ADD" HorizontalAlignment="Left" Margin="48,58,0,0" VerticalAlignment="Top" Width="116" Style="{DynamicResource MaterialButton}" Height="28" Foreground="#FFB6B6B6" Click="AddDllButton_Click"/>
-        <Button x:Name="RemoveAllButton" Content="REMOVE ALL" HorizontalAlignment="Left" Margin="48,124,0,0" VerticalAlignment="Top" Width="116" Style="{DynamicResource MaterialButton}" Height="28" Click="RemoveAllButton_Click" Foreground="#FFB6B6B6"/>
+        <Button x:Name="RemoveSelectedItemButton" Content="REMOVE SELECTED" HorizontalAlignment="Left" Margin="48,91,0,0" VerticalAlignment="Top" Width="116" Style="{DynamicResource MaterialButton}" Height="28" Foreground="#FF436AF0" Click="RemoveSelectedItemButton_Click"/>
+        <Button x:Name="AddDllButton" Content="ADD" HorizontalAlignment="Left" Margin="48,58,0,0" VerticalAlignment="Top" Width="116" Style="{DynamicResource MaterialButton}" Height="28" Foreground="#FF436AF0" Click="AddDllButton_Click"/>
+        <Button x:Name="RemoveAllButton" Content="REMOVE ALL" HorizontalAlignment="Left" Margin="48,124,0,0" VerticalAlignment="Top" Width="116" Style="{DynamicResource MaterialButton}" Height="28" Click="RemoveAllButton_Click" Foreground="#FF436AF0"/>
         <TextBox x:Name="ProcessTextBox" HorizontalAlignment="Left" Height="28" Margin="216,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164" Background="#FF2E2E2E" Foreground="#FFB6B6B6" BorderBrush="#CC1D1D1D" SelectionBrush="#FF436AF0" VerticalContentAlignment="Center" FontFamily="Tahoma"/>
-        <Button x:Name="SelectProcessButton" Content="SELECT PROCESS" HorizontalAlignment="Left" Margin="385,189,0,0" VerticalAlignment="Top" Width="145" Style="{DynamicResource MaterialButton}" Height="28" Foreground="#FFB6B6B6" Click="SelectProcessButton_Click"/>
+        <Button x:Name="SelectProcessButton" Content="SELECT PROCESS" HorizontalAlignment="Left" Margin="385,189,0,0" VerticalAlignment="Top" Width="145" Style="{DynamicResource MaterialButton}" Height="28" Foreground="#FF436AF0" Click="SelectProcessButton_Click"/>
     </Grid>
 </Window>
