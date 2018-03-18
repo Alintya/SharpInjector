@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SharpInjectorRework.Utilities
 {
@@ -34,8 +35,14 @@ namespace SharpInjectorRework.Utilities
         {
             var dllName = System.IO.Path.GetFileNameWithoutExtension(dllPath);
 
-            if (_dlls.TryGetValue(dllName ?? throw new InvalidOperationException($"could not get dll name for dll: {dllPath}"), out var temp))
+            if (_dlls.TryGetValue(dllName ?? throw new InvalidOperationException($"could not get dll name for dll: {dllPath}"), out var tempPath))
             {
+                if (dllPath.Equals(tempPath))
+                {
+                    Utilities.Messagebox.ShowInfo($"skipped dll '{dllName}' cause it is already loaded");
+                    return;
+                }
+
                 var dialogResult = Utilities.Messagebox.ShowError(
                     $"dll with name '{dllName}' already exists, do you want to override it?", MessageBoxButton.YesNo);
                 if (dialogResult == MessageBoxResult.No)
@@ -66,7 +73,11 @@ namespace SharpInjectorRework.Utilities
 
         public void RemoveAll()
         {
-            _dlls.Clear();
+            // Info:
+            // - remove each dll separate so we can trigger the remove event
+            var dllsTemp = _dlls.ToArray();
+            foreach (var dll in dllsTemp)
+                this.Remove(dll.Key);
 
             Utilities.Messagebox.ShowInfo("removed all dlls");
         }

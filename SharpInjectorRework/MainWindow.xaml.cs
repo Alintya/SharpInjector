@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using Microsoft.Win32;
 using System.Windows.Input;
 using SharpInjectorRework.Utilities;
@@ -59,8 +60,6 @@ namespace SharpInjectorRework
             }
 
             Globals.DllHandler.Remove(selectedItem.ToString());
-
-            DllsListBox.Items.Remove(selectedItem);
         }
 
         private void RemoveAllButton_Click(object sender, RoutedEventArgs e)
@@ -72,8 +71,6 @@ namespace SharpInjectorRework
             }
 
             Globals.DllHandler.RemoveAll();
-
-            DllsListBox.Items.Clear();
         }
 
         #endregion UI EVENTS
