@@ -73,6 +73,24 @@ namespace SharpInjectorRework
             Globals.DllHandler.RemoveAll();
         }
 
+        private void SelectProcessButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectProcessButton.IsEnabled)
+                SelectProcessButton.IsEnabled = false;
+
+            var processSelectionWindow = new ProcessSelectionWindow();
+            processSelectionWindow.Show();
+            processSelectionWindow.Closed += ProcessSelectionWindow_Closed;
+        }
+
+        private void ProcessSelectionWindow_Closed(object sender, EventArgs e)
+        {
+            if (!SelectProcessButton.IsEnabled)
+                SelectProcessButton.IsEnabled = true;
+
+            // TODO:
+        }
+
         #endregion UI EVENTS
 
         #region CUSTOM UI EVENTS
@@ -101,7 +119,7 @@ namespace SharpInjectorRework
                 this.DragMove();
         }
 
-        #endregion UI EVENTS
+        #endregion CUSTOM UI EVENTS
 
         #region CUSTOM EVENTS
 

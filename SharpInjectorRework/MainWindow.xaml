@@ -5,12 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SharpInjectorRework"
         mc:Ignorable="d"
-        Title="MainWindow" Height="318.834" Width="587" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
-    <Grid Background="#FF2B2B2B" RenderTransformOrigin="0.345,0.594" Height="319" VerticalAlignment="Top">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <DockPanel x:Name="Headerbar" Height="29" LastChildFill="False" VerticalAlignment="Top" Background="#FF272727" MouseMove="Headerbar_MouseMove" Margin="-6,0,0,0">
+        Title="MainWindow" Height="333.252" Width="627.295" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" Foreground="{x:Null}" Background="#FF436AF0">
+    <Grid Background="#FF2B2B2B" RenderTransformOrigin="0.345,0.594" Height="333.252" VerticalAlignment="Top">
+        <DockPanel x:Name="Headerbar" Height="29" LastChildFill="False" VerticalAlignment="Top" Background="#FF272727" MouseMove="Headerbar_MouseMove" HorizontalAlignment="Right" Width="635.105" Margin="-6.957,0,0,0">
             <DockPanel.Effect>
                 <DropShadowEffect Opacity="0.5" RenderingBias="Quality" ShadowDepth="3" Direction="0" BlurRadius="10"/>
             </DockPanel.Effect>
@@ -82,6 +79,6 @@
         <Button x:Name="AddDllButton" Content="ADD" HorizontalAlignment="Left" Margin="48,58,0,0" VerticalAlignment="Top" Width="116" Style="{DynamicResource MaterialButton}" Height="28" Foreground="#FFB6B6B6" Click="AddDllButton_Click"/>
         <Button x:Name="RemoveAllButton" Content="REMOVE ALL" HorizontalAlignment="Left" Margin="48,124,0,0" VerticalAlignment="Top" Width="116" Style="{DynamicResource MaterialButton}" Height="28" Click="RemoveAllButton_Click" Foreground="#FFB6B6B6"/>
         <TextBox x:Name="ProcessTextBox" HorizontalAlignment="Left" Height="28" Margin="216,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164" Background="#FF2E2E2E" Foreground="#FFB6B6B6" BorderBrush="#CC1D1D1D" SelectionBrush="#FF436AF0" VerticalContentAlignment="Center" FontFamily="Tahoma"/>
-        <Button x:Name="AddDllButton_Copy" Content="SELECT PROCESS" HorizontalAlignment="Left" Margin="385,189,0,0" VerticalAlignment="Top" Width="145" Style="{DynamicResource MaterialButton}" Height="28" Foreground="#FFB6B6B6"/>
+        <Button x:Name="SelectProcessButton" Content="SELECT PROCESS" HorizontalAlignment="Left" Margin="385,189,0,0" VerticalAlignment="Top" Width="145" Style="{DynamicResource MaterialButton}" Height="28" Foreground="#FFB6B6B6" Click="SelectProcessButton_Click"/>
     </Grid>
 </Window>

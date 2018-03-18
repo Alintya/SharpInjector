@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SharpInjectorRework.Utilities
 {
-    public delegate void DllHandlerEventHandler(object source, DllHandlerArgs e);
+    public delegate void DllHandlerDelegate(object source, DllHandlerArgs e);
 
     public class DllHandlerArgs : EventArgs
     {
@@ -26,8 +26,8 @@ namespace SharpInjectorRework.Utilities
 
     internal class DllHandler
     {
-        public event DllHandlerEventHandler OnDllAdd;
-        public event DllHandlerEventHandler OnDllRemove;
+        public event DllHandlerDelegate OnDllAdd;
+        public event DllHandlerDelegate OnDllRemove;
 
         private readonly Dictionary<string, string> _dlls = new Dictionary<string, string>();
 
