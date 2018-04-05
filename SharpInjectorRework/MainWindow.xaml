@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SharpInjectorRework"
         mc:Ignorable="d"
-        Title="MainWindow" Height="333.252" Width="627.295" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" Foreground="{x:Null}" Background="#FF436AF0">
-    <Grid Background="#FF2B2B2B" RenderTransformOrigin="0.345,0.594" Height="333.252" VerticalAlignment="Top">
+        Title="MainWindow" Height="183.001" Width="362.847" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" Foreground="{x:Null}" Background="#FF436AF0">
+    <Grid Background="#FF2B2B2B" RenderTransformOrigin="0.345,0.594" Height="183" VerticalAlignment="Top">
         <DockPanel x:Name="Headerbar" Height="29" LastChildFill="False" VerticalAlignment="Top" Background="#FF272727" MouseMove="Headerbar_MouseMove" HorizontalAlignment="Right" Width="635.105" Margin="-6.957,0,0,0">
             <DockPanel.Effect>
                 <DropShadowEffect Opacity="0.5" RenderingBias="Quality" ShadowDepth="3" Direction="0" BlurRadius="10"/>
@@ -49,7 +49,7 @@
                 <DropShadowEffect RenderingBias="Quality" ShadowDepth="1" Opacity="0.5"/>
             </Label.Effect>
         </Label>
-        <ListBox x:Name="DllsListBox" HorizontalAlignment="Left" Height="94" Margin="169,58,0,0" VerticalAlignment="Top" Width="193" Background="#FF2E2E2E" BorderBrush="#CC1D1D1D" Foreground="#FFB6B6B6" FontFamily="Tahoma" BorderThickness="1">
+        <ListBox x:Name="DllsListBox" HorizontalAlignment="Left" Height="76" Margin="162,71,0,0" VerticalAlignment="Top" Width="191" Background="#FF2E2E2E" BorderBrush="#CC1D1D1D" Foreground="#FFB6B6B6" FontFamily="Tahoma" BorderThickness="1">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="FontFamily" Value="Tahoma"/>
@@ -75,10 +75,40 @@
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>
-        <Button x:Name="RemoveSelectedItemButton" Content="REMOVE SELECTED" HorizontalAlignment="Left" Margin="48,91,0,0" VerticalAlignment="Top" Width="116" Style="{DynamicResource MaterialButton}" Height="28" Foreground="#FF436AF0" Click="RemoveSelectedItemButton_Click"/>
-        <Button x:Name="AddDllButton" Content="ADD" HorizontalAlignment="Left" Margin="48,58,0,0" VerticalAlignment="Top" Width="116" Style="{DynamicResource MaterialButton}" Height="28" Foreground="#FF436AF0" Click="AddDllButton_Click"/>
-        <Button x:Name="RemoveAllButton" Content="REMOVE ALL" HorizontalAlignment="Left" Margin="48,124,0,0" VerticalAlignment="Top" Width="116" Style="{DynamicResource MaterialButton}" Height="28" Click="RemoveAllButton_Click" Foreground="#FF436AF0"/>
-        <TextBox x:Name="ProcessTextBox" HorizontalAlignment="Left" Height="28" Margin="216,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164" Background="#FF2E2E2E" Foreground="#FFB6B6B6" BorderBrush="#CC1D1D1D" SelectionBrush="#FF436AF0" VerticalContentAlignment="Center" FontFamily="Tahoma"/>
-        <Button x:Name="SelectProcessButton" Content="SELECT PROCESS" HorizontalAlignment="Left" Margin="385,189,0,0" VerticalAlignment="Top" Width="145" Style="{DynamicResource MaterialButton}" Height="28" Foreground="#FF436AF0" Click="SelectProcessButton_Click"/>
+        <Button x:Name="RemoveSelectedItemButton" Content="REMOVE SELECTED DLL" HorizontalAlignment="Left" Margin="10,98,0,0" VerticalAlignment="Top" Width="147" Style="{DynamicResource MaterialButton}" Height="22" Foreground="#FF436AF0" Click="RemoveSelectedItemButton_Click"/>
+        <Button x:Name="AddDllButton" Content="ADD DLL" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" Width="147" Style="{DynamicResource MaterialButton}" Height="22" Foreground="#FF436AF0" Click="AddDllButton_Click"/>
+        <Button x:Name="RemoveAllButton" Content="REMOVE ALL DLL'S" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top" Width="147" Style="{DynamicResource MaterialButton}" Height="22" Click="RemoveAllButton_Click" Foreground="#FF436AF0"/>
+        <TextBox x:Name="ProcessTextBox" HorizontalAlignment="Left" Height="22" Margin="10,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="147" Background="#FF2E2E2E" Foreground="#FFB6B6B6" BorderBrush="#CC1D1D1D" SelectionBrush="#FF436AF0" VerticalContentAlignment="Center" FontFamily="Tahoma"/>
+        <TextBlock IsHitTestVisible="False" Text="Selected Process" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="16,48,0,120" Foreground="#7FA9A9A9" FontSize="11">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Text, ElementName=ProcessTextBox}" Value="">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <Button x:Name="SelectProcessButton" Content="SELECT PROCESS" HorizontalAlignment="Left" Margin="162,44,0,0" VerticalAlignment="Top" Width="191" Style="{DynamicResource MaterialButton}" Height="22" Foreground="#FF436AF0" Click="SelectProcessButton_Click"/>
+        <ComboBox x:Name="InjectModeCombobox" HorizontalAlignment="Left" Margin="10,152,0,0" VerticalAlignment="Top" Width="147" Height="22" Foreground="#FFB6B6B6" IsReadOnly="True" FontFamily="Tahoma" Style="{DynamicResource MaterialCombobox}">
+            <ComboBoxItem Content="Load Library" FontFamily="Tahoma"/>
+            <ComboBoxItem Content="Manual Mapping"/>
+        </ComboBox>
+        <TextBlock IsHitTestVisible="False" Text="Inject Mode" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="16,158,0,15" Foreground="#7FA9A9A9" FontSize="11">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Text, ElementName=InjectModeCombobox}" Value="">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <Button x:Name="InjectAllButton" Content="INJECT ALL" HorizontalAlignment="Left" Margin="278,152,0,0" VerticalAlignment="Top" Width="75" Style="{DynamicResource MaterialButton}" Height="22" Foreground="#FF436AF0" Click="InjectAllButton_Click"/>
+        <Button x:Name="InjectSelectedButton" Content="INJECT SELECTED" HorizontalAlignment="Left" Margin="162,152,0,0" VerticalAlignment="Top" Width="111" Style="{DynamicResource MaterialButton}" Height="22" Foreground="#FF436AF0" Click="InjectSelectedButton_Click"/>
     </Grid>
 </Window>

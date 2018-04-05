@@ -57,7 +57,7 @@
             <ListBoxItem Content="Item5"/>
         </ListView>
         <TextBox x:Name="SearchTextBox" HorizontalAlignment="Left" Height="28" Margin="10,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="222" Background="#FF2E2E2E" Foreground="#FFB6B6B6" BorderBrush="#CC1D1D1D" SelectionBrush="#FF436AF0" VerticalContentAlignment="Center" FontFamily="Tahoma" TextChanged="SearchTextBox_TextChanged"/>
-        <TextBlock IsHitTestVisible="False" Text="Search Filter" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="16,231,0,46" Foreground="DarkGray">
+        <TextBlock IsHitTestVisible="False" Text="Search Filter" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="16,231,0,46" Foreground="#7FA9A9A9">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">
                     <Setter Property="Visibility" Value="Collapsed"/>

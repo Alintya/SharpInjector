@@ -83,6 +83,39 @@ namespace SharpInjectorRework
             processSelectionWindow.Closed += ProcessSelectionWindow_Closed;
         }
 
+        private void InjectSelectedButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DllsListBox.Items.Count <= 0)
+            {
+                Utilities.Messagebox.ShowError("dlls listbox is empty");
+                return;
+            }
+
+            var selectedItem = DllsListBox.SelectedItem;
+            if (selectedItem == null)
+            {
+                Utilities.Messagebox.ShowError("no dll is selected");
+                return;
+            }
+
+            // TODO:
+            // - check if we have a valid process selected
+            // - inject
+        }
+
+        private void InjectAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DllsListBox.Items.Count <= 0)
+            {
+                Utilities.Messagebox.ShowError("dlls listbox is empty");
+                return;
+            }
+
+            // TODO:
+            // - check if we have a valid process selected
+            // - inject
+        }
+
         #endregion UI EVENTS
 
         #region CUSTOM UI EVENTS
