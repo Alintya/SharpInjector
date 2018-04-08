@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
+using System.Diagnostics;
 using System.Windows.Input;
 using System.Windows.Controls;
 
@@ -9,9 +11,14 @@ namespace SharpInjectorRework
     /// </summary>
     public partial class ProcessSelectionWindow : Window
     {
-        public ProcessSelectionWindow()
+        public ProcessSelectionWindow(Process[] found_processes = null)
         {
             InitializeComponent();
+
+            if (found_processes != null && found_processes.Any())
+            {
+                // TODO:
+            }
         }
 
         #region UI EVENTS

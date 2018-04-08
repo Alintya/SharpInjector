@@ -4,6 +4,26 @@
              xmlns:local="clr-namespace:SharpInjectorRework"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <Style x:Key="TextBox Custom Outline" TargetType="{x:Type TextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Opacity" TargetName="border" Value="0.7"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="true">
+                                <!-- nothing here cause we need to be able to change the border brush remotely -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="MaterialCombobox" TargetType="{x:Type ComboBox}">
             <Setter Property="Template">
                 <Setter.Value>

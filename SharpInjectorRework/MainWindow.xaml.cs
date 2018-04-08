@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using Microsoft.Win32;
+using System.Diagnostics;
 using System.Windows.Input;
 using SharpInjectorRework.Utilities;
 
@@ -85,6 +87,12 @@ namespace SharpInjectorRework
 
         private void InjectSelectedButton_Click(object sender, RoutedEventArgs e)
         {
+            if (Utilities.Globals.InjectProcess == null || Utilities.Globals.InjectProcess.HasExited)
+            {
+                Utilities.Messagebox.ShowError("no process selected or process has exited");
+                return;
+            }
+
             if (DllsListBox.Items.Count <= 0)
             {
                 Utilities.Messagebox.ShowError("dlls listbox is empty");
@@ -99,12 +107,17 @@ namespace SharpInjectorRework
             }
 
             // TODO:
-            // - check if we have a valid process selected
             // - inject
         }
 
         private void InjectAllButton_Click(object sender, RoutedEventArgs e)
         {
+            if (Utilities.Globals.InjectProcess == null || Utilities.Globals.InjectProcess.HasExited)
+            {
+                Utilities.Messagebox.ShowError("no process selected or process has exited");
+                return;
+            }
+
             if (DllsListBox.Items.Count <= 0)
             {
                 Utilities.Messagebox.ShowError("dlls listbox is empty");
@@ -112,8 +125,36 @@ namespace SharpInjectorRework
             }
 
             // TODO:
-            // - check if we have a valid process selected
             // - inject
+        }
+
+        private void ProcessTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            var found_processes = Process.GetProcessesByName(ProcessTextBox.Text);
+            if (found_processes.Any())
+            {
+                var found_processes_count = found_processes.Length;
+                if (found_processes_count == 1)
+                {
+                    Utilities.Globals.InjectProcess = found_processes.FirstOrDefault();
+                }
+                else if (Utilities.Messagebox.ShowInfo($"found '{found_processes_count}' processes, do you want to open the process selection?", 
+                             MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    if (SelectProcessButton.IsEnabled)
+                        SelectProcessButton.IsEnabled = false;
+
+                    var processSelectionWindow = new ProcessSelectionWindow(found_processes);
+                    processSelectionWindow.Show();
+                    processSelectionWindow.Closed += ProcessSelectionWindow_Closed;
+                }
+            }
+
+            var new_color = Utilities.Globals.InjectProcess != null && !Utilities.Globals.InjectProcess.HasExited
+                ? Utilities.Globals.MaterialGreenBrush
+                : Utilities.Globals.MaterialRedBrush;
+            if (!ProcessTextBox.BorderBrush.Equals(new_color))
+                ProcessTextBox.BorderBrush = new_color;
         }
 
         #endregion UI EVENTS
