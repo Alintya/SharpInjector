@@ -55,6 +55,10 @@ namespace SharpInjectorRework.Utilities
 
             _dlls.Add(dllName, dllPath);
 
+#if DEBUG
+            Utilities.Messagebox.ShowInfo($"added dll: {dllPath}");
+#endif
+
             OnDllAdd?.Invoke(this, new DllHandlerArgs(dllName, dllPath));
         }
 
@@ -67,6 +71,10 @@ namespace SharpInjectorRework.Utilities
             }
 
             _dlls.Remove(dllName);
+
+#if DEBUG
+            Utilities.Messagebox.ShowInfo($"removed dll: {dllPath}");
+#endif
 
             OnDllRemove?.Invoke(this, new DllHandlerArgs(dllName, dllPath));
         }

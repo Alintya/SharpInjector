@@ -150,19 +150,11 @@ namespace SharpInjectorRework
 
         private void OnDllAdd(object source, DllHandlerArgs e)
         {
-#if DEBUG
-            Utilities.Messagebox.ShowInfo($"added dll: {e.DllPath()}");
-#endif
-
             DllsListBox.Items.Add(e.DllName());
         }
 
         private void OnDllRemove(object source, DllHandlerArgs e)
         {
-#if DEBUG
-            Utilities.Messagebox.ShowInfo($"removed dll: {e.DllPath()}");
-#endif
-
             DllsListBox.Items.Remove(e.DllName());
         }
 

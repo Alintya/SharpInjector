@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="183.001" Width="362.847" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" Foreground="{x:Null}" Background="#FF436AF0">
     <Grid Background="#FF2B2B2B" RenderTransformOrigin="0.345,0.594" Height="183" VerticalAlignment="Top">
-        <DockPanel x:Name="Headerbar" Height="29" LastChildFill="False" VerticalAlignment="Top" Background="#FF272727" MouseMove="Headerbar_MouseMove" HorizontalAlignment="Right" Width="635.105" Margin="-6.957,0,0,0">
+        <DockPanel x:Name="Headerbar" Height="29" LastChildFill="False" VerticalAlignment="Top" Background="#FF272727" MouseMove="Headerbar_MouseMove" HorizontalAlignment="Right" Width="363">
             <DockPanel.Effect>
                 <DropShadowEffect Opacity="0.5" RenderingBias="Quality" ShadowDepth="3" Direction="0" BlurRadius="10"/>
             </DockPanel.Effect>
@@ -79,7 +79,7 @@
         <Button x:Name="AddDllButton" Content="ADD DLL" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" Width="147" Style="{DynamicResource MaterialButton}" Height="22" Foreground="#FF436AF0" Click="AddDllButton_Click"/>
         <Button x:Name="RemoveAllButton" Content="REMOVE ALL DLL'S" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top" Width="147" Style="{DynamicResource MaterialButton}" Height="22" Click="RemoveAllButton_Click" Foreground="#FF436AF0"/>
         <TextBox x:Name="ProcessTextBox" HorizontalAlignment="Left" Height="22" Margin="10,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="147" Background="#FF2E2E2E" Foreground="#FFB6B6B6" BorderBrush="#CC1D1D1D" SelectionBrush="#FF436AF0" VerticalContentAlignment="Center" FontFamily="Tahoma"/>
-        <TextBlock IsHitTestVisible="False" Text="Selected Process" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="16,48,0,120" Foreground="#7FA9A9A9" FontSize="11">
+        <TextBlock IsHitTestVisible="False" Text="Process" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="16,48,0,120" Foreground="#7FA9A9A9" FontSize="11">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">
                     <Setter Property="Visibility" Value="Collapsed"/>
