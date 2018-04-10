@@ -61,6 +61,7 @@
     <Compile Include="Utilities\DllHandler.cs" />
     <Compile Include="Utilities\Globals.cs" />
     <Compile Include="Utilities\Messagebox.cs" />
+    <Compile Include="Utilities\ProcessHandler.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

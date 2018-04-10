@@ -16,7 +16,7 @@
                                 <Setter Property="Opacity" TargetName="border" Value="0.7"/>
                             </Trigger>
                             <Trigger Property="IsFocused" Value="true">
-                                <!-- nothing here cause we need to be able to change the border brush remotely -->
+                                <!-- nothing here cause we need to be able to change the border brush programmatically -->
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

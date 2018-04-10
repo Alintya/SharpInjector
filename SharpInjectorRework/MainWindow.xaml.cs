@@ -15,10 +15,10 @@ namespace SharpInjectorRework
     {
         public MainWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             var compileDateTime = Utilities.Assembly.GetLinkerTime();
-            HeaderLabel.Content = $"SharpInjector [{compileDateTime.ToShortDateString()} - {compileDateTime.ToShortTimeString()}]";
+            this.HeaderLabel.Content = $"SharpInjector [{compileDateTime.ToShortDateString()} - {compileDateTime.ToShortTimeString()}]";
 
             Utilities.Globals.DllHandler.OnDllAdd += OnDllAdd;
             Utilities.Globals.DllHandler.OnDllRemove += OnDllRemove;
@@ -48,13 +48,13 @@ namespace SharpInjectorRework
 
         private void RemoveSelectedItemButton_Click(object sender, RoutedEventArgs e)
         {
-            if (DllsListBox.Items.Count <= 0)
+            if (this.DllsListBox.Items.Count <= 0)
             {
                 Utilities.Messagebox.ShowError("dlls listbox is empty");
                 return;
             }
 
-            var selectedItem = DllsListBox.SelectedItem;
+            var selectedItem = this.DllsListBox.SelectedItem;
             if (selectedItem == null)
             {
                 Utilities.Messagebox.ShowError("no dll is selected");
@@ -77,29 +77,24 @@ namespace SharpInjectorRework
 
         private void SelectProcessButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectProcessButton.IsEnabled)
-                SelectProcessButton.IsEnabled = false;
-
-            var processSelectionWindow = new ProcessSelectionWindow();
-            processSelectionWindow.Show();
-            processSelectionWindow.Closed += ProcessSelectionWindow_Closed;
+            this.OpenProcessSelectionWindow();
         }
 
         private void InjectSelectedButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Utilities.Globals.InjectProcess == null || Utilities.Globals.InjectProcess.HasExited)
+            if (!Utilities.Globals.ProcessHandler.IsProcessValid(Utilities.Globals.InjectProcess))
             {
                 Utilities.Messagebox.ShowError("no process selected or process has exited");
                 return;
             }
 
-            if (DllsListBox.Items.Count <= 0)
+            if (this.DllsListBox.Items.Count <= 0)
             {
                 Utilities.Messagebox.ShowError("dlls listbox is empty");
                 return;
             }
 
-            var selectedItem = DllsListBox.SelectedItem;
+            var selectedItem = this.DllsListBox.SelectedItem;
             if (selectedItem == null)
             {
                 Utilities.Messagebox.ShowError("no dll is selected");
@@ -112,49 +107,51 @@ namespace SharpInjectorRework
 
         private void InjectAllButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Utilities.Globals.InjectProcess == null || Utilities.Globals.InjectProcess.HasExited)
+            if (!Utilities.Globals.ProcessHandler.IsProcessValid(Utilities.Globals.InjectProcess))
             {
                 Utilities.Messagebox.ShowError("no process selected or process has exited");
                 return;
             }
 
-            if (DllsListBox.Items.Count <= 0)
+            if (this.DllsListBox.Items.Count <= 0)
             {
                 Utilities.Messagebox.ShowError("dlls listbox is empty");
                 return;
             }
 
             // TODO:
-            // - inject
+            // - we may need to put the items into a new array depending on when we remove the dlls that got injected from the listbox
+            foreach (var dll in this.DllsListBox.Items)
+            {
+                // TODO:
+                // - inject
+            }
         }
 
         private void ProcessTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            var found_processes = Process.GetProcessesByName(ProcessTextBox.Text);
-            if (found_processes.Any())
+            Utilities.Globals.InjectProcess = null;
+
+            var found_process_list = Process.GetProcessesByName(ProcessTextBox.Text);
+            if (found_process_list.Any())
             {
-                var found_processes_count = found_processes.Length;
-                if (found_processes_count == 1)
+                var found_process_list_count = found_process_list.Length;
+                if (found_process_list_count == 1)
                 {
-                    Utilities.Globals.InjectProcess = found_processes.FirstOrDefault();
+                    Utilities.Globals.InjectProcess = found_process_list.FirstOrDefault();
                 }
-                else if (Utilities.Messagebox.ShowInfo($"found '{found_processes_count}' processes, do you want to open the process selection?", 
+                else if (Utilities.Messagebox.ShowInfo($"found '{found_process_list_count}' processes, do you want to open the process selection?", 
                              MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    if (SelectProcessButton.IsEnabled)
-                        SelectProcessButton.IsEnabled = false;
-
-                    var processSelectionWindow = new ProcessSelectionWindow(found_processes);
-                    processSelectionWindow.Show();
-                    processSelectionWindow.Closed += ProcessSelectionWindow_Closed;
+                    this.OpenProcessSelectionWindow();
                 }
             }
 
-            var new_color = Utilities.Globals.InjectProcess != null && !Utilities.Globals.InjectProcess.HasExited
+            var new_color = Utilities.Globals.ProcessHandler.IsProcessValid(Utilities.Globals.InjectProcess)
                 ? Utilities.Globals.MaterialGreenBrush
                 : Utilities.Globals.MaterialRedBrush;
-            if (!ProcessTextBox.BorderBrush.Equals(new_color))
-                ProcessTextBox.BorderBrush = new_color;
+            if (!this.ProcessTextBox.BorderBrush.Equals(new_color))
+                this.ProcessTextBox.BorderBrush = new_color;
         }
 
         #endregion UI EVENTS
@@ -191,22 +188,39 @@ namespace SharpInjectorRework
 
         private void OnDllAdd(object source, DllHandlerArgs e)
         {
-            DllsListBox.Items.Add(e.DllName());
+            this.DllsListBox.Items.Add(e.DllName());
         }
 
         private void OnDllRemove(object source, DllHandlerArgs e)
         {
-            DllsListBox.Items.Remove(e.DllName());
+            this.DllsListBox.Items.Remove(e.DllName());
         }
 
         private void ProcessSelectionWindow_Closed(object sender, EventArgs e)
         {
-            if (!SelectProcessButton.IsEnabled)
-                SelectProcessButton.IsEnabled = true;
+            if (!this.SelectProcessButton.IsEnabled)
+                this.SelectProcessButton.IsEnabled = true;
 
-            // TODO:
+            // Info:
+            // - cant think of anything better atm
+            if (this.ProcessTextBox.Text != Globals.InjectProcess.ProcessName)
+                this.ProcessTextBox.Text = Globals.InjectProcess.ProcessName;
         }
 
         #endregion CUSTOM EVENTS
+
+        #region CUSTOM FUNCTIONS
+
+        public void OpenProcessSelectionWindow(Process[] process_list = null)
+        {
+            if (SelectProcessButton.IsEnabled)
+                SelectProcessButton.IsEnabled = false;
+
+            var processSelectionWindow = new ProcessSelectionWindow(process_list);
+            processSelectionWindow.Show();
+            processSelectionWindow.Closed += ProcessSelectionWindow_Closed;
+        }
+
+        #endregion CUSTOM FUNCTIONS
     }
 }

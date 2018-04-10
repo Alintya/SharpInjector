@@ -5,8 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SharpInjectorRework"
         mc:Ignorable="d"
-        Title="MainWindow" Height="183.001" Width="362.847" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" Foreground="{x:Null}" Background="#FF436AF0">
-    <Grid Background="#FF2B2B2B" RenderTransformOrigin="0.345,0.594" Height="183" VerticalAlignment="Top">
+        Title="MainWindow" Height="183.001" Width="362.847" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Foreground="{x:Null}" Background="#FF436AF0" WindowStyle="None">
+    <Grid RenderTransformOrigin="0.345,0.594" Height="183" VerticalAlignment="Top">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                <GradientStop Color="#FF272727" Offset="0"/>
+                <GradientStop Color="#FF2B2B2B" Offset="0.996"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <DockPanel x:Name="Headerbar" Height="29" LastChildFill="False" VerticalAlignment="Top" Background="#FF272727" MouseMove="Headerbar_MouseMove" HorizontalAlignment="Right" Width="363">
             <DockPanel.Effect>
                 <DropShadowEffect Opacity="0.5" RenderingBias="Quality" ShadowDepth="3" Direction="0" BlurRadius="10"/>
@@ -49,7 +55,7 @@
                 <DropShadowEffect RenderingBias="Quality" ShadowDepth="1" Opacity="0.5"/>
             </Label.Effect>
         </Label>
-        <ListBox x:Name="DllsListBox" HorizontalAlignment="Left" Height="76" Margin="162,71,0,0" VerticalAlignment="Top" Width="191" Background="#FF2E2E2E" BorderBrush="#CC1D1D1D" Foreground="#FFB6B6B6" FontFamily="Tahoma" BorderThickness="1">
+        <ListBox x:Name="DllsListBox" HorizontalAlignment="Left" Height="76" Margin="161,70,0,0" VerticalAlignment="Top" Width="191" Background="#FF2E2E2E" BorderBrush="#CC1D1D1D" Foreground="#FFB6B6B6" FontFamily="Tahoma" BorderThickness="1">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="FontFamily" Value="Tahoma"/>
@@ -75,11 +81,11 @@
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>
-        <Button x:Name="RemoveSelectedItemButton" Content="REMOVE SELECTED DLL" HorizontalAlignment="Left" Margin="10,98,0,0" VerticalAlignment="Top" Width="147" Style="{DynamicResource MaterialButton}" Height="22" Foreground="#FF436AF0" Click="RemoveSelectedItemButton_Click"/>
-        <Button x:Name="AddDllButton" Content="ADD DLL" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" Width="147" Style="{DynamicResource MaterialButton}" Height="22" Foreground="#FF436AF0" Click="AddDllButton_Click"/>
-        <Button x:Name="RemoveAllButton" Content="REMOVE ALL DLL'S" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top" Width="147" Style="{DynamicResource MaterialButton}" Height="22" Click="RemoveAllButton_Click" Foreground="#FF436AF0"/>
-        <TextBox x:Name="ProcessTextBox" HorizontalAlignment="Left" Height="22" Margin="10,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="147" Background="#FF2E2E2E" Foreground="#FFB6B6B6" BorderBrush="#CCF0434B" SelectionBrush="#FF436AF0" VerticalContentAlignment="Center" FontFamily="Tahoma" TextChanged="ProcessTextBox_TextChanged" Style="{DynamicResource TextBox Custom Outline}"/>
-        <TextBlock IsHitTestVisible="False" Text="Process" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="16,46,0,120" Foreground="#7FA9A9A9" FontSize="11">
+        <Button x:Name="RemoveSelectedItemButton" Content="REMOVE SELECTED DLL" HorizontalAlignment="Left" Margin="9,97,0,0" VerticalAlignment="Top" Width="147" Style="{DynamicResource MaterialButton}" Height="22" Foreground="#FFB6B6B6" Click="RemoveSelectedItemButton_Click" FontSize="11"/>
+        <Button x:Name="AddDllButton" Content="ADD DLL" HorizontalAlignment="Left" Margin="9,70,0,0" VerticalAlignment="Top" Width="147" Style="{DynamicResource MaterialButton}" Height="22" Foreground="#FFB6B6B6" Click="AddDllButton_Click" FontSize="11"/>
+        <Button x:Name="RemoveAllButton" Content="REMOVE ALL DLL'S" HorizontalAlignment="Left" Margin="9,124,0,0" VerticalAlignment="Top" Width="147" Style="{DynamicResource MaterialButton}" Height="22" Click="RemoveAllButton_Click" Foreground="#FFB6B6B6" FontSize="11"/>
+        <TextBox x:Name="ProcessTextBox" HorizontalAlignment="Left" Height="22" Margin="9,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="147" Background="#FF2E2E2E" Foreground="#FFB6B6B6" BorderBrush="#CCF0434B" SelectionBrush="#FF436AF0" VerticalContentAlignment="Center" FontFamily="Tahoma" TextChanged="ProcessTextBox_TextChanged" Style="{DynamicResource TextBox Custom Outline}"/>
+        <TextBlock IsHitTestVisible="False" Text="Process" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,46,0,122" Foreground="#7FA9A9A9" FontSize="11">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">
                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -91,12 +97,12 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        <Button x:Name="SelectProcessButton" Content="SELECT PROCESS" HorizontalAlignment="Left" Margin="162,44,0,0" VerticalAlignment="Top" Width="191" Style="{DynamicResource MaterialButton}" Height="22" Foreground="#FF436AF0" Click="SelectProcessButton_Click"/>
-        <ComboBox x:Name="InjectModeCombobox" HorizontalAlignment="Left" Margin="10,152,0,0" VerticalAlignment="Top" Width="147" Height="22" Foreground="#FFB6B6B6" IsReadOnly="True" FontFamily="Tahoma" Style="{DynamicResource MaterialCombobox}">
+        <Button x:Name="SelectProcessButton" Content="SELECT PROCESS" HorizontalAlignment="Left" Margin="161,43,0,0" VerticalAlignment="Top" Width="191" Style="{DynamicResource MaterialButton}" Height="22" Foreground="#FFB6B6B6" Click="SelectProcessButton_Click" FontSize="11"/>
+        <ComboBox x:Name="InjectModeCombobox" HorizontalAlignment="Left" Margin="9,151,0,0" VerticalAlignment="Top" Width="147" Height="22" Foreground="#FFB6B6B6" IsReadOnly="True" FontFamily="Tahoma" Style="{DynamicResource MaterialCombobox}">
             <ComboBoxItem Content="Load Library" FontFamily="Tahoma"/>
             <ComboBoxItem Content="Manual Mapping"/>
         </ComboBox>
-        <TextBlock IsHitTestVisible="False" Text="Inject Mode" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="16,157,0,15" Foreground="#7FA9A9A9" FontSize="11">
+        <TextBlock IsHitTestVisible="False" Text="Inject Mode" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,154,0,14" Foreground="#7FA9A9A9" FontSize="11">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">
                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -108,7 +114,7 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        <Button x:Name="InjectAllButton" Content="INJECT ALL" HorizontalAlignment="Left" Margin="278,152,0,0" VerticalAlignment="Top" Width="75" Style="{DynamicResource MaterialButton}" Height="22" Foreground="#FF436AF0" Click="InjectAllButton_Click"/>
-        <Button x:Name="InjectSelectedButton" Content="INJECT SELECTED" HorizontalAlignment="Left" Margin="162,152,0,0" VerticalAlignment="Top" Width="111" Style="{DynamicResource MaterialButton}" Height="22" Foreground="#FF436AF0" Click="InjectSelectedButton_Click"/>
+        <Button x:Name="InjectAllButton" Content="INJECT ALL" HorizontalAlignment="Left" Margin="277,151,0,0" VerticalAlignment="Top" Width="75" Style="{DynamicResource MaterialButton}" Height="22" Foreground="#FFB6B6B6" Click="InjectAllButton_Click" FontSize="11"/>
+        <Button x:Name="InjectSelectedButton" Content="INJECT SELECTED" HorizontalAlignment="Left" Margin="161,151,0,0" VerticalAlignment="Top" Width="111" Style="{DynamicResource MaterialButton}" Height="22" Foreground="#FFB6B6B6" Click="InjectSelectedButton_Click" FontSize="11"/>
     </Grid>
 </Window>

@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SharpInjectorRework.Utilities
 {
@@ -35,7 +35,7 @@ namespace SharpInjectorRework.Utilities
         {
             var dllName = System.IO.Path.GetFileNameWithoutExtension(dllPath);
 
-            if (_dlls.TryGetValue(dllName ?? throw new InvalidOperationException($"could not get dll name for dll: {dllPath}"), out var tempPath))
+            if (this._dlls.TryGetValue(dllName ?? throw new InvalidOperationException($"could not get dll name for dll: {dllPath}"), out var tempPath))
             {
                 if (dllPath.Equals(tempPath))
                 {
@@ -48,18 +48,18 @@ namespace SharpInjectorRework.Utilities
                 if (dialogResult == MessageBoxResult.No)
                     return;
 
-                _dlls.Remove(dllName);
+                this._dlls.Remove(dllName);
 
-                OnDllRemove?.Invoke(this, new DllHandlerArgs(dllName, dllPath));
+                this.OnDllRemove?.Invoke(this, new DllHandlerArgs(dllName, dllPath));
             }
 
-            _dlls.Add(dllName, dllPath);
+            this._dlls.Add(dllName, dllPath);
 
 #if DEBUG
             Utilities.Messagebox.ShowInfo($"added dll: {dllPath}");
 #endif
 
-            OnDllAdd?.Invoke(this, new DllHandlerArgs(dllName, dllPath));
+            this.OnDllAdd?.Invoke(this, new DllHandlerArgs(dllName, dllPath));
         }
 
         public void Remove(string dllName)
@@ -70,20 +70,20 @@ namespace SharpInjectorRework.Utilities
                 return;
             }
 
-            _dlls.Remove(dllName);
+            this._dlls.Remove(dllName);
 
 #if DEBUG
             Utilities.Messagebox.ShowInfo($"removed dll: {dllPath}");
 #endif
 
-            OnDllRemove?.Invoke(this, new DllHandlerArgs(dllName, dllPath));
+            this.OnDllRemove?.Invoke(this, new DllHandlerArgs(dllName, dllPath));
         }
 
         public void RemoveAll()
         {
             // Info:
             // - remove each dll separate so we can trigger the remove event
-            var dllsTemp = _dlls.ToArray();
+            var dllsTemp = this._dlls.ToArray();
             foreach (var dll in dllsTemp)
                 this.Remove(dll.Key);
 
@@ -92,7 +92,7 @@ namespace SharpInjectorRework.Utilities
 
         public string GetPath(string dllName)
         {
-            if (_dlls.TryGetValue(dllName, out var dllPath))
+            if (this._dlls.TryGetValue(dllName, out var dllPath))
                 return dllPath;
 
             Utilities.Messagebox.ShowError($"dll with name '{dllName}' doesnt exist");
@@ -102,6 +102,6 @@ namespace SharpInjectorRework.Utilities
         }
 
         public Dictionary<string, string> GetDlls()
-            => _dlls;
+            => this._dlls;
     }
 }

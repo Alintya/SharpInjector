@@ -7,7 +7,8 @@ namespace SharpInjectorRework.Utilities
     {
         public static Process InjectProcess = null;
         public static DllHandler DllHandler = new DllHandler();
-        
+        public static ProcessHandler ProcessHandler = new ProcessHandler();
+
         // Info:
         // - not sure if i leave it like this.. should never throw an exception
         public static SolidColorBrush MaterialRedBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CCF0434B"));

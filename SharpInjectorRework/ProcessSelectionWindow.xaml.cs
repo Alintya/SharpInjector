@@ -11,11 +11,11 @@ namespace SharpInjectorRework
     /// </summary>
     public partial class ProcessSelectionWindow : Window
     {
-        public ProcessSelectionWindow(Process[] found_processes = null)
+        public ProcessSelectionWindow(Process[] process_list = null)
         {
             InitializeComponent();
 
-            if (found_processes != null && found_processes.Any())
+            if (process_list != null && process_list.Any())
             {
                 // TODO:
             }
