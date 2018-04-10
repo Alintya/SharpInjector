@@ -5,7 +5,10 @@ namespace SharpInjectorRework.Utilities
 {
     internal class Globals
     {
+        // Info:
+        // - will later be moved into the 'InjectionHandler' class
         public static Process InjectProcess = null;
+
         public static DllHandler DllHandler = new DllHandler();
         public static ProcessHandler ProcessHandler = new ProcessHandler();
 
