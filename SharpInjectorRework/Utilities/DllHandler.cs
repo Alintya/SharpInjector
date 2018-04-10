@@ -35,73 +35,73 @@ namespace SharpInjectorRework.Utilities
         {
             var dllName = System.IO.Path.GetFileNameWithoutExtension(dllPath);
 
-            if (this._dlls.TryGetValue(dllName ?? throw new InvalidOperationException($"could not get dll name for dll: {dllPath}"), out var tempPath))
+            if (_dlls.TryGetValue(dllName ?? throw new InvalidOperationException($"could not get dll name for dll: {dllPath}"), out var tempPath))
             {
                 if (dllPath.Equals(tempPath))
                 {
-                    Utilities.Messagebox.ShowInfo($"skipped dll '{dllName}' cause it is already loaded");
+                    Globals.MessageboxExtension.ShowInfo($"skipped dll '{dllName}' cause it is already loaded");
                     return;
                 }
 
-                var dialogResult = Utilities.Messagebox.ShowError(
+                var dialogResult = Globals.MessageboxExtension.ShowError(
                     $"dll with name '{dllName}' already exists, do you want to override it?", MessageBoxButton.YesNo);
                 if (dialogResult == MessageBoxResult.No)
                     return;
 
-                this._dlls.Remove(dllName);
+                _dlls.Remove(dllName);
 
-                this.OnDllRemove?.Invoke(this, new DllHandlerArgs(dllName, dllPath));
+                OnDllRemove?.Invoke(this, new DllHandlerArgs(dllName, dllPath));
             }
 
-            this._dlls.Add(dllName, dllPath);
+            _dlls.Add(dllName, dllPath);
 
 #if DEBUG
-            Utilities.Messagebox.ShowInfo($"added dll: {dllPath}");
+            Globals.MessageboxExtension.ShowInfo($"added dll: {dllPath}");
 #endif
 
-            this.OnDllAdd?.Invoke(this, new DllHandlerArgs(dllName, dllPath));
+            OnDllAdd?.Invoke(this, new DllHandlerArgs(dllName, dllPath));
         }
 
         public void Remove(string dllName)
         {
             if (!_dlls.TryGetValue(dllName, out var dllPath))
             {
-                Utilities.Messagebox.ShowError($"dll with name '{dllName}' doesnt exist");
+                Globals.MessageboxExtension.ShowError($"dll with name '{dllName}' doesnt exist");
                 return;
             }
 
-            this._dlls.Remove(dllName);
+            _dlls.Remove(dllName);
 
 #if DEBUG
-            Utilities.Messagebox.ShowInfo($"removed dll: {dllPath}");
+            Globals.MessageboxExtension.ShowInfo($"removed dll: {dllPath}");
 #endif
 
-            this.OnDllRemove?.Invoke(this, new DllHandlerArgs(dllName, dllPath));
+            OnDllRemove?.Invoke(this, new DllHandlerArgs(dllName, dllPath));
         }
 
         public void RemoveAll()
         {
             // Info:
             // - remove each dll separate so we can trigger the remove event
-            var dllsTemp = this._dlls.ToArray();
+            var dllsTemp = _dlls.ToArray();
             foreach (var dll in dllsTemp)
-                this.Remove(dll.Key);
+                Remove(dll.Key);
 
-            Utilities.Messagebox.ShowInfo("removed all dlls");
+            Globals.MessageboxExtension.ShowInfo("removed all dlls");
         }
 
         public string GetPath(string dllName)
         {
-            if (this._dlls.TryGetValue(dllName, out var dllPath))
+            if (_dlls.TryGetValue(dllName, out var dllPath))
                 return dllPath;
 
-            Utilities.Messagebox.ShowError($"dll with name '{dllName}' doesnt exist");
+            Globals.MessageboxExtension.ShowError($"dll with name '{dllName}' doesnt exist");
 
             return string.Empty;
 
         }
 
         public Dictionary<string, string> GetDlls()
-            => this._dlls;
+            => _dlls;
     }
 }

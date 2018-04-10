@@ -40,25 +40,25 @@ namespace SharpInjectorRework
         private void Headerbar_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
-                this.DragMove();
+                DragMove();
         }
 
         private void ExitLabel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
-                this.Close();
+                Close();
         }
 
         private void MinimizeLabel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
-                this.WindowState = WindowState.Minimized;
+                WindowState = WindowState.Minimized;
         }
 
         private void HeaderLabel_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
-                this.DragMove();
+                DragMove();
         }
 
         #endregion CUSTOM UI EVENTS

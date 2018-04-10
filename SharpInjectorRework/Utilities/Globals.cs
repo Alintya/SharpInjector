@@ -10,7 +10,8 @@ namespace SharpInjectorRework.Utilities
         public static Process InjectProcess = null;
 
         public static DllHandler DllHandler = new DllHandler();
-        public static ProcessHandler ProcessHandler = new ProcessHandler();
+        public static ProcessExtension ProcessExtension = new ProcessExtension();
+        public static MessageboxExtension MessageboxExtension = new MessageboxExtension();
 
         // Info:
         // - not sure if i leave it like this.. should never throw an exception

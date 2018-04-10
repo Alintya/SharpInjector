@@ -60,8 +60,8 @@
     <Compile Include="Utilities\Assembly.cs" />
     <Compile Include="Utilities\DllHandler.cs" />
     <Compile Include="Utilities\Globals.cs" />
-    <Compile Include="Utilities\Messagebox.cs" />
-    <Compile Include="Utilities\ProcessHandler.cs" />
+    <Compile Include="Utilities\MessageboxExtension.cs" />
+    <Compile Include="Utilities\ProcessExtension.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
