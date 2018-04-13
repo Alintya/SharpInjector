@@ -3,21 +3,21 @@ using System.Diagnostics;
 
 namespace SharpInjectorRework.Utilities
 {
-    internal class ProcessExtension
+    internal static class Process
     {
-        public bool IsProcessValid(Process process)
+        public static bool IsProcessValid(System.Diagnostics.Process process)
             => process != null && !process.HasExited;
 
-        public Process[] FilterValidProcesses(Process[] process_list)
+        public static System.Diagnostics.Process[] FilterValidProcesses(System.Diagnostics.Process[] process_list)
             => process_list.Where(IsProcessValid).ToArray();
 
-        public bool GetModule(Process process, string module_name, out ProcessModule module_handle)
+        public static bool GetModule(System.Diagnostics.Process process, string module_name, out ProcessModule module_handle)
         {
             module_handle = null;
 
             if (!IsProcessValid(process))
             {
-                Globals.MessageboxExtension.ShowError($"failed to get module '{module_name}', invalid process");
+                Utilities.Messagebox.ShowError($"failed to get module '{module_name}', invalid process");
                 return false;
             }
 
@@ -37,7 +37,7 @@ namespace SharpInjectorRework.Utilities
                 return true;
             }
 
-            Globals.MessageboxExtension.ShowError($"failed to get module '{module_name}', module was not found");
+            Utilities.Messagebox.ShowError($"failed to get module '{module_name}', module was not found");
 
             return false;
         }

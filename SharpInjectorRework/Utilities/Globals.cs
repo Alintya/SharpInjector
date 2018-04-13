@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
 namespace SharpInjectorRework.Utilities
 {
@@ -7,11 +6,10 @@ namespace SharpInjectorRework.Utilities
     {
         // Info:
         // - will later be moved into the 'InjectionHandler' class
-        public static Process InjectProcess = null;
+        public static System.Diagnostics.Process InjectProcess = null;
 
+        public static Config Config = new Config();
         public static DllHandler DllHandler = new DllHandler();
-        public static ProcessExtension ProcessExtension = new ProcessExtension();
-        public static MessageboxExtension MessageboxExtension = new MessageboxExtension();
 
         // Info:
         // - not sure if i leave it like this.. should never throw an exception

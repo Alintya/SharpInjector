@@ -18,7 +18,7 @@ namespace SharpInjectorRework.Utilities
             }
             catch (Exception e)
             {
-                Globals.MessageboxExtension.ShowWarning($"failed to get assembly creation date: {e}");
+                Utilities.Messagebox.ShowWarning($"failed to get assembly creation date: {e}");
                 return DateTime.Now;
             }
         }

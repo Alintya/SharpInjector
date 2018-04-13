@@ -39,11 +39,11 @@ namespace SharpInjectorRework.Utilities
             {
                 if (dllPath.Equals(tempPath))
                 {
-                    Globals.MessageboxExtension.ShowInfo($"skipped dll '{dllName}' cause it is already loaded");
+                    Utilities.Messagebox.ShowInfo($"skipped dll '{dllName}' cause it is already loaded");
                     return;
                 }
 
-                var dialogResult = Globals.MessageboxExtension.ShowError(
+                var dialogResult = Utilities.Messagebox.ShowError(
                     $"dll with name '{dllName}' already exists, do you want to override it?", MessageBoxButton.YesNo);
                 if (dialogResult == MessageBoxResult.No)
                     return;
@@ -56,7 +56,7 @@ namespace SharpInjectorRework.Utilities
             _dlls.Add(dllName, dllPath);
 
 #if DEBUG
-            Globals.MessageboxExtension.ShowInfo($"added dll: {dllPath}");
+            Utilities.Messagebox.ShowInfo($"added dll: {dllPath}");
 #endif
 
             OnDllAdd?.Invoke(this, new DllHandlerArgs(dllName, dllPath));
@@ -66,14 +66,14 @@ namespace SharpInjectorRework.Utilities
         {
             if (!_dlls.TryGetValue(dllName, out var dllPath))
             {
-                Globals.MessageboxExtension.ShowError($"dll with name '{dllName}' doesnt exist");
+                Utilities.Messagebox.ShowError($"dll with name '{dllName}' doesnt exist");
                 return;
             }
 
             _dlls.Remove(dllName);
 
 #if DEBUG
-            Globals.MessageboxExtension.ShowInfo($"removed dll: {dllPath}");
+            Utilities.Messagebox.ShowInfo($"removed dll: {dllPath}");
 #endif
 
             OnDllRemove?.Invoke(this, new DllHandlerArgs(dllName, dllPath));
@@ -87,7 +87,7 @@ namespace SharpInjectorRework.Utilities
             foreach (var dll in dllsTemp)
                 Remove(dll.Key);
 
-            Globals.MessageboxExtension.ShowInfo("removed all dlls");
+            Utilities.Messagebox.ShowInfo("removed all dlls");
         }
 
         public string GetPath(string dllName)
@@ -95,7 +95,7 @@ namespace SharpInjectorRework.Utilities
             if (_dlls.TryGetValue(dllName, out var dllPath))
                 return dllPath;
 
-            Globals.MessageboxExtension.ShowError($"dll with name '{dllName}' doesnt exist");
+            Utilities.Messagebox.ShowError($"dll with name '{dllName}' doesnt exist");
 
             return string.Empty;
 

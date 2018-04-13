@@ -45,6 +45,7 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -58,10 +59,12 @@
       <DependentUpon>ProcessSelectionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\Assembly.cs" />
+    <Compile Include="Utilities\Config.cs" />
     <Compile Include="Utilities\DllHandler.cs" />
     <Compile Include="Utilities\Globals.cs" />
-    <Compile Include="Utilities\MessageboxExtension.cs" />
-    <Compile Include="Utilities\ProcessExtension.cs" />
+    <Compile Include="Utilities\Messagebox.cs" />
+    <Compile Include="Utilities\Process.cs" />
+    <Compile Include="Utilities\Settings.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

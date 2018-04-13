@@ -23,20 +23,6 @@ namespace SharpInjectorRework
 
         #region UI EVENTS
 
-        private void SelectProcessButton_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO:
-        }
-
-        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            // TODO:
-        }
-
-        #endregion UI EVENTS
-
-        #region CUSTOM UI EVENTS
-
         private void Headerbar_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -61,6 +47,16 @@ namespace SharpInjectorRework
                 DragMove();
         }
 
-        #endregion CUSTOM UI EVENTS
+        private void SelectProcessButton_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO:
+        }
+
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // TODO:
+        }
+
+        #endregion UI EVENTS
     }
 }
