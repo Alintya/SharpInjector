@@ -1,6 +1,6 @@
 # SharpInjectorRework - Current Design
 
-![Design Preview](https://i.imgur.com/YWxYzmi.png)
+![Design Preview](https://i.imgur.com/NDDPpMq.png)
 
 #TODO:
 ________
