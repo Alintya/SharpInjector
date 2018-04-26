@@ -220,7 +220,7 @@ namespace SharpInjectorRework
 
             // Info:
             // - cant think of anything better atm
-            if (ProcessTextBox.Text != Globals.InjectProcess.ProcessName)
+            if (Globals.InjectProcess != null && ProcessTextBox.Text != Globals.InjectProcess.ProcessName)
                 ProcessTextBox.Text = Globals.InjectProcess.ProcessName;
         }
 
