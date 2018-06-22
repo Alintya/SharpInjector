@@ -48,7 +48,7 @@ namespace SharpInjectorRework.Utilities
                 if (dialogResult == MessageBoxResult.No)
                     return;
 
-                Remove(dllName)
+                Remove(dllName);
             }
 
             _dlls.Add(dllName, dllPath);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using Microsoft.Win32;
@@ -6,6 +7,7 @@ using System.Windows.Input;
 using SharpInjectorRework.Utilities;
 using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
+using Process = System.Diagnostics.Process;
 
 namespace SharpInjectorRework
 {
@@ -177,26 +179,37 @@ namespace SharpInjectorRework
         {
             Globals.InjectProcess = null;
 
-            var found_process_list = System.Diagnostics.Process.GetProcessesByName(ProcessTextBox.Text);
-            if (found_process_list.Any())
+            var processList = new List<Process>();
+
+            foreach (var process in Process.GetProcessesByName(ProcessTextBox.Text))
             {
-                var found_process_list_count = found_process_list.Length;
-                if (found_process_list_count == 1)
+                if (!Environment.Is64BitProcess)
                 {
-                    Globals.InjectProcess = found_process_list.FirstOrDefault();
+                    if (Utilities.Process.IsProcess64Bit(process, out var isValid) || !isValid)
+                        continue;
                 }
-                else if (Utilities.Messagebox.ShowInfo($"found '{found_process_list_count}' processes, do you want to open the process selection?", 
-                             MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+
+                processList.Add(process);
+            }
+
+            if (processList.Any())
+            {
+                var foundProcessListCount = processList.Count;
+                if (foundProcessListCount == 1)
                 {
-                    OpenProcessSelectionWindow();
+                    Globals.InjectProcess = processList.FirstOrDefault();
+                }
+                else if (Utilities.Messagebox.ShowInfo($"found '{foundProcessListCount}' processes, do you want to open the process selection?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    OpenProcessSelectionWindow(processList);
                 }
             }
 
-            var new_color = Utilities.Process.IsProcessValid(Globals.InjectProcess)
+            var newColor = Utilities.Process.IsProcessValid(Globals.InjectProcess)
                 ? Globals.MaterialGreenBrush
                 : Globals.MaterialRedBrush;
-            if (!ProcessTextBox.BorderBrush.Equals(new_color))
-                ProcessTextBox.BorderBrush = new_color;
+            if (!ProcessTextBox.BorderBrush.Equals(newColor))
+                ProcessTextBox.BorderBrush = newColor;
         }
 
         #endregion UI EVENTS
@@ -228,12 +241,12 @@ namespace SharpInjectorRework
 
         #region CUSTOM FUNCTIONS
 
-        public void OpenProcessSelectionWindow(System.Diagnostics.Process[] process_list = null)
+        public void OpenProcessSelectionWindow(List<Process> processList = null)
         {
             if (SelectProcessButton.IsEnabled)
                 SelectProcessButton.IsEnabled = false;
 
-            var processSelectionWindow = new ProcessSelectionWindow(process_list);
+            var processSelectionWindow = new ProcessSelectionWindow(processList);
             processSelectionWindow.Show();
             processSelectionWindow.Closed += ProcessSelectionWindow_Closed;
         }

@@ -49,8 +49,15 @@
                 <DropShadowEffect RenderingBias="Quality" ShadowDepth="1" Opacity="0.5"/>
             </Label.Effect>
         </Label>
-        <ListView x:Name="ProcessListView" HorizontalAlignment="Left" Height="185" Margin="10,35,0,0" VerticalAlignment="Top" Width="222" BorderBrush="#CC1D1D1D" Background="#FF2E2E2E" Foreground="#FFB6B6B6" FontFamily="Tahoma"/>
-        <TextBox x:Name="SearchTextBox" HorizontalAlignment="Left" Height="28" Margin="10,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="222" Background="#FF2E2E2E" Foreground="#FFB6B6B6" BorderBrush="#CC1D1D1D" SelectionBrush="#FF436AF0" VerticalContentAlignment="Center" FontFamily="Tahoma" TextChanged="SearchTextBox_TextChanged"/>
+        <ListView x:Name="ProcessListView" HorizontalAlignment="Left" Height="185" Margin="10,35,0,0" VerticalAlignment="Top" Width="222" BorderBrush="#CC1D1D1D" Background="#FF2E2E2E" Foreground="#FFB6B6B6" FontFamily="Tahoma">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBox x:Name="SearchTextBox" HorizontalAlignment="Left" Height="28" Margin="10,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" Background="#FF2E2E2E" Foreground="#FFB6B6B6" BorderBrush="#CC1D1D1D" SelectionBrush="#FF436AF0" VerticalContentAlignment="Center" FontFamily="Tahoma"/>
         <TextBlock IsHitTestVisible="False" Text="Search Filter" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="16,231,0,46" Foreground="#7FA9A9A9">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">
@@ -63,6 +70,8 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        <Button x:Name="SelectProcessButton" Content="Select" HorizontalAlignment="Left" Margin="10,258,0,0" VerticalAlignment="Top" Width="222" Style="{DynamicResource MaterialButton}" Height="27" Click="SelectProcessButton_Click"/>
+        <Button x:Name="SelectProcessButton" Content="Select" HorizontalAlignment="Left" Margin="126,258,0,0" VerticalAlignment="Top" Width="105" Style="{DynamicResource MaterialButton}" Height="27" Click="SelectProcessButton_Click"/>
+        <Button x:Name="RefreshProcessListButton" Content="Refresh List" HorizontalAlignment="Left" Margin="9,258,0,0" VerticalAlignment="Top" Width="112" Style="{DynamicResource MaterialButton}" Height="27" Click="RefreshProcessListButton_Click"/>
+        <Button x:Name="ApplySearchFilterButton" Content="Apply Filter" HorizontalAlignment="Left" Margin="126,226,0,0" VerticalAlignment="Top" Width="105" Style="{DynamicResource MaterialButton}" Height="27" Click="ApplySearchFilterButton_Click"/>
     </Grid>
 </Window>

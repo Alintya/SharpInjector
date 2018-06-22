@@ -1,45 +1,96 @@
-﻿using System.Linq;
+﻿using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace SharpInjectorRework.Utilities
 {
-    internal static class Process
+    public static class Process
     {
-        public static bool IsProcessValid(System.Diagnostics.Process process)
-            => process != null && !process.HasExited;
-
-        public static System.Diagnostics.Process[] FilterValidProcesses(System.Diagnostics.Process[] process_list)
-            => process_list.Where(IsProcessValid).ToArray();
-
-        public static bool GetModule(System.Diagnostics.Process process, string module_name, out ProcessModule module_handle)
+        public enum ProcessFilterType
         {
-            module_handle = null;
+            Valid,
+            Invalid
+        }
+
+        public static bool IsProcessValid(System.Diagnostics.Process process)
+        {
+            return process != null && !process.HasExited;
+        }
+
+        public static System.Diagnostics.Process[] FilterProcesses(ProcessFilterType filterType, System.Diagnostics.Process[] processList)
+        {
+            return processList.Where(x => filterType == ProcessFilterType.Valid ? IsProcessValid(x) : !IsProcessValid(x)).ToArray();
+        }
+
+        // TODO:
+        // - yes this is SHIT but i didnt find any method to check if we have permission to access a process
+        public static bool IsProcess64Bit(System.Diagnostics.Process process, out bool isValid)
+        {
+            isValid = true;
+
+            if (!Environment.Is64BitOperatingSystem)
+                return false;
+
+            var isWow64 = false;
+
+            try
+            {
+                if (!IsWow64Process(process.Handle, out isWow64))
+                    throw new Exception();
+            }
+            catch
+            {
+                isValid = false;
+            }
+
+            return !isWow64;
+        }
+
+        public static void GetModule(System.Diagnostics.Process process, string module_name, int timeout_ms, out ProcessModule process_module)
+        {
+            process_module = null;
 
             if (!IsProcessValid(process))
             {
                 Utilities.Messagebox.ShowError($"failed to get module '{module_name}', invalid process");
-                return false;
+                return;
             }
 
-            foreach (ProcessModule process_module in process.Modules)
+            var start_tickcount = Environment.TickCount;
+
+            try
             {
-                if (process_module == null)
-                    continue;
+                while (true)
+                {
+                    Thread.Sleep(1000);
 
-                var module_name_lower = module_name.ToLower();
-                var process_module_name_lower = process_module.ModuleName.ToLower();
+                    foreach (ProcessModule module in process.Modules)
+                        if (module.ModuleName.ToLower().Equals(module_name.ToLower()))
+                        {
+                            process_module = module;
+                            return;
+                        }
 
-                if (!process_module_name_lower.Equals(module_name_lower))
-                    continue;
+                    if (Environment.TickCount - start_tickcount > timeout_ms)
+                    {
+                        Utilities.Messagebox.ShowError($"timed out while trying to get module '{module_name}' from '{process.ProcessName}'");
+                        return;
+                    }
 
-                module_handle = process_module;
-
-                return true;
+                    process.Refresh();
+                }
             }
-
-            Utilities.Messagebox.ShowError($"failed to get module '{module_name}', module was not found");
-
-            return false;
+            catch (Exception e)
+            {
+                Utilities.Messagebox.ShowError($"failed to get module '{module_name}', {e}");
+            }
         }
+
+        [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool IsWow64Process([In] IntPtr process, [Out] out bool wow64Process);
     }
 }
