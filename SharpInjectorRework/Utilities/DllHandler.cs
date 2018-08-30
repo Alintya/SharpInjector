@@ -24,7 +24,7 @@ namespace SharpInjectorRework.Utilities
             => _dllPath;
     }
 
-    internal class DllHandler
+    public class DllHandler
     {
         public event DllHandlerDelegate OnDllAdd;
         public event DllHandlerDelegate OnDllRemove;
@@ -43,8 +43,7 @@ namespace SharpInjectorRework.Utilities
                     return;
                 }
 
-                var dialogResult = Utilities.Messagebox.ShowError(
-                    $"dll with name '{dllName}' already exists, do you want to override it?", MessageBoxButton.YesNo);
+                var dialogResult = Utilities.Messagebox.ShowError($"dll with name '{dllName}' already exists, do you want to override it?", MessageBoxButton.YesNo);
                 if (dialogResult == MessageBoxResult.No)
                     return;
 
@@ -99,7 +98,7 @@ namespace SharpInjectorRework.Utilities
 
         }
 
-        public Dictionary<string, string> GetDlls()
+        public IReadOnlyDictionary<string, string> GetDlls()
             => _dlls;
     }
 }

@@ -7,6 +7,7 @@ namespace SharpInjectorRework.Utilities
         // Info:
         // - will later be moved into the 'InjectionHandler' class
         public static System.Diagnostics.Process InjectProcess = null;
+        public static bool IsSelectedProcess = false;
 
         public static Config Config = new Config();
         public static DllHandler DllHandler = new DllHandler();

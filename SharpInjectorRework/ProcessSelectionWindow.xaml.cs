@@ -4,7 +4,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using SharpInjectorRework.Utilities;
 using Process = System.Diagnostics.Process;
 
 namespace SharpInjectorRework
@@ -81,7 +80,8 @@ namespace SharpInjectorRework
                 return;
             }
 
-            Globals.InjectProcess = Process.GetProcessById(selectedProcess.Id);
+            Utilities.Globals.InjectProcess = Process.GetProcessById(selectedProcess.Id);
+            Utilities.Globals.IsSelectedProcess = true;
 
             Close();
         }
