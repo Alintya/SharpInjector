@@ -81,7 +81,7 @@ namespace SharpInjectorRework
             var dialogResult = openFileDialog.ShowDialog();
             if (dialogResult != true)
             {
-                Utilities.Messagebox.ShowError("failed to add dll");
+                Utilities.Messagebox.ShowError("Failed to add dll");
                 return;
             }
 
@@ -91,16 +91,17 @@ namespace SharpInjectorRework
 
         private void RemoveSelectedItemButton_Click(object sender, RoutedEventArgs e)
         {
+            // TODO: Remove redundant check?
             if (DllsListBox.Items.Count <= 0)
             {
-                Utilities.Messagebox.ShowError("dlls listbox is empty");
+                Utilities.Messagebox.ShowError("Nothing to remove");
                 return;
             }
 
             var selectedItem = DllsListBox.SelectedItem;
             if (selectedItem == null)
             {
-                Utilities.Messagebox.ShowError("no dll is selected");
+                Utilities.Messagebox.ShowError("No dll is selected");
                 return;
             }
 
@@ -111,7 +112,7 @@ namespace SharpInjectorRework
         {
             if (DllsListBox.Items.Count <= 0)
             {
-                Utilities.Messagebox.ShowError("dlls listbox is empty");
+                Utilities.Messagebox.ShowError("Nothing to remove");
                 return;
             }
 
@@ -127,20 +128,20 @@ namespace SharpInjectorRework
         {
             if (!Utilities.Process.IsProcessValid(Utilities.Globals.InjectProcess))
             {
-                Utilities.Messagebox.ShowError("no process selected or process has exited");
+                Utilities.Messagebox.ShowError("No running process selected or process has exited");
                 return;
             }
 
             if (DllsListBox.Items.Count <= 0)
             {
-                Utilities.Messagebox.ShowError("dlls listbox is empty");
+                Utilities.Messagebox.ShowError("Nothing to inject");
                 return;
             }
 
             var selectedItem = DllsListBox.SelectedItem;
             if (selectedItem == null)
             {
-                Utilities.Messagebox.ShowError("no dll is selected");
+                Utilities.Messagebox.ShowError("No dll is selected");
                 return;
             }
 
@@ -152,13 +153,13 @@ namespace SharpInjectorRework
         {
             if (!Utilities.Process.IsProcessValid(Utilities.Globals.InjectProcess))
             {
-                Utilities.Messagebox.ShowError("no process selected or process has exited");
+                Utilities.Messagebox.ShowError("No running process selected or process has exited");
                 return;
             }
 
             if (DllsListBox.Items.Count <= 0)
             {
-                Utilities.Messagebox.ShowError("dlls listbox is empty");
+                Utilities.Messagebox.ShowError("Nothing to inject");
                 return;
             }
 
@@ -167,6 +168,7 @@ namespace SharpInjectorRework
             // - 1: remove them directly after they successfully injected
             // - 2: remove the ones that injected successfully after we finished injecting all of them (extra work? -> tracking)
             // - 3: just call remove all after after we finished injecting all of them
+            // - or dont remove them at all for future injections
             foreach (var dll in DllsListBox.Items)
             {
                 // TODO:
@@ -195,9 +197,10 @@ namespace SharpInjectorRework
                     if (processList.Any())
                     {
                         var foundProcessListCount = processList.Count;
+
                         if (foundProcessListCount == 1)
                             Utilities.Globals.InjectProcess = processList.FirstOrDefault();
-                        else if (Utilities.Messagebox.ShowInfo($"found '{foundProcessListCount}' processes, do you want to open the process selection?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        else if (Utilities.Messagebox.ShowInfo($"Found '{foundProcessListCount}' processes, open the process selection?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             OpenProcessSelectionWindow(processList);
                     }
                 }
@@ -205,6 +208,7 @@ namespace SharpInjectorRework
                     Utilities.Globals.IsSelectedProcess = false;
 
             var newColor = Utilities.Process.IsProcessValid(Utilities.Globals.InjectProcess) ? Utilities.Globals.MaterialGreenBrush : Utilities.Globals.MaterialRedBrush;
+            
             if (ProcessTextBox.BorderBrush.Equals(newColor))
                 return;
 
