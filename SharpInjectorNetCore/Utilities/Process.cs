@@ -1,13 +1,14 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Linq;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 
-namespace SharpInjectorRework.Utilities
+namespace SharpInjectorNetCore.Utilities
 {
-    public static class Process
+    public static class ProcessExtensions
     {
         public enum ProcessFilterType
         {
@@ -15,19 +16,15 @@ namespace SharpInjectorRework.Utilities
             Invalid
         }
 
-        public static bool IsProcessValid(System.Diagnostics.Process process)
+        // TODO: catch access denied
+        public static bool IsProcessValid(/*System.Diagnostics.Process process*/ this System.Diagnostics.Process proc)
         {
-            return process != null && !process.HasExited;
-        }
-
-        public static System.Diagnostics.Process[] FilterProcesses(ProcessFilterType filterType, System.Diagnostics.Process[] processList)
-        {
-            return processList.Where(x => filterType == ProcessFilterType.Valid ? IsProcessValid(x) : !IsProcessValid(x)).ToArray();
+            return proc != null && !proc.HasExited;
         }
 
         // TODO:
         // - yes this is SHIT but i didnt find any method to check if we have permission to access a process
-        public static bool IsProcess64Bit(System.Diagnostics.Process process, out bool isValid)
+        public static bool IsProcess64Bit(this System.Diagnostics.Process proc, out bool isValid)
         {
             isValid = true;
 
@@ -38,7 +35,7 @@ namespace SharpInjectorRework.Utilities
 
             try
             {
-                if (!IsWow64Process(process.Handle, out isWow64))
+                if (!IsWow64Process(proc.Handle, out isWow64))
                     throw new Exception();
             }
             catch
@@ -49,11 +46,11 @@ namespace SharpInjectorRework.Utilities
             return !isWow64;
         }
 
-        public static void GetModule(System.Diagnostics.Process process, string module_name, int timeout_ms, out ProcessModule process_module)
+        public static void GetModule(this System.Diagnostics.Process proc, string module_name, int timeout_ms, out ProcessModule process_module)
         {
             process_module = null;
 
-            if (!IsProcessValid(process))
+            if (!IsProcessValid(proc))
             {
                 Utilities.Messagebox.ShowError($"Failed to get module '{module_name}', invalid process");
                 return;
@@ -67,7 +64,7 @@ namespace SharpInjectorRework.Utilities
                 {
                     Thread.Sleep(1000);
 
-                    foreach (ProcessModule module in process.Modules)
+                    foreach (ProcessModule module in proc.Modules)
                         if (module.ModuleName.ToLower().Equals(module_name.ToLower()))
                         {
                             process_module = module;
@@ -76,17 +73,22 @@ namespace SharpInjectorRework.Utilities
 
                     if (Environment.TickCount - start_tickcount > timeout_ms)
                     {
-                        Utilities.Messagebox.ShowError($"Timed out while trying to get module '{module_name}' from '{process.ProcessName}'");
+                        Utilities.Messagebox.ShowError($"Timed out while trying to get module '{module_name}' from '{proc.ProcessName}'");
                         return;
                     }
 
-                    process.Refresh();
+                    proc.Refresh();
                 }
             }
             catch (Exception e)
             {
                 Utilities.Messagebox.ShowError($"Failed to get module '{module_name}', {e}");
             }
+        }
+
+        public static System.Diagnostics.Process[] FilterProcesses(ProcessFilterType filterType, System.Diagnostics.Process[] processList)
+        {
+            return processList.Where(x => filterType == ProcessFilterType.Valid ? IsProcessValid(x) : !IsProcessValid(x)).ToArray();
         }
 
         [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]

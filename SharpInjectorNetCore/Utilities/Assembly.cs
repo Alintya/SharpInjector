@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
-namespace SharpInjectorRework.Utilities
+namespace SharpInjectorNetCore.Utilities
 {
     internal class Assembly
     {
