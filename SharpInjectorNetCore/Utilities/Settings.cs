@@ -1,4 +1,8 @@
-﻿namespace SharpInjectorRework.Utilities
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace SharpInjectorNetCore.Utilities
 {
     internal static class Settings
     {

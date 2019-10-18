@@ -1,22 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using SharpInjectorNetCore.Utilities;
 using Process = System.Diagnostics.Process;
 
-namespace SharpInjectorRework
+namespace SharpInjectorNetCore
 {
+    /// <summary>
+    /// Interaction logic for ProcessSelectionWindow.xaml
+    /// </summary>
+    ///
+
     public class ProcessListViewItem
     {
         public int Id { get; set; }
         public string Name { get; set; }
     }
 
-    /// <summary>
-    /// Interaktionslogik für ProcessSelectionWindow.xaml
-    /// </summary>
     public partial class ProcessSelectionWindow : Window
     {
         public ProcessSelectionWindow(IReadOnlyCollection<Process> processList = null)
@@ -121,7 +130,7 @@ namespace SharpInjectorRework
 
                 if (!Environment.Is64BitProcess)
                 {
-                    if (Utilities.Process.IsProcess64Bit(process, out var isValid) || !isValid)
+                    if (process.IsProcess64Bit(out var isValid) || !isValid)
                         continue;
                 }
 

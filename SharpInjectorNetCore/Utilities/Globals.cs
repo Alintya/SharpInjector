@@ -1,6 +1,10 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows.Media;
 
-namespace SharpInjectorRework.Utilities
+
+namespace SharpInjectorNetCore.Utilities
 {
     internal class Globals
     {

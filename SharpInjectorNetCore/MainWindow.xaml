@@ -1,9 +1,9 @@
-﻿<Window x:Class="SharpInjectorRework.MainWindow"
+﻿<Window x:Class="SharpInjectorNetCore.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SharpInjectorRework"
+        xmlns:local="clr-namespace:SharpInjectorNetCore"
         mc:Ignorable="d"
         Title="MainWindow" Height="183.001" Width="362.847" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Foreground="{x:Null}" Background="#FF436AF0" WindowStyle="None">
     <Grid RenderTransformOrigin="0.345,0.594" Height="183" VerticalAlignment="Top">

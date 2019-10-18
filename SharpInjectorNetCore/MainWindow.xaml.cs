@@ -1,17 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
-using Microsoft.Win32;
-using System.Windows.Input;
 using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using Microsoft.Win32;
+using SharpInjectorNetCore.Utilities;
 using Process = System.Diagnostics.Process;
 
-namespace SharpInjectorRework
+namespace SharpInjectorNetCore
 {
     /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -126,7 +136,7 @@ namespace SharpInjectorRework
 
         private void InjectSelectedButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!Utilities.Process.IsProcessValid(Utilities.Globals.InjectProcess))
+            if (!Utilities.Globals.InjectProcess.IsProcessValid())
             {
                 Utilities.Messagebox.ShowError("No running process selected or process has exited");
                 return;
@@ -151,7 +161,7 @@ namespace SharpInjectorRework
 
         private void InjectAllButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!Utilities.Process.IsProcessValid(Utilities.Globals.InjectProcess))
+            if (!Utilities.Globals.InjectProcess.IsProcessValid())
             {
                 Utilities.Messagebox.ShowError("No running process selected or process has exited");
                 return;
@@ -188,7 +198,7 @@ namespace SharpInjectorRework
                     foreach (var process in Process.GetProcessesByName(ProcessTextBox.Text))
                     {
                         if (!Environment.Is64BitProcess)
-                            if (Utilities.Process.IsProcess64Bit(process, out var isValid) || !isValid)
+                            if (process.IsProcess64Bit(out var isValid) || !isValid)
                                 continue;
 
                         processList.Add(process);
@@ -207,8 +217,8 @@ namespace SharpInjectorRework
                 else
                     Utilities.Globals.IsSelectedProcess = false;
 
-            var newColor = Utilities.Process.IsProcessValid(Utilities.Globals.InjectProcess) ? Utilities.Globals.MaterialGreenBrush : Utilities.Globals.MaterialRedBrush;
-            
+            var newColor = Utilities.Globals.InjectProcess.IsProcessValid() ? Utilities.Globals.MaterialGreenBrush : Utilities.Globals.MaterialRedBrush;
+
             if (ProcessTextBox.BorderBrush.Equals(newColor))
                 return;
 

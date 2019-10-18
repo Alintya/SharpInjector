@@ -1,6 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows;
 
-namespace SharpInjectorRework.Utilities
+namespace SharpInjectorNetCore.Utilities
 {
     internal static class Messagebox
     {

@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Linq;
-using System.Windows;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
 
-namespace SharpInjectorRework.Utilities
+namespace SharpInjectorNetCore.Utilities
 {
     public delegate void DllHandlerDelegate(object source, DllHandlerArgs e);
 
