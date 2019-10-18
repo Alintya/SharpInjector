@@ -50,8 +50,22 @@
             </Label.Effect>
         </Label>
         <ListView x:Name="ProcessListView" HorizontalAlignment="Left" Height="185" Margin="10,35,0,0" VerticalAlignment="Top" Width="222" BorderBrush="#CC1D1D1D" Background="#FF2E2E2E" Foreground="#FFB6B6B6" FontFamily="Tahoma">
+            <ListView.Resources>
+                <DataTemplate x:Key="Template">
+                    <Image Source="{Binding Path=Icon}" Width="24" Height="24"/>
+                </DataTemplate>
+            </ListView.Resources>
             <ListView.View>
                 <GridView>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate >
+                            <DataTemplate>
+                                <Image Source="{Binding Icon}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Ico" CellTemplate="{StaticResource Template}"/>
+                    <GridViewColumn Header="test" DisplayMemberBinding="{Binding Icon}"/>
                     <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
                 </GridView>

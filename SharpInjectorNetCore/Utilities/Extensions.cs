@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace SharpInjectorNetCore.Utilities
 {
-    public static class ProcessExtensions
+    public static class Extensions
     {
         public enum ProcessFilterType
         {
@@ -86,10 +92,45 @@ namespace SharpInjectorNetCore.Utilities
             }
         }
 
+        #region System.Drawing.Icon extensions
+        public static ImageSource ToImageSource(this Icon icon)
+        {
+            Bitmap bitmap = icon.ToBitmap();
+            IntPtr hBitmap = bitmap.GetHbitmap();
+
+            ImageSource wpfBitmap = Imaging.CreateBitmapSourceFromHBitmap(
+                hBitmap,
+                IntPtr.Zero,
+                Int32Rect.Empty,
+                BitmapSizeOptions.FromEmptyOptions());
+
+            if (!DeleteObject(hBitmap))
+            {
+                throw new Exception();
+            }
+
+            return wpfBitmap;
+        }
+
+        public static ImageSource ToImageSourceHIcon(this Icon icon)
+        {
+            ImageSource imageSource = Imaging.CreateBitmapSourceFromHIcon(
+                icon.Handle,
+                Int32Rect.Empty,
+                BitmapSizeOptions.FromEmptyOptions());
+
+            return imageSource;
+        }
+
+        #endregion
+
         public static System.Diagnostics.Process[] FilterProcesses(ProcessFilterType filterType, System.Diagnostics.Process[] processList)
         {
             return processList.Where(x => filterType == ProcessFilterType.Valid ? IsProcessValid(x) : !IsProcessValid(x)).ToArray();
         }
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        private static extern bool DeleteObject(IntPtr hObject);
 
         [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
         [return: MarshalAs(UnmanagedType.Bool)]
