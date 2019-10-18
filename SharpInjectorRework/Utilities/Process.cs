@@ -55,7 +55,7 @@ namespace SharpInjectorRework.Utilities
 
             if (!IsProcessValid(process))
             {
-                Utilities.Messagebox.ShowError($"failed to get module '{module_name}', invalid process");
+                Utilities.Messagebox.ShowError($"Failed to get module '{module_name}', invalid process");
                 return;
             }
 
@@ -76,7 +76,7 @@ namespace SharpInjectorRework.Utilities
 
                     if (Environment.TickCount - start_tickcount > timeout_ms)
                     {
-                        Utilities.Messagebox.ShowError($"timed out while trying to get module '{module_name}' from '{process.ProcessName}'");
+                        Utilities.Messagebox.ShowError($"Timed out while trying to get module '{module_name}' from '{process.ProcessName}'");
                         return;
                     }
 
@@ -85,7 +85,7 @@ namespace SharpInjectorRework.Utilities
             }
             catch (Exception e)
             {
-                Utilities.Messagebox.ShowError($"failed to get module '{module_name}', {e}");
+                Utilities.Messagebox.ShowError($"Failed to get module '{module_name}', {e}");
             }
         }
 

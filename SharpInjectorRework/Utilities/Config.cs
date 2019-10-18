@@ -12,35 +12,35 @@ namespace SharpInjectorRework.Utilities
         private readonly XmlDocument _xmlDocument = new XmlDocument();
         private readonly string _configDirectory = Directory.GetCurrentDirectory();
 
-        public bool Load(string config_name)
+        public bool Load(string configName)
         {
             try
             {
-                var configPath = Path.Combine(_configDirectory, $"{config_name}.xml");
-                if (!File.Exists(configPath) && Save(config_name))
+                var configPath = Path.Combine(_configDirectory, $"{configName}.xml");
+                if (!File.Exists(configPath) && Save(configName))
                 {
-                    Utilities.Messagebox.ShowInfo("created config file");
+                    Utilities.Messagebox.ShowInfo("Created config file in executable's directory");
                     return false;
                 }
 
                 _xmlDocument.Load(configPath);
                 if (_xmlDocument.DocumentElement == null)
                 {
-                    Messagebox.ShowWarning("failed to load config");
+                    Messagebox.ShowWarning("Failed to load config");
                     return false;
                 }
 
                 var settingsMode = _xmlDocument.DocumentElement.SelectSingleNode("Settings");
                 if (settingsMode == null || !settingsMode.HasChildNodes)
                 {
-                    Messagebox.ShowWarning("failed to load config, could not find 'Settings' node");
+                    Messagebox.ShowWarning("Failed to load config, could not find 'Settings' node");
                     return false;
                 }
 
                 var autoInjectSettingsMode = settingsMode.FirstChild;
                 if (!autoInjectSettingsMode.HasChildNodes)
                 {
-                    Messagebox.ShowWarning("failed to load config, 'AutoInject' node had no childs");
+                    Messagebox.ShowWarning("Failed to load config, 'AutoInject' node has no child nodes");
                     return false;
                 }
 
@@ -54,7 +54,7 @@ namespace SharpInjectorRework.Utilities
                         case "Enabled":
                             if (!bool.TryParse(nodeValue, out var enabledValue))
                             {
-                                Messagebox.ShowWarning("failed to parse value of 'AutoInject/Enabled'");
+                                Messagebox.ShowWarning("Failed to parse value of 'AutoInject/Enabled'");
                                 break;
                             }
 
@@ -69,14 +69,14 @@ namespace SharpInjectorRework.Utilities
                         case "Method":
                             if (!int.TryParse(nodeValue, out var methodValue))
                             {
-                                Messagebox.ShowWarning("failed to parse value of 'AutoInject/Method'");
+                                Messagebox.ShowWarning("Failed to parse value of 'AutoInject/Method'");
                                 break;
                             }
 
                             Utilities.Settings.AutoInject.Method = methodValue;
                             break;
                         default:
-                            Messagebox.ShowInfo($"unknown 'AutoInject' setting node: {nodeName} - {nodeValue}");
+                            Messagebox.ShowInfo($"Unknown 'AutoInject' setting node: {nodeName} - {nodeValue}");
                             break;
                     }
                 }
@@ -86,7 +86,7 @@ namespace SharpInjectorRework.Utilities
             }
             catch (Exception e)
             {
-                Utilities.Messagebox.ShowWarning($"failed to load config: {e}");
+                Utilities.Messagebox.ShowWarning($"Failed to load config: {e}");
                 return false;
             }
 
@@ -102,7 +102,7 @@ namespace SharpInjectorRework.Utilities
             }
             catch (Exception e)
             {
-                Utilities.Messagebox.ShowWarning($"failed to save config: {e}");
+                Utilities.Messagebox.ShowWarning($"Failed to save config: {e}");
                 return false;
             }
 
