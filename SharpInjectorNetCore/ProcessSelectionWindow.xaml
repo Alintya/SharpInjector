@@ -57,15 +57,7 @@
             </ListView.Resources>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn>
-                        <GridViewColumn.CellTemplate >
-                            <DataTemplate>
-                                <Image Source="{Binding Icon}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
                     <GridViewColumn Header="Ico" CellTemplate="{StaticResource Template}"/>
-                    <GridViewColumn Header="test" DisplayMemberBinding="{Binding Icon}"/>
                     <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
                 </GridView>

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
@@ -93,9 +89,9 @@ namespace SharpInjectorNetCore.Utilities
         }
 
         #region System.Drawing.Icon extensions
-        public static ImageSource ToImageSource(this Icon icon)
+        public static ImageSource ToImageSource(this System.Drawing.Icon icon)
         {
-            Bitmap bitmap = icon.ToBitmap();
+            System.Drawing.Bitmap bitmap = icon.ToBitmap();
             IntPtr hBitmap = bitmap.GetHbitmap();
 
             ImageSource wpfBitmap = Imaging.CreateBitmapSourceFromHBitmap(
@@ -112,7 +108,7 @@ namespace SharpInjectorNetCore.Utilities
             return wpfBitmap;
         }
 
-        public static ImageSource ToImageSourceHIcon(this Icon icon)
+        public static ImageSource ToImageSourceHIcon(this System.Drawing.Icon icon)
         {
             ImageSource imageSource = Imaging.CreateBitmapSourceFromHIcon(
                 icon.Handle,

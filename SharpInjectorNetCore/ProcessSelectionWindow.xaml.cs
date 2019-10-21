@@ -39,13 +39,7 @@ namespace SharpInjectorNetCore
             {
                 foreach (var process in processList)
                 {
-                    ProcessListView.Items.Add(new ProcessListViewItem
-                    {
-                        Id = process.Id,
-                        Name = process.ProcessName,
-                        Icon = System.Drawing.Icon.ExtractAssociatedIcon(process.MainModule.FileName).ToImageSourceHIcon()
-                        //Imaging.CreateBitmapSourceFromHIcon()
-                    });
+                    CreateListEntry(process);
                 }
             }
             else
@@ -127,6 +121,10 @@ namespace SharpInjectorNetCore
 
             foreach (var process in Process.GetProcesses())
             {
+                // Skip inaccessible system processes
+                if (process.Id == 0 || process.Id == 4)
+                    continue;
+
                 if (processNameContains != null)
                 {
                     if (!process.ProcessName.ToLower().Contains(processNameContains.ToLower()))
@@ -139,13 +137,29 @@ namespace SharpInjectorNetCore
                         continue;
                 }
 
-                ProcessListView.Items.Add(new ProcessListViewItem
-                {
-                    Id = process.Id,
-                    Name = process.ProcessName,
-                    Icon = System.Drawing.Icon.ExtractAssociatedIcon(process.MainModule.FileName).ToImageSourceHIcon()
-                });
+                CreateListEntry(process);
             }
+        }
+
+        private void CreateListEntry(Process proc)
+        {
+            ImageSource ico = new BitmapImage();
+
+            try
+            {
+                ico = System.Drawing.Icon.ExtractAssociatedIcon(proc.MainModule?.FileName).ToImageSourceHIcon();
+            }
+            catch (System.ComponentModel.Win32Exception e)
+            {
+                // TODO: set to default icon instead
+            }
+
+            ProcessListView.Items.Add(new ProcessListViewItem
+            {
+                Id = proc.Id,
+                Name = proc.ProcessName,
+                Icon = ico
+            });
         }
 
         #endregion CUSTOM FUNCTIONS
