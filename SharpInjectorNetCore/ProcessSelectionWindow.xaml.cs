@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -7,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -24,6 +26,7 @@ namespace SharpInjectorNetCore
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public ImageSource Icon { get; set; }
     }
 
     public partial class ProcessSelectionWindow : Window
@@ -36,11 +39,7 @@ namespace SharpInjectorNetCore
             {
                 foreach (var process in processList)
                 {
-                    ProcessListView.Items.Add(new ProcessListViewItem
-                    {
-                        Id = process.Id,
-                        Name = process.ProcessName
-                    });
+                    CreateListEntry(process);
                 }
             }
             else
@@ -122,6 +121,10 @@ namespace SharpInjectorNetCore
 
             foreach (var process in Process.GetProcesses())
             {
+                // Skip inaccessible system processes
+                if (process.Id == 0 || process.Id == 4)
+                    continue;
+
                 if (processNameContains != null)
                 {
                     if (!process.ProcessName.ToLower().Contains(processNameContains.ToLower()))
@@ -134,12 +137,29 @@ namespace SharpInjectorNetCore
                         continue;
                 }
 
-                ProcessListView.Items.Add(new ProcessListViewItem
-                {
-                    Id = process.Id,
-                    Name = process.ProcessName
-                });
+                CreateListEntry(process);
             }
+        }
+
+        private void CreateListEntry(Process proc)
+        {
+            ImageSource ico = new BitmapImage();
+
+            try
+            {
+                ico = System.Drawing.Icon.ExtractAssociatedIcon(proc.MainModule?.FileName).ToImageSourceHIcon();
+            }
+            catch (System.ComponentModel.Win32Exception e)
+            {
+                // TODO: set to default icon instead
+            }
+
+            ProcessListView.Items.Add(new ProcessListViewItem
+            {
+                Id = proc.Id,
+                Name = proc.ProcessName,
+                Icon = ico
+            });
         }
 
         #endregion CUSTOM FUNCTIONS
